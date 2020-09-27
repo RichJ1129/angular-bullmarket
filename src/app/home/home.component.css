@@ -1,0 +1,65 @@
+body {
+  background-color: white;
+  color: black;
+  font-family: Calibri, sans-serif
+}
+
+.markets{
+  margin-bottom: 5px;
+}
+
+.nav-link{
+  background-color:white;
+  color:black;
+  font-family: Calibri, sans-serif;
+  font-size:28px;
+  font-weight: bold;
+}
+
+.nav-link:hover {
+  color:grey;
+}
+
+body {
+  padding-bottom: 0rem;
+}
+
+h1,
+h2,
+p {
+  padding: 0 5%;
+}
+
+.symbolLink{
+  color:white;
+  text-decoration:none;
+
+}
+.symbolLink:hover{
+  color:grey;
+  text-decoration:none;
+}
+
+.assetSearchBox{
+  padding:10px;
+}
+
+.assetSubmit{
+  color:black;
+  background-color: grey;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+::ng-deep #vector-map {
+  height: 500px;
+}
+
+h4 {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+::ng-deep #gdp-sectors {
+  width: 400px;
+  height: 200px;
+}
