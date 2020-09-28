@@ -13,6 +13,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "devextreme-angular",
+              "devextreme"
+            ],
             "outputPath": "dist/angular-bullmarket",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -124,18 +128,4 @@
     }
   },
   "defaultProject": "angular-bullmarket",
-  "styles": [
-    "node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
-    "node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
-    "node_modules/@fortawesome/fontawesome-free/scss/regular.scss",
-    "node_modules/@fortawesome/fontawesome-free/scss/brands.scss",
-    "node_modules/angular-bootstrap-md/assets/scss/bootstrap/bootstrap.scss",
-    "node_modules/angular-bootstrap-md/assets/scss/mdb.scss",
-    "node_modules/animate.css/animate.css",
-    "src/styles.scss"
-  ],
-  "scripts": [
-    "node_modules/chart.js/dist/Chart.js",
-    "node_modules/hammerjs/hammer.min.js"
-  ]
 }

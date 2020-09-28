@@ -6,7 +6,6 @@ import { LayoutModule } from './layout/layout.module';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { HomeModule} from './home/home.module';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 
 @NgModule({
