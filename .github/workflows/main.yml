@@ -1,10 +1,16 @@
-name: CI   // Any name of your choice
+name: CI
 
-on: [push] // GitHub event like push, pull-request etc
+on: 
+    push:
+      branches:
+      - master
 
 jobs:
   build:
-    runs-on: ubuntu-latest  // Using latest ubuntu latest version
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+          node-version: [12.x]  
 
     steps:
     - uses: actions/checkout@v1
@@ -20,6 +26,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+#
     - name: Installing NPM
       run: npm install
 
@@ -27,7 +34,7 @@ jobs:
       run: npm run build
 
     - name: Generate deployment package
-      run: zip -r deploy.zip * -x "**node_modules**
+      run: zip -r deploy.zip server.js dist package.json
 
     - name: Get timestamp
       uses: gerred/actions/current-time@master
@@ -47,9 +54,9 @@ jobs:
       with:
         aws_access_key: ${{secrets.AWS_ACCESS_KEY}}
         aws_secret_key: ${{secrets.AWS_SECRET_KEY}}
-        region: us-east-2a
+        region: us-east-2
         application_name: angular-bullmarket
-        environment_name: AngularBullmarket-env-3
+        environment_name: AngularBullmarket-env
         version_label: "angular-bullmarket-${{ steps.format-time.outputs.replaced }}"
         deployment_package: deploy.zip
     - name: Deployed!
