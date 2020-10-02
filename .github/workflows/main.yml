@@ -3,7 +3,7 @@ name: CI
 on: 
     push:
       branches:
-      - master
+      - connect_database
 
 jobs:
   build:
