@@ -1,14 +1,41 @@
-<mat-card>
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <form (submit)="onSignup(signupForm)" #signupForm="ngForm" *ngIf="!isLoading">
-    <mat-form-field>
-      <input matInput name="email" ngModel type="email" placeholder="E-Mail" #emailInput="ngModel" required email>
-      <mat-error *ngIf="emailInput.invalid">Please enter a valid email.</mat-error>
+<div class="container">
+  <div class="register_welcome">BullMarket</div>
+  <div class="form-container">
+  <form [formGroup]="signUpForm" (submit)="register()">
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label> First Name
+      </mat-label>
+      <input matInput formControlName="first_name" required>
+      <mat-error *ngIf="signUpForm.controls.first_name.touched && signUpForm.controls.first_name.invalid">
+        <span *ngIf="signUpForm.controls.first_name.errors.required">Please enter your first name.</span>
+      </mat-error>
     </mat-form-field>
-    <mat-form-field>
-      <input type="password" name="password" ngModel matInput placeholder="Password" #passwordInput="ngModel" required>
-      <mat-error *ngIf="passwordInput.invalid">Please enter a valid password.</mat-error>
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label> Last Name
+      </mat-label>
+      <input matInput formControlName="last_name" required>
+      <mat-error *ngIf="signUpForm.controls.last_name.touched && signUpForm.controls.last_name.invalid">
+        <span *ngIf="signUpForm.controls.last_name.errors.required">Please enter your last name. </span>
+      </mat-error>
     </mat-form-field>
-    <button mat-raised-button color="accent" type="submit" *ngIf="!isLoading">Signup</button>
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label> E-mail
+      </mat-label>
+      <input matInput formControlName="email" required>
+      <mat-error *ngIf="signUpForm.controls.email.touched && signUpForm.controls.email.invalid">
+        <span *ngIf="signUpForm.controls.email.errors.required">This field is mandatory.</span>
+        <span *ngIf="signUpForm.controls.email.errors.pattern">Please enter a valid email address.</span>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label> Password
+      </mat-label>
+      <input matInput formControlName="password" type="password">
+      <mat-error *ngIf="signUpForm.controls.password.touched && signUpForm.controls.password.invalid">
+        <span *ngIf="signUpForm.controls.password.errors.required">This field is mandatory.</span>
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="basic" type="submit">Register</button>
   </form>
-</mat-card>
+  </div>
+</div>
