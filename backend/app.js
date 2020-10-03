@@ -9,7 +9,7 @@ const app = express();
 
 mongoose
   .connect(
-    ""
+    process.env.mongo_database //Replace with mongo database url if running locally
   )
   .then(() => {
     console.log("Connected to database!");
