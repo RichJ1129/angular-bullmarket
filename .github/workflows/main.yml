@@ -30,8 +30,11 @@ jobs:
     - name: Installing NPM
       run: npm install
       
+    - name: Installing angular
+      run: npm install -g @angular/cli > /dev/null
+      
     - name: Building application
-      run: npm run build
+      run: ng build --prod
 
     - name: Generate deployment package
       run: cd backend &&  zip -r deploy.zip angular-bullmarket middleware models routes app.js package.json server.js
