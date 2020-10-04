@@ -29,7 +29,7 @@ jobs:
 
     - name: Installing NPM
       run: npm install
-
+      
     - name: Building application
       run: npm run build
 
