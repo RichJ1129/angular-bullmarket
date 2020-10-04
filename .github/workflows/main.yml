@@ -1,6 +1,6 @@
 name: CI
 
-on: 
+on:
     push:
       branches:
       - master
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
         matrix:
-          node-version: [12.x]  
+          node-version: [12.x]
 
     steps:
     - uses: actions/checkout@v1
@@ -31,10 +31,10 @@ jobs:
       run: npm install
       
     - name: Building application
-      run: npm run build
+      run: ng build --prod
 
     - name: Generate deployment package
-      run:  zip -r deploy.zip server.js dist && zip -r -j deploy.zip backend/package.json
+      run:  zip -r  deploy.zip backend/
 
     - name: Get timestamp
       uses: gerred/actions/current-time@master

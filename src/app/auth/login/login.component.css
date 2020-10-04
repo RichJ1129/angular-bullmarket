@@ -1,0 +1,33 @@
+mat-form-field {
+  width: 100%;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+mat-card{
+  margin-top: 10%;
+}
+
+.container{
+  text-align: center
+}
+
+.form-container{
+  width: 400px;
+  margin: 75px auto 0px;
+}
+
+.form-field{
+  display: block
+}
+
+.login_welcome{
+  padding-top: 5%;
+  font-size: 300%;
+}
+.sign_up{
+  padding-top: 5%;
+  font-size: 110%;
+}
