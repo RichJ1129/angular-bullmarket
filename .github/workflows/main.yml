@@ -31,7 +31,7 @@ jobs:
       run: npm install
       
     - name: Building application
-      run: ng build --prod
+      run: npm run build --prod
 
     - name: Generate deployment package
       run:  zip -r  deploy.zip backend/
