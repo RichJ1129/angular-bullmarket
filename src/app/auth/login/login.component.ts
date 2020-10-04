@@ -17,10 +17,11 @@ export class LoginComponent {
 
   constructor(private formBuilder: FormBuilder, public authService: AuthService) {}
 
+  // tslint:disable-next-line:typedef use-lifecycle-interface
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       email: [null, [Validators.required, Validators.pattern(this.emailRegx)]],
-      password: [null, Validators.required]
+      userName: [null, Validators.required]
     });
   }
 
@@ -32,11 +33,12 @@ export class LoginComponent {
   //   this.authService.login(form.value.email, form.value.password);
   // }
 
+  // tslint:disable-next-line:typedef
   submit() {
     if (!this.loginForm.valid) {
       return;
     }
     this.isLoading = true;
-    this.authService.login(this.loginForm.value.email, this.loginForm.value.password);;
+    this.authService.login(this.loginForm.value.userName, this.loginForm.value.email);
   }
 }

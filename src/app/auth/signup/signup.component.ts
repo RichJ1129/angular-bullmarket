@@ -19,9 +19,7 @@ export class SignupComponent {
   ngOnInit() {
     this.signUpForm = this.formBuilder.group({
       email: [null, [Validators.required, Validators.pattern(this.emailRegx)]],
-      password: [null, Validators.required],
-      first_name: [null, Validators.required],
-      last_name: [null, Validators.required]
+      userName: [null, Validators.required]
     });
   }
 
@@ -32,10 +30,8 @@ export class SignupComponent {
     }
     this.isLoading = true;
     this.authService.createUser(
-      this.signUpForm.value.email,
-      this.signUpForm.value.password,
-      this.signUpForm.value.first_name,
-      this.signUpForm.value.last_name
+      this.signUpForm.value.userName,
+      this.signUpForm.value.email
     );
   }
 }

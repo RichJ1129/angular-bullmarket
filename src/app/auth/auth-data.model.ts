@@ -1,11 +1,5 @@
 export interface AuthData {
   email: string;
-  password: string;
+  userName: string;
 }
 
-export interface UserData {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-}
