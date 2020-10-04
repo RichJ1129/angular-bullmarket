@@ -31,7 +31,7 @@ jobs:
       run: npm install
       
     - name: Building application
-      run: npm run build --prod
+      run: npm run build —- —-prod
 
     - name: Generate deployment package
       run: cd backend &&  zip -r deploy.zip angular-bullmarket middleware models routes app.js package.json server.js
