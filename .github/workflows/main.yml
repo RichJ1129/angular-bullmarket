@@ -34,7 +34,8 @@ jobs:
       run: npm run build --prod
 
     - name: Generate deployment package
-      run:  zip -r  deploy.zip backend/
+      run: cd backend &&  zip -r deploy.zip angular-bullmarket middleware models routes app.js package.json server.js
+
 
     - name: Get timestamp
       uses: gerred/actions/current-time@master
