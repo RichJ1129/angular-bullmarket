@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
 import { AuthData } from './auth-data.model';
+import { environment } from '../../environments/environment';
+
+const backendURL = environment.apiURL;
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -15,25 +18,29 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  // tslint:disable-next-line:typedef
   getToken() {
     return this.token;
   }
 
+  // tslint:disable-next-line:typedef
   getIsAuth() {
     return this.isAuthenticated;
   }
 
+  // tslint:disable-next-line:typedef
   getUserId() {
     return this.userId;
   }
 
+  // tslint:disable-next-line:typedef
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
   }
 
   createUser(userName: string, email: string) {
     const authData: AuthData = { userName: userName, email: email };
-    this.http.post('http://localhost:3000/api/user/signup', authData).subscribe(() => {
+    this.http.post(backendURL + '/user/signup', authData).subscribe(() => {
       this.router.navigate(['/']);
     },
     error => {
@@ -46,7 +53,7 @@ export class AuthService {
     const authData: AuthData = { userName: userName, email: email };
     this.http
       .post<{ token: string; expiresIn: number; userId: string }>(
-        'http://localhost:3000/api/user/login',
+        backendURL + '/user/login',
         authData
       )
       .subscribe(response => {
