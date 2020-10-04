@@ -18,10 +18,12 @@
 <body>
 <div class="container">
   <br>
-  <div align="right">Login/Register</div>
+
+  <a *ngIf="!userIsAuthenticated" class="nav-link" style="font-size: 16px; text-align:right;" routerLink="/login">Login/Register</a>
+  <a *ngIf="userIsAuthenticated" class="nav-link" style="font-size: 16px; text-align:right;" (click)="onLogout()">Logout</a>
   <a class="col-12" class="nav-link" style="font-size: 75px; font-family: Calibri, sans-serif; text-align:center;" routerLink="/home">MARKETPLACE</a>
 
-  <div class="markets" style="padding:1% 0 1% 0; border-top:6px solid black; border-bottom: 6px solid black;">
+  <div *ngIf="userIsAuthenticated" class="markets" style="padding:1% 0 1% 0; border-top:6px solid black; border-bottom: 6px solid black;">
     <div class="row">
       <div class="col-12">
         <ul class="nav nav-fill">

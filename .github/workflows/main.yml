@@ -1,6 +1,6 @@
 name: CI
 
-on: 
+on:
     push:
       branches:
       - master
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
         matrix:
-          node-version: [12.x]  
+          node-version: [12.x]
 
     steps:
     - uses: actions/checkout@v1
@@ -29,12 +29,16 @@ jobs:
 
     - name: Installing NPM
       run: npm install
-
+      
+    - name: Installing angular
+      run: npm install -g @angular/cli > /dev/null
+      
     - name: Building application
-      run: npm run build
+      run: ng build --prod
 
     - name: Generate deployment package
-      run:  zip -r deploy.zip server.js dist && zip -r -j deploy.zip backend/package.json
+      run: cd backend &&  zip -r deploy.zip angular-bullmarket middleware models routes app.js package.json server.js
+
 
     - name: Get timestamp
       uses: gerred/actions/current-time@master
@@ -58,7 +62,7 @@ jobs:
         application_name: angular-bullmarket
         environment_name: AngularBullmarket-env
         version_label: "angular-bullmarket-${{ steps.format-time.outputs.replaced }}"
-        deployment_package: deploy.zip
+        deployment_package: backend/deploy.zip
     - name: Deployed!
       run: echo App deployed to ELB
 

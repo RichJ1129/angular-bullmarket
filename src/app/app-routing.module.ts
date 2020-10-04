@@ -6,6 +6,9 @@ import {StocksComponent} from './stocks/stocks.component';
 import {CurrencyComponent} from './currency/currency.component';
 import {RealestateComponent} from './realestate/realestate.component';
 import {HomeComponent} from './home/home.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -36,6 +39,14 @@ const routes: Routes = [
   {
     path: 'realestate',
     component: RealestateComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'signup',
+    component: SignupComponent
   }
 ];
 
@@ -45,13 +56,4 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 
-// @NgModule({
-//   imports: [RouterModule.forRoot(routes, {
-//     // preload all modules; optionally we could
-//     // implement a custom preloading strategy for just some
-//     // of the modules (PRs welcome 😉)
-//     preloadingStrategy: PreloadAllModules
-//   })],
-//   exports: [RouterModule]
-// })
-// export class AppRoutingModule {}
+
