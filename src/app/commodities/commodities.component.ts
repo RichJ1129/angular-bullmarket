@@ -1,25 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 
-export interface People {
+export interface Commodity {
+  ticker: string;
   name: string;
-  age: number;
-  gender: string;
-  country: string;
+  price: number;
+  unit: string;
 }
 
-const PEOPLE_DATA: People[] = [
+const COMMODITY_DATA: Commodity[] = [
   {
-    name : 'Rahul',
-    age : 21,
-    gender : 'Male',
-    country : 'India'
+    ticker : 'GLD',
+    name : "GOLD",
+    price : 183.42,
+    unit : 'Troy Ounce'
   },
   {
-    name : 'Ajay',
-    age : 25,
-    gender : 'Male',
-    country : 'India'
+    ticker : 'SLV',
+    name : 'SILVER',
+    price : 22.65,
+    unit : 'Troy Ounce'
   }
 ];
 
@@ -29,8 +28,8 @@ const PEOPLE_DATA: People[] = [
   styleUrls: ['./commodities.component.css']
 })
 export class CommoditiesComponent {
-  displayedColumns: string[] = ['name', 'age', 'gender', 'country'];
-  dataSource = PEOPLE_DATA;
+  displayedColumns: string[] = ['ticker', 'name', 'price', 'unit'];
+  dataSource = COMMODITY_DATA;
 }
 
 
