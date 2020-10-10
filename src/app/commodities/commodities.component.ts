@@ -1,38 +1,37 @@
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+
+export interface People {
+  name: string;
+  age: number;
+  gender: string;
+  country: string;
+}
+
+const PEOPLE_DATA: People[] = [
+  {
+    name : 'Rahul',
+    age : 21,
+    gender : 'Male',
+    country : 'India'
+  },
+  {
+    name : 'Ajay',
+    age : 25,
+    gender : 'Male',
+    country : 'India'
+  }
+];
 
 @Component({
   selector: 'app-commodities',
   templateUrl: './commodities.component.html',
   styleUrls: ['./commodities.component.css']
 })
-export class CommoditiesComponent implements OnInit {
-
-  headers: any;
-  rows: any;
-
-  constructor() {
-    this.headers = ['test', 'pleaseWork'];
-
-    this.rows =  [{
-      ID : '1',
-      Name : 'Rahul',
-      Age : '21',
-      Gender : 'Male',
-      Country : 'India'
-    },
-      {
-        ID : '2',
-        Name : 'Ajay',
-        Age : '25',
-        Gender : 'Male',
-        Country : 'India'
-      }];
-  }
-
-
-  ngOnInit(): void {
-  }
-
+export class CommoditiesComponent {
+  displayedColumns: string[] = ['name', 'age', 'gender', 'country'];
+  dataSource = PEOPLE_DATA;
 }
+
 
 
