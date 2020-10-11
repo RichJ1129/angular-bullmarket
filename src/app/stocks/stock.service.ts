@@ -7,3 +7,7 @@ import { environment } from '../../environments/environment';
 import { StockData } from './stock.model';
 
 const backendURL = environment.apiURL;
+
+@Injectable({ providedIn: 'root' })
+export class StockService {
+}
