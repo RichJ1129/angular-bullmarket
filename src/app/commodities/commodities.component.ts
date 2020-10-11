@@ -10,7 +10,7 @@ export interface Commodity {
 const COMMODITY_DATA: Commodity[] = [
   {
     ticker : 'GLD',
-    name : "GOLD",
+    name : 'GOLD',
     price : 183.42,
     unit : 'Troy Ounce'
   },
