@@ -58,6 +58,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "aws-sdk": "^2.761.0",
+    "axios": "^0.20.0",
     "codelyzer": "^6.0.0",
     "devextreme-cli": "latest",
     "devextreme-themebuilder": "20.1-stable",
