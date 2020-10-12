@@ -4,7 +4,7 @@ const Stock = require("../models/stock");
 
 const router = express.Router();
 
-router.post("/stocks", (req, res, next) => {
+router.post("/post_stocks", (req, res, next) => {
   const stock = new Stock({
     stockName: req.body.stockName,
     symbol: req.body.symbol,
@@ -24,6 +24,8 @@ router.post("/stocks", (req, res, next) => {
       });
     });
 });
+
+
 
 
 

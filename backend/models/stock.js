@@ -19,5 +19,5 @@ const StockSchema = mongoose.Schema({
 
 });
 
-// export model user with UserSchema
+// export model stock with StockSchema
 module.exports = mongoose.model("Stock", StockSchema);
