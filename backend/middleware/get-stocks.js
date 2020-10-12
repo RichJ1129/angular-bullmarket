@@ -118,8 +118,8 @@ for (const [ticker, company] of stock_entries) {
         console.log('Exchange: ' + apiResponse['exchange'])
         console.log('Volume: ' + apiResponse['volume'])
         console.log('Close: ' + apiResponse['close'])
-    }
-  }).catch(error => {
+      }
+    }).catch(error => {
     console.log(error);
   });
 }

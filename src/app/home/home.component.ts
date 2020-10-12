@@ -1,13 +1,13 @@
-import { OnInit } from '@angular/core';
-import { ViewChild, Component } from '@angular/core';
-import { DxVectorMapComponent } from 'devextreme-angular';
+import {OnInit} from '@angular/core';
+import {ViewChild, Component} from '@angular/core';
+import {DxVectorMapComponent} from 'devextreme-angular';
 
 import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js';
-import { Service } from './home.service';
+import {Service} from './home.service';
 
 @Component({
   selector: 'app-home',
-  providers: [ Service ],
+  providers: [Service],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -22,16 +22,16 @@ export class HomeComponent implements OnInit {
   }
 
   customizeTooltip(arg) {
-    if (arg.attribute("gdp")) {
+    if (arg.attribute('gdp')) {
       return {
-        text: arg.attribute("name") + ': ' + arg.attribute('gdp')/1000 + 'B GDP'
+        text: arg.attribute('name') + ': ' + arg.attribute('gdp') / 1000 + 'B GDP'
       };
     }
   }
 
   customizeLayers(elements) {
     elements.forEach((element) => {
-      element.attribute("gdp", this.gdp[element.attribute("name")]);
+      element.attribute('gdp', this.gdp[element.attribute('name')]);
     });
   }
 

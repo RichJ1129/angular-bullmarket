@@ -16,7 +16,7 @@ router.post("/post_stocks", (req, res, next) => {
       res.status(201).json({
         message: "Stock Created!",
         result: result
-        });
+      });
     })
     .catch(err => {
       res.status(500).json({
@@ -24,21 +24,6 @@ router.post("/post_stocks", (req, res, next) => {
       });
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports = router;

@@ -2,25 +2,25 @@
   <div class="login_welcome">BullMarket</div>
   <div class="form-container">
     <form [formGroup]="loginForm" (submit)="submit()">
-        <mat-form-field class="form-field" appearance="outline">
-          <mat-label> E-mail
-          </mat-label>
-          <input matInput formControlName="email" required>
-          <mat-error *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid">
-            <span *ngIf="loginForm.controls.email.errors.required">This field is mandatory.</span>
-            <span *ngIf="loginForm.controls.email.errors.pattern">This field is invalid.</span>
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field class="form-field" appearance="outline">
-          <mat-label> User Name
-          </mat-label>
-          <input matInput formControlName="userName" required>
-          <mat-error *ngIf="loginForm.controls.userName.touched && loginForm.controls.userName.invalid">
-            <span *ngIf="loginForm.controls.userName.errors.required">This field is mandatory.</span>
-          </mat-error>
-        </mat-form-field>
-        <button mat-raised-button color="basic" type="submit">Log In</button>
-      </form>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label> E-mail
+        </mat-label>
+        <input matInput formControlName="email" required>
+        <mat-error *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid">
+          <span *ngIf="loginForm.controls.email.errors.required">This field is mandatory.</span>
+          <span *ngIf="loginForm.controls.email.errors.pattern">This field is invalid.</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label> User Name
+        </mat-label>
+        <input matInput formControlName="userName" required>
+        <mat-error *ngIf="loginForm.controls.userName.touched && loginForm.controls.userName.invalid">
+          <span *ngIf="loginForm.controls.userName.errors.required">This field is mandatory.</span>
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="basic" type="submit">Log In</button>
+    </form>
   </div>
   <div class="sign_up"> Don't have an account? <a routerLink="/signup">Sign up</a></div>
 </div>
