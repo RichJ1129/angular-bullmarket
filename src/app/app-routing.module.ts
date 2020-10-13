@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {BondsComponent} from './bonds/bonds.component';
 import {CommoditiesComponent} from './commodities/commodities.component';
-import {StocksComponent} from './stocks/stocks.component';
+import {StockTableComponent} from './stocks/stock-table/stock-table.component';
 import {CurrencyComponent} from './currency/currency.component';
 import {RealestateComponent} from './realestate/realestate.component';
 import {HomeComponent} from './home/home.component';
@@ -29,8 +29,8 @@ const routes: Routes = [
     component: CommoditiesComponent
   },
   {
-    path: 'stocks',
-    component: StocksComponent
+    path: 'stock-table',
+    component: StockTableComponent
   },
   {
     path: 'currency',

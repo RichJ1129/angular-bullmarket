@@ -3,4 +3,5 @@ export interface StockData {
   symbol: string;
   price: number;
   marketCap: number;
+  closeDate: Date;
 }
