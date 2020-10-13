@@ -1,7 +1,11 @@
+const express = require("express");
+const Stock = require("../models/stock");
+const router = express.Router();
 const axios = require('axios');
 
+
 const params = {
-  access_key: "043e80f508d8f10f1b49230fa43b55cd"
+  access_key: process.env.STOCK_KEY
 }
 
 const stock_object = {
@@ -109,19 +113,29 @@ const stock_object = {
 
 const stock_entries = Object.entries(stock_object)
 
-for (const [ticker, company] of stock_entries) {
-  axios.get('http://api.marketstack.com/v1/tickers/' + `${ticker}` + '/eod/latest', {params})
-    .then(response => {
-      const apiResponse = response.data;
-      if (typeof apiResponse === 'object') {
-        console.log('Company: ' + `${company}`)
-        console.log('Exchange: ' + apiResponse['exchange'])
-        console.log('Volume: ' + apiResponse['volume'])
-        console.log('Close: ' + apiResponse['close'])
-      }
-    }).catch(error => {
-    console.log(error);
-  });
-}
+
+module.exports = {
+  getStocks: function () {
+    for (const [ticker, company] of stock_entries) {
+      axios.get('http://api.marketstack.com/v1/tickers/' + `${ticker}` + '/eod/latest', {params})
+        .then(response => {
+          const apiResponse = response.data;
+          if (typeof apiResponse === 'object') {
+            const stock = new Stock({
+              stockName: `${company}`,
+              symbol: `${ticker}`,
+              price: apiResponse['close'],
+              marketCap: apiResponse['close'] * apiResponse['volume'],
+              closeDate: new Date(Date.now())
+            });
+            stock.save();
+          }
+        }).catch(error => {
+        console.log(error);
+      });
+    }
+  }
+};
+
 
 

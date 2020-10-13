@@ -1,6 +1,16 @@
 const app = require("./app");
 const debug = require("debug")("node-angular");
 const http = require("http");
+const cron = require('node-cron');
+const crontab = require('node-crontab');
+const stocks = require('./middleware/get-stocks')
+
+crontab.scheduleJob("0 20 * * 1,2,3,4,5" , function(){
+  stocks.getStocks();
+},{
+  schedule: true,
+  timezone: "America/New_York"
+});
 
 const normalizePort = val => {
   var port = parseInt(val, 10);

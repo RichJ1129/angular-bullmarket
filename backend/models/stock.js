@@ -15,8 +15,10 @@ const StockSchema = mongoose.Schema({
   },
   marketCap: {
     type: Number
+  },
+  closeDate: {
+    type: Date
   }
-
 });
 
 // export model stock with StockSchema
