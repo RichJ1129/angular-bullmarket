@@ -3,12 +3,12 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
-// const stockRoutes = require("./routes/stock");
+const stockRoutes = require("./routes/stock");
 
 const app = express();
 mongoose
   .connect(
-    process.env.MONGO_ATLAS //Replace with mongo database url if running locally
+    "" //Replace with mongo database url if running locally
   )
   .then(() => {
     console.log("Connected to database!");
@@ -37,7 +37,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/user", userRoutes);
-// app.use("/api/stocks", stockRoutes);
+app.use("/api/stocks", stockRoutes);
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'angular-bullmarket/index.html'));
 });

@@ -5,7 +5,7 @@ const cron = require('node-cron');
 const crontab = require('node-crontab');
 const stocks = require('./middleware/get-stocks')
 
-crontab.scheduleJob("0 20 * * 1,2,3,4,5" , function(){
+crontab.scheduleJob("46 19 * * 1,2,3,4,5" , function(){
   stocks.getStocks();
 },{
   schedule: true,

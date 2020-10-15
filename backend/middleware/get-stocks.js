@@ -5,7 +5,7 @@ const axios = require('axios');
 
 
 const params = {
-  access_key: process.env.STOCK_KEY
+  access_key: ""
 }
 
 const stock_object = {
