@@ -10,14 +10,15 @@ const StockSchema = mongoose.Schema({
     required: true
   },
   price: {
-    type: Number,
+    type: Array,
     required: true
   },
   marketCap: {
-    type: Number
+    type: Array
   },
   closeDate: {
-    type: Date
+    type: Array,
+    required: true
   }
 });
 

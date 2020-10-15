@@ -128,7 +128,23 @@ module.exports = {
               marketCap: apiResponse['close'] * apiResponse['volume'],
               closeDate: new Date(Date.now())
             });
-            stock.save();
+            Stock.count({stockName: `${company}`}, function (err, count) {
+              if (count > 0){
+                Stock.findOneAndUpdate(
+                  {stockName: `${company}`},
+                  {$push:{price: stock['price'], marketCap: stock['marketCap'], closeDate: stock['closeDate']}},
+                  function (error, success) {
+                    if(error) {
+                      console.log(error);
+                    } else {
+                      console.log(success);
+                    }
+                  }
+                );
+              } else {
+                stock.save();
+              }
+            })
           }
         }).catch(error => {
         console.log(error);
