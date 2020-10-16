@@ -22,6 +22,7 @@ import {AuthInterceptor} from './auth/auth-interceptor';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTableModule} from '@angular/material/table';
 import {CommoditiesComponent} from './commodities/commodities.component';
+import {StockTableComponent} from './stocks/stock-table/stock-table.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {CommoditiesComponent} from './commodities/commodities.component';
     AppComponent,
     LoginComponent,
     SignupComponent,
-    CommoditiesComponent
+    CommoditiesComponent,
+    StockTableComponent
   ],
   imports: [
     BrowserModule,
