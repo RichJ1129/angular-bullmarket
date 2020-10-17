@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { BondsRoutingModule } from './bonds-routing.module';
-import { BondsComponent } from './bonds.component';
+import {BondsRoutingModule} from './bonds-routing.module';
+import {BondsComponent} from './bonds.component';
 
 
 @NgModule({
@@ -12,4 +12,5 @@ import { BondsComponent } from './bonds.component';
     BondsRoutingModule
   ]
 })
-export class BondsModule { }
+export class BondsModule {
+}

@@ -1,6 +1,6 @@
 {
   "env": {
-    "MONGO_ATLAS_PW": "bullmarket",
+    "MONGO_ATLAS": "",
     "JWT_KEY": "secret_this_should_be_longer"
   }
 }

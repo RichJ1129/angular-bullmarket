@@ -25,10 +25,9 @@ router.post("/signup", (req, res, next) => {
 });
 
 
-
 router.post("/login", (req, res, next) => {
   let fetchedUser;
-  User.findOne({ email: req.body.email })
+  User.findOne({email: req.body.email})
     .then(user => {
       if (!user) {
         return res.status(401).json({
@@ -37,9 +36,9 @@ router.post("/login", (req, res, next) => {
       }
       fetchedUser = user;
       const token = jwt.sign(
-        { email: fetchedUser.email, userId: fetchedUser._id },
+        {email: fetchedUser.email, userId: fetchedUser._id},
         process.env.JWT_KEY,
-        { expiresIn: "1h" }
+        {expiresIn: "1h"}
       );
       res.status(200).json({
         token: token,

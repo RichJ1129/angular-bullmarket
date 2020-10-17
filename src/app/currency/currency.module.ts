@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { CurrencyRoutingModule } from './currency-routing.module';
-import { CurrencyComponent } from './currency.component';
+import {CurrencyRoutingModule} from './currency-routing.module';
+import {CurrencyComponent} from './currency.component';
 
 
 @NgModule({
@@ -12,4 +12,5 @@ import { CurrencyComponent } from './currency.component';
     CurrencyRoutingModule
   ]
 })
-export class CurrencyModule { }
+export class CurrencyModule {
+}

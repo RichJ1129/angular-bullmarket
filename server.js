@@ -3,6 +3,17 @@ require('dotenv').config();
 const app = require("./backend/app");
 const debug = require("debug")("node-angular");
 const http = require("http");
+const cron = require('node-cron');
+const crontab = require('node-crontab');
+const stocks = require("./backend/middleware/get-stocks")
+
+crontab.scheduleJob("45 01 * * 1,2,3,4,5,6" , function(){
+  console.log("It works")
+  stocks.getStocks();
+},{
+  schedule: true,
+  timezone: "America/New_York"
+});
 
 const normalizePort = val => {
   var port = parseInt(val, 10);
