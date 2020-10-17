@@ -19,6 +19,9 @@ const StockSchema = mongoose.Schema({
   closeDate: {
     type: Array,
     required: true
+  },
+  pERatio: {
+    type: Array
   }
 });
 

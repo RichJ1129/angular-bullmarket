@@ -26,6 +26,7 @@
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@types/chart.js": "^2.9.24",
     "animate.css": "^4.1.1",
+    "async": "^3.2.0",
     "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -50,6 +51,7 @@
     "path": "^0.12.7",
     "popper.js": "^1.16.1",
     "rxjs": "~6.6.0",
+    "sleep": "^6.3.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },

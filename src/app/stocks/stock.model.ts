@@ -1,7 +1,8 @@
 export interface Stock {
-  name: string;
+  stockName: string;
   symbol: string;
-  price: number;
-  marketCap: number;
-  closeDate: Date;
+  price: Array<number>;
+  marketCap: Array<number>;
+  closeDate: Array<string>;
+  pERatio: Array<number>;
 }

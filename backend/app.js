@@ -8,7 +8,7 @@ const stockRoutes = require("./routes/stock");
 const app = express();
 mongoose
   .connect(
-    "" //Replace with mongo database url if running locally
+    process.env.MONGO_ATLAS //Replace with mongo database url if running locally
   )
   .then(() => {
     console.log("Connected to database!");

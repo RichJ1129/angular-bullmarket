@@ -23,6 +23,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTableModule} from '@angular/material/table';
 import {CommoditiesComponent} from './commodities/commodities.component';
 import {StockTableComponent} from './stocks/stock-table/stock-table.component';
+import {StockService} from './stocks/stock.service';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import {StockTableComponent} from './stocks/stock-table/stock-table.component';
     MatTableModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    StockService
   ],
   bootstrap: [AppComponent]
 })
