@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 export interface Commodity {
   ticker: string;
@@ -9,16 +9,16 @@ export interface Commodity {
 
 const COMMODITY_DATA: Commodity[] = [
   {
-    ticker : 'GLD',
-    name : "GOLD",
-    price : 183.42,
-    unit : 'Troy Ounce'
+    ticker: 'GLD',
+    name: 'GOLD',
+    price: 183.42,
+    unit: 'Troy Ounce'
   },
   {
-    ticker : 'SLV',
-    name : 'SILVER',
-    price : 22.65,
-    unit : 'Troy Ounce'
+    ticker: 'SLV',
+    name: 'SILVER',
+    price: 22.65,
+    unit: 'Troy Ounce'
   }
 ];
 

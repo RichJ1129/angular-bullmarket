@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
+import {Subject} from 'rxjs';
 
-import { AuthData } from './auth-data.model';
-import { environment } from '../../environments/environment';
+import {AuthData} from './auth-data.model';
+import {environment} from '../../environments/environment';
 
 const backendURL = environment.apiURL;
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class AuthService {
   private isAuthenticated = false;
   private token: string;
@@ -16,7 +16,8 @@ export class AuthService {
   private userId: string;
   private authStatusListener = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+  }
 
   // tslint:disable-next-line:typedef
   getToken() {
@@ -39,18 +40,18 @@ export class AuthService {
   }
 
   createUser(userName: string, email: string) {
-    const authData: AuthData = { userName: userName, email: email };
+    const authData: AuthData = {userName: userName, email: email};
     this.http.post(backendURL + '/user/signup', authData).subscribe(() => {
-      this.router.navigate(['/']);
-    },
-    error => {
-      this.authStatusListener.next(false);
-    }
+        this.router.navigate(['/']);
+      },
+      error => {
+        this.authStatusListener.next(false);
+      }
     );
   }
 
   login(userName: string, email: string) {
-    const authData: AuthData = { userName: userName, email: email };
+    const authData: AuthData = {userName: userName, email: email};
     this.http
       .post<{ token: string; expiresIn: number; userId: string }>(
         backendURL + '/user/login',

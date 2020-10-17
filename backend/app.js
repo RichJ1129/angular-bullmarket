@@ -2,8 +2,8 @@ const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-
 const userRoutes = require("./routes/user");
+const stockRoutes = require("./routes/stock");
 
 const app = express();
 mongoose
@@ -18,7 +18,7 @@ mongoose
   });
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'angular-bullmarket')));
 
 //May have to uncomment when running locally
@@ -37,7 +37,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/user", userRoutes);
-app.get('*', function(req, res) {
+app.use("/api/stocks", stockRoutes);
+app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'angular-bullmarket/index.html'));
 });
 
