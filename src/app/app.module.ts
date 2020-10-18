@@ -24,6 +24,7 @@ import {MatTableModule} from '@angular/material/table';
 import {CommoditiesComponent} from './commodities/commodities.component';
 import {StockTableComponent} from './stocks/stock-table/stock-table.component';
 import {StockService} from './stocks/stock.service';
+import {MatSortModule} from '@angular/material/sort';
 import {InvestmentComponent} from './investment/investment.component';
 
 
@@ -55,7 +56,8 @@ import {InvestmentComponent} from './investment/investment.component';
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatFormFieldModule,
-    MatTableModule
+    MatTableModule,
+    MatSortModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
