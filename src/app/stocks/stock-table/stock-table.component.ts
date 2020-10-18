@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Stock } from '../stock.model';
 import { StockService } from '../stock.service';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-stock-table',
@@ -10,14 +11,17 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 export class StockTableComponent implements OnInit {
 
+  displayedColumns: any[] = ['stockName', 'symbol', 'price', 'pERatio', 'marketCap'];
   StockData: any = [];
   dataSource: MatTableDataSource<Stock>;
-  displayedColumns: any[] = ['stockName', 'symbol', 'price', 'pERatio', 'marketCap'];
+  @ViewChild(MatSort) sort: MatSort;
+
 
   constructor(private stockApi: StockService) {
     this.stockApi.getStocks().subscribe(data => {
       this.StockData = data;
       this.dataSource = new MatTableDataSource<Stock>(this.StockData);
+      this.dataSource.sort = this.sort;
     });
   }
 
