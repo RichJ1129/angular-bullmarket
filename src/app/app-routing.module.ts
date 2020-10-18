@@ -33,7 +33,8 @@ const routes: Routes = [
   },
   {
     path: 'stock-table',
-    component: StockTableComponent
+    component: StockTableComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'currency',
