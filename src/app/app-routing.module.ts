@@ -5,6 +5,7 @@ import {CommoditiesComponent} from './commodities/commodities.component';
 import {StockTableComponent} from './stocks/stock-table/stock-table.component';
 import {CurrencyComponent} from './currency/currency.component';
 import {RealestateComponent} from './realestate/realestate.component';
+import {InvestmentComponent} from './investment/investment.component';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './auth/login/login.component';
 import {SignupComponent} from './auth/signup/signup.component';
@@ -53,6 +54,10 @@ const routes: Routes = [
   {
     path: 'signup',
     component: SignupComponent
+  },
+  {
+    path: 'investment',
+    component: InvestmentComponent
   }
 ];
 

@@ -25,6 +25,8 @@ import {CommoditiesComponent} from './commodities/commodities.component';
 import {StockTableComponent} from './stocks/stock-table/stock-table.component';
 import {StockService} from './stocks/stock.service';
 import {MatSortModule} from '@angular/material/sort';
+import {InvestmentComponent} from './investment/investment.component';
+
 
 
 @NgModule({
@@ -33,7 +35,8 @@ import {MatSortModule} from '@angular/material/sort';
     LoginComponent,
     SignupComponent,
     CommoditiesComponent,
-    StockTableComponent
+    StockTableComponent,
+    InvestmentComponent
   ],
   imports: [
     BrowserModule,
