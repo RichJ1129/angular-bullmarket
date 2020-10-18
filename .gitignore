@@ -46,4 +46,4 @@ testem.log
 Thumbs.db
 /.github/
 
-nodemon.json
+/nodemon.json
