@@ -14,32 +14,38 @@ import {AuthGuard} from './auth/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'bonds',
-    component: BondsComponent
+    component: BondsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'commodities',
-    component: CommoditiesComponent
+    component: CommoditiesComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'stock-table',
-    component: StockTableComponent
+    component: StockTableComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'currency',
-    component: CurrencyComponent
+    component: CurrencyComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'realestate',
-    component: RealestateComponent
+    component: RealestateComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -57,7 +63,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule {
 }
