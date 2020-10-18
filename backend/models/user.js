@@ -10,6 +10,10 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true,
     unique: true
+  },
+  cashBalance: {
+    type: Decimal128,
+    required: false
   }
 });
 
