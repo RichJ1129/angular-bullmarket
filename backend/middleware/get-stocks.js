@@ -85,7 +85,7 @@ const stocks = [
   ['INTC', 'Intel', 4473, 22700],
   ['FB', 'Facebook', 2956, 21000],
   ['GOOG', 'Google', 680, 34500],
-  ['TSLA', 'Tesla', 932, -100],
+  ['TSLA', 'Tesla', 932, 376],
   ['ATVI', 'Activision Blizzard', 766, 1500],
   ['PEP', 'PepsiCo', 1390, 7200],
   ['AMZN', 'Amazon', 501, 10600],
