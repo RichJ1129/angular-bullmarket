@@ -3,10 +3,18 @@ const debug = require("debug")("node-angular");
 const http = require("http");
 const cron = require('node-cron');
 const crontab = require('node-crontab');
-const stocks = require('./middleware/get-stocks')
+const stocks = require('./middleware/get-stocks');
+const commodities = require('./middleware/get-commodities');
 
 crontab.scheduleJob("45 01 * * 1,2,3,4,5,6" , function(){
   stocks.getStocks();
+},{
+  schedule: true,
+  timezone: "America/New_York"
+});
+
+crontab.scheduleJob("48 22 * * 0,1,2,3,4,5,6" , function(){
+  commodities.getCommodities();
 },{
   schedule: true,
   timezone: "America/New_York"
