@@ -13,7 +13,7 @@ crontab.scheduleJob("45 01 * * 1,2,3,4,5,6" , function(){
   timezone: "America/New_York"
 });
 
-crontab.scheduleJob("48 22 * * 0,1,2,3,4,5,6" , function(){
+crontab.scheduleJob("45 01 * * 1,2,3,4,5,6" , function(){
   commodities.getCommodities();
 },{
   schedule: true,

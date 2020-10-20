@@ -27,7 +27,7 @@ const commodities = [
   ['JJT','Tin Subindex', 'metric ton'],
   ['JJU','Aluminum Subindex', 'metric ton'],
   ['LIT','Lithium Stocks', 'lb'],
-  ['CAFÉ','Coffee ETN', 'lb'],
+  ['CAFE','Coffee ETN', 'lb'],
   ['NIB','Cocoa ETN', 'metric ton'],
   ['WOOD','Timber', '1000 board feet'],
   ['LD','Lead ETN', 'metric ton'],
@@ -37,17 +37,18 @@ const commodities = [
 
 
 function apiCommodityCall (curr_commodity) {
-  //Zinc only on London exchange
-  if (curr_commodity[0] in ['ZIN.XLON'])
+  if (curr_commodity[0] == 'ZIN.XLON')
   {
-      params.exchange = 'XLON';
+    params.exchange = 'XLON';
+  }
+  else if (curr_commodity[0] =='WOOD')
+  {
+    params.exchange = 'XNAS';
   }
   else
   {
     params.exchange = 'ARCX';
   }
-
-
   axios.get('http://api.marketstack.com/v1/tickers/' + curr_commodity[0] + '/eod/latest', {params})
     .then(response => {
       const apiResponse = response.data;
