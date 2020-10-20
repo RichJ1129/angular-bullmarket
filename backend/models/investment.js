@@ -1,18 +1,25 @@
 const mongoose = require("mongoose");
 
 const UserSchema = mongoose.Schema({
-  userName: {
-    type: String,
-    required: true,
-    unique: true
-  },
   email: {
     type: String,
     required: true,
     unique: true
   },
-  cashBalance: {
-    type: Number,
+  name: {
+    type: String,
+    required: false
+  },
+  symbol: {
+    type: String,
+    required: false
+  },
+  purchasePrice: {
+    type: String,
+    required: false
+  },
+  shares: {
+    type: String,
     required: false
   }
 });

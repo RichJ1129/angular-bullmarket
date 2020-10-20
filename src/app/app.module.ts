@@ -25,6 +25,9 @@ import {CommodityTableComponent} from './commodities/commodities-table/commoditi
 import {CommodityService} from './commodities/commodity.service';
 import {StockTableComponent} from './stocks/stock-table/stock-table.component';
 import {StockService} from './stocks/stock.service';
+import {MatSortModule} from '@angular/material/sort';
+import {InvestmentComponent} from './investment/investment.component';
+
 
 
 @NgModule({
@@ -33,7 +36,8 @@ import {StockService} from './stocks/stock.service';
     LoginComponent,
     SignupComponent,
     CommodityTableComponent,
-    StockTableComponent
+    StockTableComponent,
+    InvestmentComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +57,8 @@ import {StockService} from './stocks/stock.service';
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatFormFieldModule,
-    MatTableModule
+    MatTableModule,
+    MatSortModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

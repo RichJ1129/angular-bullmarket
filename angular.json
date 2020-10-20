@@ -129,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "angular-bullmarket"
+  "defaultProject": "angular-bullmarket",
+  "cli": {
+    "analytics": "fd4df722-d481-4ab8-b3f8-7b4ae9c5ed98"
+  }
 }

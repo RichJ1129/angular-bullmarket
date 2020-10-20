@@ -5,6 +5,7 @@ import {CommodityTableComponent} from './commodities/commodities-table/commoditi
 import {StockTableComponent} from './stocks/stock-table/stock-table.component';
 import {CurrencyComponent} from './currency/currency.component';
 import {RealestateComponent} from './realestate/realestate.component';
+import {InvestmentComponent} from './investment/investment.component';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './auth/login/login.component';
 import {SignupComponent} from './auth/signup/signup.component';
@@ -13,32 +14,38 @@ import {AuthGuard} from './auth/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'bonds',
-    component: BondsComponent
+    component: BondsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'commodity-table',
-    component: CommodityTableComponent
+    component: CommodityTableComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'stock-table',
-    component: StockTableComponent
+    component: StockTableComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'currency',
-    component: CurrencyComponent
+    component: CurrencyComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'realestate',
-    component: RealestateComponent
+    component: RealestateComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -47,12 +54,17 @@ const routes: Routes = [
   {
     path: 'signup',
     component: SignupComponent
+  },
+  {
+    path: 'investment',
+    component: InvestmentComponent
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule {
 }
