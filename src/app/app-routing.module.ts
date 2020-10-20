@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {BondsComponent} from './bonds/bonds.component';
-import {CommoditiesComponent} from './commodities/commodities.component';
+import {CommodityTableComponent} from './commodities/commodities-table/commodities.component';
 import {StockTableComponent} from './stocks/stock-table/stock-table.component';
 import {CurrencyComponent} from './currency/currency.component';
 import {RealestateComponent} from './realestate/realestate.component';
@@ -28,8 +28,8 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'commodities',
-    component: CommoditiesComponent,
+    path: 'commodity-table',
+    component: CommodityTableComponent,
     canActivate: [AuthGuard]
   },
   {

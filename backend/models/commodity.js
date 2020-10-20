@@ -1,30 +1,21 @@
 const mongoose = require("mongoose");
 
 const CommoditySchema = mongoose.Schema({
-  Ticker: {
+  commodityName: {
     type: String,
     required: true,
-    unique: true
   },
-  Commodity: {
+  symbol: {
     type: String,
     required: true,
-    unique: true
   },
-  ETFPrice: {
-    type: String,
+  etfPrice: {
+    type: Array,
     required: true,
-    unique: true
   },
-  CommodityPrice: {
+  commodityUnit: {
     type: String,
     required: true,
-    unique: true
-  },
-  CommodityUnit: {
-    type: String,
-    required: true,
-    unique: true
   }
 });
 

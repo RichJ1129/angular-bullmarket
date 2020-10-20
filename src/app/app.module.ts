@@ -21,7 +21,8 @@ import {SignupComponent} from './auth/signup/signup.component';
 import {AuthInterceptor} from './auth/auth-interceptor';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTableModule} from '@angular/material/table';
-import {CommoditiesComponent} from './commodities/commodities.component';
+import {CommodityTableComponent} from './commodities/commodities-table/commodities.component';
+import {CommodityService} from './commodities/commodity.service';
 import {StockTableComponent} from './stocks/stock-table/stock-table.component';
 import {StockService} from './stocks/stock.service';
 import {MatSortModule} from '@angular/material/sort';
@@ -34,7 +35,7 @@ import {InvestmentComponent} from './investment/investment.component';
     AppComponent,
     LoginComponent,
     SignupComponent,
-    CommoditiesComponent,
+    CommodityTableComponent,
     StockTableComponent,
     InvestmentComponent
   ],
@@ -61,7 +62,8 @@ import {InvestmentComponent} from './investment/investment.component';
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-    StockService
+    StockService,
+    CommodityService
   ],
   bootstrap: [AppComponent]
 })
