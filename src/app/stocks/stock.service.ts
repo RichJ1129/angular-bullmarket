@@ -13,7 +13,12 @@ export class StockService {
 
   // tslint:disable-next-line:typedef
   getStocks() {
-    console.log(this.http.get(backendURL + '/stocks'));
+    // console.log(this.http.get(backendURL + '/stocks'));
     return this.http.get(backendURL + '/stocks');
+  }
+
+  // tslint:disable-next-line:typedef
+  getOneStock(stockTicker: string) {
+    return this.http.get(backendURL + '/stocks/' + stockTicker);
   }
 }
