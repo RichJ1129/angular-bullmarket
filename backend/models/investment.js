@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const UserSchema = mongoose.Schema({
+const InvestmentSchema = mongoose.Schema({
   email: {
     type: String,
     required: true,
@@ -25,4 +25,4 @@ const UserSchema = mongoose.Schema({
 });
 
 // export model user with UserSchema
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model("Investment", InvestmentSchema);
