@@ -10,6 +10,7 @@ import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './auth/login/login.component';
 import {SignupComponent} from './auth/signup/signup.component';
 import {AuthGuard} from './auth/auth.guard';
+import { StockPageComponent } from './stocks/stock-page/stock-page.component';
 
 const routes: Routes = [
   {
@@ -57,7 +58,13 @@ const routes: Routes = [
   },
   {
     path: 'investment',
-    component: InvestmentComponent
+    component: InvestmentComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'stock-page',
+    component: StockPageComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
