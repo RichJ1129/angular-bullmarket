@@ -75,10 +75,43 @@ const INVESTMENT_DATA: Investment[] = [
 export class InvestmentComponent {
 
   dataSource = INVESTMENT_DATA;
-  displayedColumns: string[] = ['name', 'symbol', 'shares', 'currentPrice', 'purchasePrice', 'net', 'buy', 'sell', 'number'];
+  displayedColumns: string[] = ['name', 'symbol', 'shares', 'currentPrice', 'purchasePrice', 'net', 'button'];
 
-  onClickMe(){
+  
+  calculateAssets(data){
+    let assetValue=0;
+    for (let i in data){
+      assetValue += (data[i].currentPrice * data[i].shares);
+    }
+    return assetValue;
+  }
+
+  calculateNet(data){
+    let netValue=0;
+    for (let i in data){
+      netValue += (data[i].net);
+    }
+    return netValue;
+  }
+
+
+  investmentValue=this.calculateAssets(INVESTMENT_DATA);
+  netValue=this.calculateNet(INVESTMENT_DATA);
+  cashValue=(100000-(this.investmentValue-this.netValue));
+
+  onClickBuy(x, index){
     console.log("Yolo");
+    console.log(x);
+    this.investmentValue+=1;
+    this.dataSource[index].shares=(this.dataSource[index].shares + +x);
+
+  }
+
+  onClickSell(x, index){
+    console.log("Yolo");
+    console.log(x);
+    this.investmentValue-=1;
+    this.dataSource[index].shares=(this.dataSource[index].shares - +x);
 
   }
 
