@@ -19,6 +19,13 @@ export class StockService {
 
   // tslint:disable-next-line:typedef
   getOneStock(stockTicker: string) {
-    return this.http.get(backendURL + '/stocks/' + stockTicker);
+    return this.http.get<{
+      stockName: string;
+      symbol: string;
+      price: Array<number>;
+      marketCap: Array<number>;
+      closeDate: Array<string>;
+      pERatio: Array<number>;
+    }>(backendURL + '/stocks/' + stockTicker);
   }
 }
