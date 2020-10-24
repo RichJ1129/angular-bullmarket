@@ -27,6 +27,7 @@ import {StockTableComponent} from './stocks/stock-table/stock-table.component';
 import {StockService} from './stocks/stock.service';
 import {MatSortModule} from '@angular/material/sort';
 import {InvestmentComponent} from './investment/investment.component';
+import { StockPageComponent } from './stocks/stock-page/stock-page.component';
 
 
 
@@ -37,7 +38,8 @@ import {InvestmentComponent} from './investment/investment.component';
     SignupComponent,
     CommodityTableComponent,
     StockTableComponent,
-    InvestmentComponent
+    InvestmentComponent,
+    StockPageComponent
   ],
   imports: [
     BrowserModule,
