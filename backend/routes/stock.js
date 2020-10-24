@@ -14,4 +14,15 @@ router.get("",(req, res) => {
   })
 })
 
+router.get("/:ticker", (req, res, next) => {
+  Stock.findOne({symbol: req.params.ticker.toUpperCase()}).then( stock => {
+    if (stock) {
+      res.status(200).json(stock);
+    } else {
+      res.status(404).json({ message: "Stock not found!" });
+    }
+  });
+});
+
+
 module.exports = router;
