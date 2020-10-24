@@ -1,6 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
 import {AppComponent} from './app.component';
 import {LayoutModule} from './layout/layout.module';
 import {AppRoutingModule} from './app-routing.module';
@@ -27,6 +26,8 @@ import {StockService} from './stocks/stock.service';
 import {MatSortModule} from '@angular/material/sort';
 import {InvestmentComponent} from './investment/investment.component';
 import { StockPageComponent } from './stocks/stock-page/stock-page.component';
+import { ChartsModule } from 'ng2-charts';
+
 
 
 
@@ -59,7 +60,8 @@ import { StockPageComponent } from './stocks/stock-page/stock-page.component';
     MatPaginatorModule,
     MatFormFieldModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    ChartsModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
