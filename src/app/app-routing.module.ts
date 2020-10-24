@@ -62,7 +62,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'stock-page',
+    path: 'stock-page/:stock_ticker',
     component: StockPageComponent,
     canActivate: [AuthGuard]
   }
