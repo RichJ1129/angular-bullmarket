@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 
-const UserSchema = mongoose.Schema({
-  email: {
+const InvestmentSchema = mongoose.Schema({
+  userID: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   name: {
     type: String,
@@ -25,4 +24,4 @@ const UserSchema = mongoose.Schema({
 });
 
 // export model user with UserSchema
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model("Investment", InvestmentSchema);
