@@ -29,8 +29,6 @@ import { StockPageComponent } from './stocks/stock-page/stock-page.component';
 import { ChartsModule } from 'ng2-charts';
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
