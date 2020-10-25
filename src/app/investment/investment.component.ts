@@ -16,7 +16,7 @@ const INVESTMENT_DATA: Investment[] = [
     shares: 10,
     currentPrice: 190,
     purchasePrice: 183.42,
-    net: -65.80
+    net: +65.80
   },
   {
     name: 'SILVER',
@@ -24,7 +24,7 @@ const INVESTMENT_DATA: Investment[] = [
     shares: 10,
     currentPrice: 190,
     purchasePrice: 183.42,
-    net: -65.80
+    net: +65.80
   },
   {
     name: 'OIL',
@@ -56,7 +56,7 @@ const INVESTMENT_DATA: Investment[] = [
     shares: 1,
     currentPrice: 32400,
     purchasePrice: 32500,
-    net: +100
+    net: -100
   },
   {
     name: 'EUROS',
@@ -74,7 +74,7 @@ const INVESTMENT_DATA: Investment[] = [
 })
 export class InvestmentComponent {
 
-  dataSource = INVESTMENT_DATA;
+  //dataSource = INVESTMENT_DATA;
   displayedColumns: string[] = ['name', 'symbol', 'shares', 'currentPrice', 'purchasePrice', 'net', 'button'];
 
   
@@ -94,24 +94,45 @@ export class InvestmentComponent {
     return netValue;
   }
 
+  getCurrentPrices(data){
+    for (let i in data){
+      data[i].currentPrice = data[i].purchasePrice + 1;
+    }
+    return data;
+  }
 
-  investmentValue=this.calculateAssets(INVESTMENT_DATA);
-  netValue=this.calculateNet(INVESTMENT_DATA);
-  cashValue=(100000-(this.investmentValue-this.netValue));
+  getRowNet(data, i){
+      data[i].net = ((data[i].currentPrice - data[i].purchasePrice) * data[i].shares);
+  }
 
-  onClickBuy(x, index){
-    console.log("Yolo");
-    console.log(x);
-    this.investmentValue+=1;
-    this.dataSource[index].shares=(this.dataSource[index].shares + +x);
+  dataSource=this.getCurrentPrices(INVESTMENT_DATA);
+  investmentValue=Math.round((this.calculateAssets(INVESTMENT_DATA) * 100)/100);
+  netValue=Math.round((this.calculateNet(INVESTMENT_DATA) * 100)/100);
+  cashValue=Math.round(((100000-(this.investmentValue-this.netValue)) * 100)/100);
+
+  onClickBuy(shares, index){
+
+    //Update Row Share/Net Values
+    this.dataSource[index].shares=(this.dataSource[index].shares + +shares); // The + converts shares into a number from string
+    this.dataSource[index].net=((this.dataSource[index].currentPrice - this.dataSource[index].purchasePrice) * this.dataSource[index].shares);
+    
+    // Top Line Values
+    this.netValue=Math.round((this.calculateNet(INVESTMENT_DATA) * 100)/100);
+    this.cashValue=Math.round(((this.cashValue - (this.dataSource[index].currentPrice * shares) ) * 100)/100);
+    this.investmentValue=Math.round((this.calculateAssets(this.dataSource) * 100)/100);
 
   }
 
-  onClickSell(x, index){
-    console.log("Yolo");
-    console.log(x);
-    this.investmentValue-=1;
-    this.dataSource[index].shares=(this.dataSource[index].shares - +x);
+  onClickSell(shares, index){
+
+    //Update Row Share/Net Values
+    this.dataSource[index].shares=(this.dataSource[index].shares - +shares); // The + converts shares into a number from string.
+    this.dataSource[index].net=((this.dataSource[index].currentPrice - this.dataSource[index].purchasePrice) * this.dataSource[index].shares);
+    
+    // Top Line Values
+    this.netValue=Math.round((this.calculateNet(INVESTMENT_DATA) * 100)/100);
+    this.cashValue=Math.round(((this.cashValue + (this.dataSource[index].currentPrice * shares) ) * 100)/100);
+    this.investmentValue=Math.round((this.calculateAssets(this.dataSource) * 100)/100);
 
   }
 

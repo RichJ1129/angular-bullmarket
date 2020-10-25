@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 
 const InvestmentSchema = mongoose.Schema({
-  email: {
+  userID: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   name: {
     type: String,
