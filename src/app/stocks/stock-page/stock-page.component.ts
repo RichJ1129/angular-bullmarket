@@ -3,7 +3,7 @@ import { Stock } from '../stock.model';
 import { StockService } from '../stock.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { ActivatedRoute, ParamMap } from "@angular/router";
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 
 
