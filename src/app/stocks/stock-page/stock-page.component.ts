@@ -23,13 +23,14 @@ export class StockPageComponent implements OnInit {
 
   // @Input() stock_profile = {};
   chartType = 'line';
-  chartData: ChartDataSets[] = [
-    {data: []}
-  ];
+  chartData = {
+    data: []
+  };
   // newChart[] = [{data = [4, 8, 9, 10, 11, 12, 15, 12]}];
   chartLabels = [];
 
   computeData() {
+    this.chartData.data = this.stock.price;
     this.chartLabels = [this.stock.closeDate];
   }
 
@@ -55,7 +56,7 @@ export class StockPageComponent implements OnInit {
           };
           this.computeData();
           console.log(typeof(this.chartData));
-          console.log(this.chartLabels);
+          console.log(typeof(this.chartLabels));
         });
       }
     });
