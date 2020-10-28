@@ -1,18 +1,16 @@
 
-<div>
-  {{stock.stockName}}
-  <br>
-  {{stock.price[stock.price.length - 1]}}
-</div>
+<!--<div>-->
+<!--  {{stock.stockName}}-->
+<!--  <br>-->
+<!--  {{stock.price[stock.price.length - 1]}}-->
+<!--</div>-->
 
 <div>
   <div style="display: block">
     <canvas baseChart
-            [datasets]=""
-            [labels]=""
-            [options]=""
-            [legend]=""
-            [chartType]="">
+            [datasets]="chartData"
+            [labels]="chartLabels"
+            [chartType]="chartType">
     </canvas>
   </div>
 </div>

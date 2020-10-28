@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { Stock } from '../stock.model';
 import { StockService } from '../stock.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 
@@ -17,8 +18,21 @@ export class StockPageComponent implements OnInit {
   displayedColumns: any[] = ['stockName', 'symbol', 'price', 'pERatio', 'marketCap'];
   // StockData: any = [];
   stock: Stock;
-  dataSource: MatTableDataSource<Stock>;
+  // dataSource: MatTableDataSource<Stock>;
   private stockTicker: string;
+
+  // @Input() stock_profile = {};
+  chartType = 'line';
+  chartData: ChartDataSets[] = [
+    {data: []}
+  ];
+  // newChart[] = [{data = [4, 8, 9, 10, 11, 12, 15, 12]}];
+  chartLabels = [];
+
+  computeData() {
+    this.chartLabels = [this.stock.closeDate];
+  }
+
 
 
   constructor(
@@ -39,9 +53,11 @@ export class StockPageComponent implements OnInit {
             closeDate: stockData.closeDate,
             pERatio: stockData.pERatio
           };
+          this.computeData();
+          console.log(typeof(this.chartData));
+          console.log(this.chartLabels);
         });
       }
     });
   }
-
 }
