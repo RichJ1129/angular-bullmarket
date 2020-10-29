@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { Stock } from '../stock.model';
 import { StockService } from '../stock.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { ActivatedRoute, ParamMap } from "@angular/router";
-
+import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import {DatePipe} from '@angular/common';
+import {FormControl} from '@angular/forms';
 
 
 @Component({
@@ -17,13 +19,31 @@ export class StockPageComponent implements OnInit {
   displayedColumns: any[] = ['stockName', 'symbol', 'price', 'pERatio', 'marketCap'];
   // StockData: any = [];
   stock: Stock;
-  dataSource: MatTableDataSource<Stock>;
+  // dataSource: MatTableDataSource<Stock>;
   private stockTicker: string;
+  stockValue = new FormControl('');
 
+  chartType = 'line';
+  chartData: ChartDataSets[] =  [
+    {data: [],  label: 'Stock Prices'}
+  ];
+  chartLabels = [];
+
+  computeData(): void {
+    this.chartData[0].data = this.stock.price;
+    const transformedDates = [];
+
+    for (const i of this.stock.closeDate){
+      transformedDates.push(this.datePipe.transform(i, 'yyyy-MM-dd'));
+    }
+
+    this.chartLabels = transformedDates;
+  }
 
   constructor(
     public stocksService: StockService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public datePipe: DatePipe
   ) {}
 
   ngOnInit() {
@@ -39,9 +59,9 @@ export class StockPageComponent implements OnInit {
             closeDate: stockData.closeDate,
             pERatio: stockData.pERatio
           };
+          this.computeData();
         });
       }
     });
   }
-
 }

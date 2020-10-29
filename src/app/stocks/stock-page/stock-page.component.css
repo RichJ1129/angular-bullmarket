@@ -1,0 +1,11 @@
+.mat-form-field{
+  width:75% !important;
+  font-size: 10px;
+
+}
+
+#center-text-trick {
+  height: 100px;
+  line-height: 100px;
+  white-space: nowrap;
+}
