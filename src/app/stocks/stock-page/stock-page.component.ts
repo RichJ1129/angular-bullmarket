@@ -5,7 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-
+import {DatePipe} from '@angular/common';
+import {FormControl} from '@angular/forms';
 
 
 @Component({
@@ -20,25 +21,30 @@ export class StockPageComponent implements OnInit {
   stock: Stock;
   // dataSource: MatTableDataSource<Stock>;
   private stockTicker: string;
+  stockValue = new FormControl('');
 
   // @Input() stock_profile = {};
   chartType = 'line';
-  chartData = {
-    data: []
-  };
-  // newChart[] = [{data = [4, 8, 9, 10, 11, 12, 15, 12]}];
+  chartData: ChartDataSets[] =  [
+    {data: [],  label: 'Stock Prices'}
+  ];
   chartLabels = [];
 
-  computeData() {
-    this.chartData.data = this.stock.price;
-    this.chartLabels = [this.stock.closeDate];
+  computeData(): void {
+    this.chartData[0].data = this.stock.price;
+    const transformedDates = [];
+
+    for (const i of this.stock.closeDate){
+      transformedDates.push(this.datePipe.transform(i, 'yyyy-MM-dd'));
+    }
+
+    this.chartLabels = transformedDates;
   }
-
-
 
   constructor(
     public stocksService: StockService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public datePipe: DatePipe
   ) {}
 
   ngOnInit() {
@@ -55,8 +61,11 @@ export class StockPageComponent implements OnInit {
             pERatio: stockData.pERatio
           };
           this.computeData();
-          console.log(typeof(this.chartData));
-          console.log(typeof(this.chartLabels));
+          // let data =
+          // this.pushDataToCharts(data);
+          // console.log(this.chartData);
+          // console.log(typeof(this.chartData));
+          // console.log(typeof(this.chartLabels));
         });
       }
     });

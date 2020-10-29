@@ -28,7 +28,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {InvestmentComponent} from './investment/investment.component';
 import { StockPageComponent } from './stocks/stock-page/stock-page.component';
 import { ChartsModule } from 'ng2-charts';
-
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -65,7 +65,8 @@ import { ChartsModule } from 'ng2-charts';
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     StockService,
-    CommodityService
+    CommodityService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

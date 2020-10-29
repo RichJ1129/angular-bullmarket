@@ -1,17 +1,51 @@
-
 <!--<div>-->
 <!--  {{stock.stockName}}-->
 <!--  <br>-->
 <!--  {{stock.price[stock.price.length - 1]}}-->
 <!--</div>-->
 
-<div>
-  <div style="display: block">
-    <canvas baseChart
-            [datasets]="chartData"
-            [labels]="chartLabels"
-            [chartType]="chartType">
-    </canvas>
+<br>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col col-sm-8">
+      <canvas baseChart
+              [datasets]="chartData"
+              [labels]="chartLabels"
+              [chartType]="chartType">
+      </canvas>
+    </div>
+    <div class="col col-sm-4">
+      <mat-card class="stock-card">
+        <div>Buy {{stock.stockName}}</div>
+        <hr>
+          <div class="row">
+            <div class="col col-sm-8">
+              <span class="align-baseline">Shares</span>
+            </div>
+            <div class="col col-sm-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Shares</mat-label>
+                <input [formControl]="stockValue" matInput align="center" placeholder="0">
+              </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col col-sm-8">Market Price</div>
+          <div class="col col-sm-4">${{stock.price[stock.price.length - 1]}}</div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col col-sm-6">Estimated Cost</div>
+          <div class="col col-sm-6">${{stock.price[stock.price.length - 1] * stockValue.value | number:'1.0-2'}}</div>
+        </div>
+        <mat-card-actions class="align-middle">
+          <hr>
+          <button mat-button>Buy</button>
+          <button mat-button>Sell</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
   </div>
 </div>
 
