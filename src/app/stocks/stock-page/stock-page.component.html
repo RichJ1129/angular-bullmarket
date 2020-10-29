@@ -6,7 +6,8 @@
       <div class="container">
         <h2 class="Stock_Name">{{stock.stockName}}</h2>
         <h2 class="Stock_Price">${{stock.price[stock.price.length - 1]}}</h2>
-        <h6 class="Daily_Change">${{stock.price[stock.price.length - 1] - stock.price[stock.price.length - 2] | number:'1.0-2' }}({{(stock.price[stock.price.length - 1] - stock.price[stock.price.length - 2])/stock.price[stock.price.length - 2] * 100  | number:'1.0-2' }}%) Today</h6>
+        <h6 class="Daily_Change">${{stock.price[stock.price.length - 1] - stock.price[stock.price.length - 2] | number:'1.0-2' }}
+          ({{(stock.price[stock.price.length - 1] - stock.price[stock.price.length - 2])/stock.price[stock.price.length - 2] * 100  | number:'1.0-2' }}%) Today</h6>
       </div>
       <div class="col-lg-12">
         <br>
@@ -21,7 +22,7 @@
         <hr>
       </div>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-4" >
       <mat-card class="stock-card">
         <div>Buy {{stock.stockName}}</div>
         <hr>
@@ -56,4 +57,3 @@
     </div>
   </div>
 </div>
-
