@@ -23,7 +23,6 @@ export class StockPageComponent implements OnInit {
   private stockTicker: string;
   stockValue = new FormControl('');
 
-  // @Input() stock_profile = {};
   chartType = 'line';
   chartData: ChartDataSets[] =  [
     {data: [],  label: 'Stock Prices'}
@@ -61,11 +60,6 @@ export class StockPageComponent implements OnInit {
             pERatio: stockData.pERatio
           };
           this.computeData();
-          // let data =
-          // this.pushDataToCharts(data);
-          // console.log(this.chartData);
-          // console.log(typeof(this.chartData));
-          // console.log(typeof(this.chartLabels));
         });
       }
     });
