@@ -2,36 +2,47 @@
 <br>
 <div class="container">
   <div class="row">
-    <div class="col col-sm-8">
-      <canvas baseChart
-              [datasets]="chartData"
-              [labels]="chartLabels"
-              [chartType]="chartType">
-      </canvas>
+    <div class="col-lg-8">
+      <div class="container">
+        <h2 class="Stock_Name">{{stock.stockName}}</h2>
+        <h2 class="Stock_Price">${{stock.price[stock.price.length - 1]}}</h2>
+        <h6 class="Daily_Change">${{stock.price[stock.price.length - 1] - stock.price[stock.price.length - 2] | number:'1.0-2' }}({{(stock.price[stock.price.length - 1] - stock.price[stock.price.length - 2])/stock.price[stock.price.length - 2] * 100  | number:'1.0-2' }}%) Today</h6>
+      </div>
+      <div class="col-lg-12">
+        <br>
+        <canvas baseChart
+                [datasets]="chartData"
+                [labels]="chartLabels"
+                [chartType]="chartType"
+                [legend]="false"
+                [options]="options">
+        </canvas>
+        <hr>
+      </div>
     </div>
-    <div class="col col-sm-4">
+    <div class="col-lg-4">
       <mat-card class="stock-card">
         <div>Buy {{stock.stockName}}</div>
         <hr>
-          <div class="row">
-            <div class="col col-sm-8">
-              <span class="align-baseline">Shares</span>
-            </div>
-            <div class="col col-sm-4">
-              <mat-form-field appearance="outline">
-                <mat-label>Shares</mat-label>
-                <input [formControl]="stockValue" matInput align="center" placeholder="0">
-              </mat-form-field>
-            </div>
+        <div class="row">
+          <div class="col-lg-8">
+            <span class="align-baseline">Shares</span>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Shares</mat-label>
+              <input [formControl]="stockValue" matInput align="center" placeholder="0">
+            </mat-form-field>
+          </div>
         </div>
         <div class="row">
-          <div class="col col-sm-8">Market Price</div>
-          <div class="col col-sm-4">${{stock.price[stock.price.length - 1]}}</div>
+          <div class="col-lg-8">Market Price</div>
+          <div class="col-lg-4">${{stock.price[stock.price.length - 1]}}</div>
         </div>
         <hr>
         <div class="row">
-          <div class="col col-sm-6">Estimated Cost</div>
-          <div class="col col-sm-6">${{stock.price[stock.price.length - 1] * stockValue.value | number:'1.0-2'}}</div>
+          <div class="col-lg-6">Estimated Cost</div>
+          <div class="col-lg-6">${{stock.price[stock.price.length - 1] * stockValue.value | number:'1.0-2'}}</div>
         </div>
         <mat-card-actions class="align-middle">
           <hr>
