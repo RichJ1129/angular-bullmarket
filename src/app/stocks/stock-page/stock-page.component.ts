@@ -25,16 +25,43 @@ export class StockPageComponent implements OnInit {
 
   chartType = 'line';
   chartData: ChartDataSets[] =  [
-    {data: [],  label: 'Stock Prices'}
+    {data: [],  label: 'Stock Price', fill: false, lineTension: 0}
   ];
   chartLabels = [];
+
+  options = {
+    scales: {
+      xAxes: [{
+        // display: false,
+        gridLines: {
+          display: false
+        }
+      }],
+      yAxes: [{
+        display: false,
+        gridLines: {
+          display: false
+        }
+      }]
+    }
+  };
+  chartColor = [
+    { // grey
+      backgroundColor: 'rgba(148,159,177,0.2)',
+      borderColor: 'rgba(148,159,177,1)',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    }];
+
 
   computeData(): void {
     this.chartData[0].data = this.stock.price;
     const transformedDates = [];
 
     for (const i of this.stock.closeDate){
-      transformedDates.push(this.datePipe.transform(i, 'yyyy-MM-dd'));
+      transformedDates.push(this.datePipe.transform(i, 'MM-dd'));
     }
 
     this.chartLabels = transformedDates;
