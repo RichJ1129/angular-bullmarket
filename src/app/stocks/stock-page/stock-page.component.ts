@@ -7,6 +7,8 @@ import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {FormControl} from '@angular/forms';
+import * as pluginAnnotations from 'chartjs-plugin-annotation';
+
 
 
 @Component({
@@ -16,10 +18,14 @@ import {FormControl} from '@angular/forms';
 })
 export class StockPageComponent implements OnInit {
 
+  constructor(
+    public stocksService: StockService,
+    public route: ActivatedRoute,
+    public datePipe: DatePipe
+  ) {}
+
   displayedColumns: any[] = ['stockName', 'symbol', 'price', 'pERatio', 'marketCap'];
-  // StockData: any = [];
   stock: Stock;
-  // dataSource: MatTableDataSource<Stock>;
   private stockTicker: string;
   stockValue = new FormControl('');
 
@@ -29,10 +35,10 @@ export class StockPageComponent implements OnInit {
   ];
   chartLabels = [];
 
-  options = {
+  public lineChartOptions: (ChartOptions & { annotation: any }) = {
+    responsive: true,
     scales: {
       xAxes: [{
-        // display: false,
         gridLines: {
           display: false
         }
@@ -43,10 +49,28 @@ export class StockPageComponent implements OnInit {
           display: false
         }
       }]
+    },
+    annotation: {
+      annotations: [
+        {
+        type: 'line',
+        mode: 'horizontal',
+        scaleID: 'y-axis-0',
+        value: 5,
+        borderColor: 'grey',
+        borderWidth: 2,
+          borderDash: [4, 4],
+          label: {
+          enabled: false,
+          fontColor: 'orange',
+          content: 'LineAnno'
+        }
+      }]
     }
   };
+
   chartColor = [
-    { // grey
+    {
       backgroundColor: 'rgba(148,159,177,0.2)',
       borderColor: 'rgba(148,159,177,1)',
       pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -55,8 +79,23 @@ export class StockPageComponent implements OnInit {
       pointHoverBorderColor: 'rgba(148,159,177,0.8)'
     }];
 
+  public lineChartPlugins = [pluginAnnotations];
 
-  computeData(): void {
+  public changeAnnotation(stockPrice): void {
+    this.lineChartOptions.annotation.annotations[0].value = stockPrice;
+  }
+
+  public changeLineColor(yesterdayPrice, todayPrice): void {
+    if (todayPrice > yesterdayPrice){
+      this.chartColor[0].borderColor = 'rgb(0,200,7)';
+    }
+    else if (todayPrice < yesterdayPrice) {
+      this.chartColor[0].borderColor = 'rgb(255,80,0)';
+    }
+  }
+
+
+  public computeData(): void {
     this.chartData[0].data = this.stock.price;
     const transformedDates = [];
 
@@ -66,12 +105,6 @@ export class StockPageComponent implements OnInit {
 
     this.chartLabels = transformedDates;
   }
-
-  constructor(
-    public stocksService: StockService,
-    public route: ActivatedRoute,
-    public datePipe: DatePipe
-  ) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -86,6 +119,8 @@ export class StockPageComponent implements OnInit {
             closeDate: stockData.closeDate,
             pERatio: stockData.pERatio
           };
+          this.changeAnnotation(this.stock.price[this.stock.price.length - 2]);
+          this.changeLineColor(this.stock.price[this.stock.price.length - 2], this.stock.price[this.stock.price.length - 1]);
           this.computeData();
         });
       }
