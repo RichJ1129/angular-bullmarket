@@ -22,7 +22,7 @@ crontab.scheduleJob("45 01 * * 1,2,3,4,5,6" , function(){
   timezone: "America/New_York"
 });
 
-crontab.scheduleJob("00 08 * * 5" , function(){
+crontab.scheduleJob("30 08 * * 5" , function(){
   companies.getCompanies();
 },{
   schedule: true,
