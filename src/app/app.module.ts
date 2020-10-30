@@ -29,6 +29,7 @@ import {InvestmentComponent} from './investment/investment.component';
 import { StockPageComponent } from './stocks/stock-page/stock-page.component';
 import { ChartsModule } from 'ng2-charts';
 import { DatePipe } from '@angular/common';
+import { TruncateModule } from 'ng2-truncate';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { DatePipe } from '@angular/common';
     MatFormFieldModule,
     MatTableModule,
     MatSortModule,
-    ChartsModule
+    ChartsModule,
+    TruncateModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
