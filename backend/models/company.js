@@ -2,25 +2,21 @@ const mongoose = require("mongoose");
 
 const CompanySchema = mongoose.Schema({
   companyName: {
-    type: String,
-    required: true
+    type: String
   },
   companySymbol: {
-    type: String,
-    required: true
+    type: String
   },
   companyCountry: {
-    type: String,
-    required: true
+    type: String
   },
   companySummary: {
     type: String
   },
   companyCurrency: {
-    type: String,
-    required: true
+    type: String
   }
 });
 
 // export model company with CompanySchema
-module.exports = mongoose.model("company", CompanySchema);
+module.exports = mongoose.model("Company", CompanySchema);

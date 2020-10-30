@@ -111,7 +111,6 @@ const stocks = [
   ['WMT', 'Walmart', 2830, 14900]
 ]
 
-
 function apiStockCall (curr_stock) {
   axios.get('http://api.marketstack.com/v1/tickers/' + curr_stock[0] + '/eod/latest', {params})
     .then(response => {
