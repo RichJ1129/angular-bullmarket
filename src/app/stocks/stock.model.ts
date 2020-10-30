@@ -6,3 +6,11 @@ export interface Stock {
   closeDate: Array<string>;
   pERatio: Array<number>;
 }
+
+export interface Company {
+  companyName: string;
+  companySymbol: string;
+  companyCountry: string;
+  companySummary: string;
+  companyCurrency: string;
+}

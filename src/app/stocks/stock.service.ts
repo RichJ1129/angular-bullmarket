@@ -28,4 +28,15 @@ export class StockService {
       pERatio: Array<number>;
     }>(backendURL + '/stocks/' + stockTicker);
   }
+
+  // tslint:disable-next-line:typedef
+  getOneCompany(companyTicker: string) {
+    return this.http.get<{
+      companyName: string;
+      companySymbol: string;
+      companyCountry: string;
+      companySummary: string;
+      companyCurrency: string;
+    }>(backendURL + '/companies/' + companyTicker);
+  }
 }

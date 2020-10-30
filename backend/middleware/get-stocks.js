@@ -35,11 +35,10 @@ const stocks = [
   ['BASF.XMIL', 'BASF', 918, 8800 ],
   ['BAY.XMIL', 'Bayer', 982, 4800 ],
   ['TCS.XBOM', 'Tata Consultancy Services', 3752, 4600 ],
-  // ['BHARTIARTL.XBOM', 'Bharti Airtel', 5455, -3800 ],
   ['INFY.XBOM', 'Infosys', 3519, 2300 ],
   ['ITC.XBOM', 'ITC', 12295, 1600 ],
   ['RELIANCE.XBOM', 'Reliance Industries', 6339, 6200],
-  ['CAN', 'Accenture', 663, 33500],
+  ['ACN', 'Accenture', 663, 33500],
   ['MDT', 'Medtronic', 1344, 5400],
   ['TEVA', 'Teva Pharmaceutical', 1100, -1000],
   // 6758.XTKS
@@ -106,12 +105,11 @@ const stocks = [
   ['MCD', 'McDonalds', 765, 20800],
   ['KO', 'Coca-Cola', 4300, 10000],
   ['GIS', 'General Mills', 620, 2100],
-  ['PFE', 'Pfizer', 5675, 15800, 15800],
+  ['PFE', 'Pfizer', 5675, 15800],
   ['DOW', 'Dow Chemical', 741, -1700],
   ['HD', 'Home Depot', 1097, 11200],
   ['WMT', 'Walmart', 2830, 14900]
 ]
-
 
 function apiStockCall (curr_stock) {
   axios.get('http://api.marketstack.com/v1/tickers/' + curr_stock[0] + '/eod/latest', {params})

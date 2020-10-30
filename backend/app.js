@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
 const stockRoutes = require("./routes/stock");
+const companyRoutes = require("./routes/company");
 const commodityRoutes = require("./routes/commodity");
 
 const app = express();
@@ -39,6 +40,7 @@ app.use((req, res, next) => {
 
 app.use("/api/user", userRoutes);
 app.use("/api/stocks", stockRoutes);
+app.use("/api/companies", companyRoutes);
 app.use("/api/commodities", commodityRoutes);
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'angular-bullmarket/index.html'));
