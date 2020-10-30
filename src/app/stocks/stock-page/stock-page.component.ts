@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
-import { Stock } from '../stock.model';
+import { Stock, Company } from '../stock.model';
 import { StockService } from '../stock.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -26,6 +26,7 @@ export class StockPageComponent implements OnInit {
 
   displayedColumns: any[] = ['stockName', 'symbol', 'price', 'pERatio', 'marketCap'];
   stock: Stock;
+  company: { companyCurrency: string; companySummary: string; companyCountry: string };
   private stockTicker: string;
   stockValue = new FormControl('');
 
@@ -106,6 +107,7 @@ export class StockPageComponent implements OnInit {
     this.chartLabels = transformedDates;
   }
 
+  // tslint:disable-next-line:typedef
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('stock_ticker')) {
@@ -122,6 +124,13 @@ export class StockPageComponent implements OnInit {
           this.changeAnnotation(this.stock.price[this.stock.price.length - 2]);
           this.changeLineColor(this.stock.price[this.stock.price.length - 2], this.stock.price[this.stock.price.length - 1]);
           this.computeData();
+        });
+        this.stocksService.getOneCompany(this.stockTicker).subscribe(companyData => {
+          this.company = {
+            companySummary: companyData.companySummary,
+            companyCountry: companyData.companyCountry,
+            companyCurrency: companyData.companyCurrency
+         };
         });
       }
     });
