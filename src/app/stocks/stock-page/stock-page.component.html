@@ -21,7 +21,9 @@
         </canvas>
         <hr>
         <h2>About</h2>
-        <p >{{company.companySummary}}</p>
+        <div class="about_section" [class.show]="show">{{company.companySummary}}</div>
+        <br>
+        <button type="button" class="btn btn-dark" (click)="show = !show">{{ show ? 'Show less': 'Show More' }}</button>
       </div>
     </div>
     <div class="col-lg-4" >

@@ -24,6 +24,8 @@ export class StockPageComponent implements OnInit {
     public datePipe: DatePipe
   ) {}
 
+  show = false;
+
   displayedColumns: any[] = ['stockName', 'symbol', 'price', 'pERatio', 'marketCap'];
   stock: Stock;
   company: { companyCurrency: string; companySummary: string; companyCountry: string };
