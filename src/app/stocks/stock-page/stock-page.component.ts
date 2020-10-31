@@ -34,8 +34,12 @@ export class StockPageComponent implements OnInit {
 
   chartType = 'line';
   chartData: ChartDataSets[] =  [
-    {data: [],  label: 'Stock Price', fill: false, lineTension: 0}
+    {data: [], label: 'All Stock Prices', fill: false, lineTension: 0},
+    // {data: [], label: '10 day Stock Prices', fill: false, lineTension: 0}
+    // {data: [], label: '5 Day Stock Prices', fill: false, lineTension: 0},
+    // {data: [], label: '3 Day Stock Prices', fill: false, lineTension: 0}
   ];
+
   chartLabels = [];
 
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
@@ -100,6 +104,10 @@ export class StockPageComponent implements OnInit {
 
   public computeData(): void {
     this.chartData[0].data = this.stock.price;
+    // this.chartData[1].data = this.stock.price.slice(this.stock.price.length - 5);
+    // this.chartData[2].data = this.stock.price.slice(this.stock.price.length - 5);
+    // this.chartData[3].data = this.stock.price.slice(this.stock.price.length - 3);
+
     const transformedDates = [];
 
     for (const i of this.stock.closeDate){
