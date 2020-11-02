@@ -69,7 +69,7 @@ import { DatePipe } from '@angular/common';
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     StockService,
     CommodityService,
-    BondService
+    BondService,
     DatePipe
 
   ],
