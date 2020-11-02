@@ -6,6 +6,7 @@ const crontab = require('node-crontab');
 const stocks = require('./middleware/get-stocks');
 const commodities = require('./middleware/get-commodities');
 const bonds = require('./middleware/get-bonds')
+const companies = require('./middleware/get-company');
 
 crontab.scheduleJob("00 18 * * 1,2,3,4,5" , function(){
   stocks.getStocks();
@@ -23,6 +24,13 @@ crontab.scheduleJob("45 01 * * 1,2,3,4,5,6" , function(){
 
 crontab.scheduleJob("01 11 * * 1,2,3,4,5,6" , function(){
   bonds.getBonds();
+},{
+  schedule: true,
+  timezone: "America/New_York"
+});
+
+crontab.scheduleJob("30 08 * * 5" , function(){
+  companies.getCompanies();
 },{
   schedule: true,
   timezone: "America/New_York"
