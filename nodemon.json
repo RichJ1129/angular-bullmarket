@@ -1,7 +1,0 @@
-{
-  "env": {
-    "MONGO_ATLAS_PW": "bullmarket",
-    "JWT_KEY": "secret_this_should_be_longer",
-    "MONGO_ATLAS": "mongodb+srv://josephri:TempPass@cluster0.murwd.mongodb.net/bull_market?retryWrites=true&w=majority"
-  }
-}
