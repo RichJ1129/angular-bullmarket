@@ -22,6 +22,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTableModule} from '@angular/material/table';
 import {CommodityTableComponent} from './commodities/commodities-table/commodities.component';
 import {CommodityService} from './commodities/commodity.service';
+import {BondTableComponent} from './bonds/bonds-table/bonds.component';
+import {BondService} from './bonds/bond.service';
 import {StockTableComponent} from './stocks/stock-table/stock-table.component';
 import {StockService} from './stocks/stock.service';
 import {MatSortModule} from '@angular/material/sort';
@@ -36,6 +38,7 @@ import { ChartsModule } from 'ng2-charts';
     LoginComponent,
     SignupComponent,
     CommodityTableComponent,
+    BondTableComponent,
     StockTableComponent,
     InvestmentComponent,
     StockPageComponent
@@ -65,7 +68,8 @@ import { ChartsModule } from 'ng2-charts';
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     StockService,
-    CommodityService
+    CommodityService,
+    BondService
   ],
   bootstrap: [AppComponent]
 })

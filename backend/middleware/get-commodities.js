@@ -5,6 +5,7 @@ const axios = require('axios');
 
 //Uses same market stack key, currently named STOCK_KEY in AWS. Set exchange to NYSE to differentiate between
 //tickers that exist in multiple exchanges
+process.env.STOCK_KEY = '48c665517e29fe823a293d8d31d4d277'; //uncomment this, only for local
 const params = {
   access_key: process.env.STOCK_KEY,
   exchange: 'ARCX'

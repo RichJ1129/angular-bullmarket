@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
 const stockRoutes = require("./routes/stock");
 const commodityRoutes = require("./routes/commodity");
+const bondRoutes = require("./routes/bond");
 
 const app = express();
 mongoose
@@ -40,6 +41,7 @@ app.use((req, res, next) => {
 app.use("/api/user", userRoutes);
 app.use("/api/stocks", stockRoutes);
 app.use("/api/commodities", commodityRoutes);
+app.use("/api/bonds", bondRoutes);
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'angular-bullmarket/index.html'));
 });
