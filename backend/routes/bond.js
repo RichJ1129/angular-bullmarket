@@ -1,11 +1,11 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const Commodity = require("../models/commodity");
+const Bond = require("../models/bond");
 const router = express.Router();
 
-//Method to get all the commodities in your database. No duplicate commodities so query can be just be a find.
+//Method to get all the bonds in your database. No duplicate bonds so query can be just be a find.
 router.get("",(req, res) => {
-  Commodity.find((error, data) => {
+  Bond.find((error, data) => {
     if (error) {
       return next(error)
     } else {

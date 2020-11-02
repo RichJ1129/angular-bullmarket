@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {BondsComponent} from './bonds/bonds.component';
+import {BondTableComponent} from './bonds/bonds-table/bonds.component';
 import {CommodityTableComponent} from './commodities/commodities-table/commodities.component';
 import {StockTableComponent} from './stocks/stock-table/stock-table.component';
 import {CurrencyComponent} from './currency/currency.component';
@@ -24,8 +24,8 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'bonds',
-    component: BondsComponent,
+    path: 'bond-table',
+    component: BondTableComponent,
     canActivate: [AuthGuard]
   },
   {
