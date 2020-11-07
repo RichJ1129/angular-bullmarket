@@ -9,7 +9,7 @@ const CurrencySchema = mongoose.Schema({
     type: Array,
     required: true
   },
-  closeDate: {
+  timeStamp: {
     type: Array,
     required: true
   }
