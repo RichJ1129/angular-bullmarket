@@ -39,6 +39,7 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
+  // tslint:disable-next-line:typedef
   createUser(userName: string, email: string) {
     const authData: AuthData = {userName: userName, email: email};
     this.http.post(backendURL + '/user/signup', authData).subscribe(() => {
@@ -50,6 +51,7 @@ export class AuthService {
     );
   }
 
+  // tslint:disable-next-line:typedef
   login(userName: string, email: string) {
     const authData: AuthData = {userName: userName, email: email};
     this.http
@@ -75,6 +77,7 @@ export class AuthService {
       });
   }
 
+  // tslint:disable-next-line:typedef
   autoAuthUser() {
     const authInformation = this.getAuthData();
     if (!authInformation) {
