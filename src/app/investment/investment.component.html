@@ -1,52 +1,9 @@
-<br>
-<h1>Investments</h1>
-<hr>
-<h3>Cash Balance: ${{cashValue}}     |     Investment Value: ${{investmentValue}}    |     Net: ${{netValue}}</h3>
-<hr>
-<br>
-<div>
-    <table mat-table [dataSource]="dataSource">
-      <ng-container matColumnDef="name" style="width: 16%;">
-        <th mat-header-cell *matHeaderCellDef>Investment</th>
-        <td mat-cell *matCellDef="let investment"> {{investment.name}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef style="width: 10%;">Ticker</th>
-        <td mat-cell *matCellDef="let investment"> {{investment.symbol}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="shares">
-        <th mat-header-cell *matHeaderCellDef style="width: 10%;">Shares</th>
-        <td mat-cell *matCellDef="let investment"> {{investment.shares}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="currentPrice">
-        <th mat-header-cell *matHeaderCellDef style="width: 10%;">Current Price</th>
-        <td mat-cell *matCellDef="let investment"> {{investment.currentPrice}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="purchasePrice">
-        <th mat-header-cell *matHeaderCellDef style="width: 10%;">Purchase Price</th>
-        <td mat-cell *matCellDef="let investment"> {{investment.purchasePrice}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="net">
-        <th mat-header-cell *matHeaderCellDef style="width: 10%;">Net</th>
-        <td mat-cell *matCellDef="let investment"> {{investment.net}} </td>
-      </ng-container>
-
-
-      <ng-container matColumnDef="button">
-        <th mat-header-cell *matHeaderCellDef style="width: 20%;"></th>
-        <td mat-cell *matCellDef="let button; let i = index;" >
-             <button mat-button (click)="onClickSell(number.value, i)" class="sellButton" style="width: 23%; margin: 2%;">Sell</button>
-             <button mat-button (click)="onClickBuy(number.value, i)" class="sellButton" style="width: 23%; margin: 2%;">Buy</button>
-             <input matInput #number type="number" min="0" value="0" style="width: 25%; margin: 1%;">
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
+<div class="row">
+  <div class="col-lg-8">
+    <app-investment-page></app-investment-page>
   </div>
+  <div class="col-lg-4">
+    <br><br><br><br>
+    <app-investment-button-buy></app-investment-button-buy>
+  </div>
+</div>
