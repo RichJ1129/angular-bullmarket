@@ -7,6 +7,7 @@ const stockRoutes = require("./routes/stock");
 const companyRoutes = require("./routes/company");
 const commodityRoutes = require("./routes/commodity");
 const bondRoutes = require("./routes/bond");
+const investmentRoutes = require("./routes/investment");
 
 const app = express();
 mongoose
@@ -44,6 +45,7 @@ app.use("/api/stocks", stockRoutes);
 app.use("/api/companies", companyRoutes);
 app.use("/api/commodities", commodityRoutes);
 app.use("/api/bonds", bondRoutes);
+app.use("/api/investment", investmentRoutes);
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'angular-bullmarket/index.html'));
 });
