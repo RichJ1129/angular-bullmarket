@@ -36,7 +36,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import { InvestmentBuyButtonComponent } from './investment/investment-button-buy/investment-button-buy.component'
 import { InvestmentPageComponent } from './investment/investment-page/investment-page.component'
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-
+import {InvestmentService} from './investment/investment.service';
 
 @NgModule({
   declarations: [
@@ -80,6 +80,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     CommodityService,
     BondService,
     DatePipe,
+    InvestmentService
   ],
   bootstrap: [AppComponent]
 })

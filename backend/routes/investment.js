@@ -21,7 +21,7 @@ router.post("",(req,res,next) => {
     purchasePrice: req.body.purchasePrice,
     shares: req.body.shares
   });
-  console.log(investment);
+  investment.save();
   res.status(201).json({
     message: 'Investment Added Successfully'
   })

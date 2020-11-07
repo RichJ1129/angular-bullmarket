@@ -4,19 +4,22 @@ import { InvestmentService } from '../investment.service';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { Injectable } from '@angular/core';    
 import { Subscription } from 'rxjs/internal/Subscription';   
-
+import {Subject } from 'rxjs';
 
 @Component({
   selector: 'app-investment-page',
   templateUrl: './investment-page.component.html',
   styleUrls: ['./investment-page.component.css'],
 })
-export class InvestmentPageComponent {
+export class InvestmentPageComponent implements OnInit, OnDestroy{
 
   InvestmentData: any = [];
+  investments: Investment[] =[];
   displayedColumns: string[] = ['name', 'symbol', 'shares', 'currentPrice', 'purchasePrice', 'net'];
   dataSource: MatTableDataSource<Investment>;
   investmentValue; netValue; cashValue;
+  private investmentSub: Subscription;
+  
 
     constructor(private investmentApi: InvestmentService) {
       this.investmentApi.getInvestments().subscribe(data => {
@@ -41,8 +44,18 @@ export class InvestmentPageComponent {
 
 
   ngOnInit() {
+    this.investmentSub = this.investmentApi.getInvestmentUpdateListener()
+      .subscribe((investments: Investment[]) => {
+        //this.InvestmentData[x].currentPrice = +(this.investments[x].purchasePrice)+1;
+        //this.InvestmentData[x].net = (+this.investments[x].currentPrice)-(+this.investments[x].purchasePrice);
+        this.dataSource = new MatTableDataSource<Investment>(investments);
+      });
+
   }
 
+  ngOnDestroy(){
+    this.investmentSub.unsubscribe();
+  }
 
   calculateAssets(data){
     let assetValue=0;
