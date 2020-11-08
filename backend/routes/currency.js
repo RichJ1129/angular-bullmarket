@@ -14,13 +14,13 @@ router.get("",(req, res) => {
   })
 })
 
-//Method to get a single stock in database.
+//Method to get a single currency in database.
 router.get("/:ticker", (req, res, next) => {
-  Stock.findOne({symbol: req.params.ticker.toUpperCase()}).then( stock => {
-    if (stock) {
-      res.status(200).json(stock);
+  Currencies.findOne({ticker: req.params.ticker.toUpperCase()}).then( currency => {
+    if (currency) {
+      res.status(200).json(currency);
     } else {
-      res.status(404).json({ message: "Stock not found!" });
+      res.status(404).json({ message: "Currency not found!" });
     }
   });
 });
