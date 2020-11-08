@@ -13,11 +13,19 @@ const InvestmentSchema = mongoose.Schema({
     type: String,
     required: false
   },
-  purchasePrice: {
+  transactionPrice: {
     type: String,
     required: false
   },
   shares: {
+    type: String,
+    required: false
+  },
+  transactionType: {
+    type: String,
+    required: false
+  },
+  assetType: {
     type: String,
     required: false
   }

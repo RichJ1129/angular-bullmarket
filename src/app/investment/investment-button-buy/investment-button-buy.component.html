@@ -31,7 +31,7 @@
         <hr>
         <div align="center">
           <button mat-button (click)="onClickBuy(symbol.value, shares.value)">Buy</button>
-          <button mat-button>Sell</button>
+          <button mat-button (click)="onClickSell(symbol.value, shares.value)">Sell</button>
         </div>
       </mat-card-actions>
     </mat-card>

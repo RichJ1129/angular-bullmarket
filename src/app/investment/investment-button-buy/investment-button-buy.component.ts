@@ -10,8 +10,14 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { StockService } from 'src/app/stocks/stock.service';
 import { Stock } from 'src/app/stocks/stock.model';
+import { AuthService } from 'src/app/auth/auth.service';
+import { AuthData } from 'src/app/auth/auth-data.model';
 
-
+interface IDAuthData{
+  _id: string;
+  email: string;
+  userName: string;
+};
 
 @Component({
   selector: 'app-investment-button-buy',
@@ -26,16 +32,25 @@ export class InvestmentBuyButtonComponent {
   stockTicker="MSFT";
   stock: Stock;
   stock2: Stock;
+  UID: string;
+  userObject: any;
+
+  
 
     constructor(private investmentApi: InvestmentService, private stockApi: StockService) {
-      this.investmentApi.getInvestments().subscribe(data => {
+        this.investmentApi.getUserID().subscribe(data => {
+          this.userObject=data;
+          this.UID = this.userObject._id;
+          //console.log("?");
+          //console.log(this.UID);
+
       });
 
     }
 
     private _filter(value: string): string[] {
       const filterValue = value.toLowerCase();
-  
+
       return this.options.filter(option => option.toLowerCase().includes(filterValue));
     }
 
@@ -55,24 +70,8 @@ export class InvestmentBuyButtonComponent {
     ];*/
 
   ngOnInit() {
-     this.filteredOptions = this.myControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
-      this.stockApi.getOneStock(this.stockTicker).subscribe(stockData => {
-        this.stock = {
-          stockName: stockData.stockName,
-          symbol: stockData.symbol,
-          price: stockData.price,
-          marketCap: stockData.marketCap,
-          closeDate: stockData.closeDate,
-          pERatio: stockData.pERatio
-        };
-        console.log("MSFT");
-        console.log(this.stock.price[0])
-      });
-    };
+
+  };
   
 
 
@@ -87,40 +86,31 @@ export class InvestmentBuyButtonComponent {
         closeDate: stockData2.closeDate,
         pERatio: stockData2.pERatio
       };
-
+      console.log("stockData: ")
       console.log(this.stock2.price[0]);
-      this.investmentApi.buyInvestment("24315",stockData2.stockName,stockData2.symbol,stockData2.price[0],shares);
-
+      console.log(this.UID);
+      this.investmentApi.buyInvestment(this.UID,this.stock2.stockName,this.stock2.symbol,this.stock2.price[0],shares,'b','stock');
     });
-    
-    
   }
 
-  /*onClickBuy(shares, index){
 
-    //Update Row Share/Net Values
-    this.dataSource[index].shares=(this.dataSource[index].shares + +shares); // The + converts shares into a number from string
-    this.dataSource[index].net=((this.dataSource[index].currentPrice - this.dataSource[index].purchasePrice) * this.dataSource[index].shares);
-    
-    // Top Line Values
-    this.netValue=Math.round((this.calculateNet(this.dataSource) * 100)/100);
-    this.cashValue=Math.round(((this.cashValue - (this.dataSource[index].currentPrice * shares) ) * 100)/100);
-    this.investmentValue=Math.round((this.calculateAssets(this.dataSource) * 100)/100);
-
+  onClickSell(symbol, shares){
+    console.log("Sell ", shares, " shares of ", symbol);
+    this.stockApi.getOneStock(symbol).subscribe(stockData2 => {
+      this.stock2 = {
+        stockName: stockData2.stockName,
+        symbol: stockData2.symbol,
+        price: stockData2.price,
+        marketCap: stockData2.marketCap,
+        closeDate: stockData2.closeDate,
+        pERatio: stockData2.pERatio
+      };
+      console.log("stockData: ")
+      console.log(this.stock2.price[0]);
+      console.log(this.UID);
+      this.investmentApi.sellInvestment(this.UID,this.stock2.stockName,this.stock2.symbol,this.stock2.price[0],-Math.abs(shares),'s','stock');
+    });
   }
 
-  onClickSell(shares, index){
-
-    //Update Row Share/Net Values
-    this.dataSource[index].shares=(this.dataSource[index].shares - +shares); // The + converts shares into a number from string.
-    this.dataSource[index].net=((this.dataSource[index].currentPrice - this.dataSource[index].purchasePrice) * this.dataSource[index].shares);
-    
-    // Top Line Values
-    this.netValue=Math.round((this.calculateNet(this.dataSource) * 100)/100);
-    this.cashValue=Math.round(((this.cashValue + (this.dataSource[index].currentPrice * shares) ) * 100)/100);
-    this.investmentValue=Math.round((this.calculateAssets(this.dataSource) * 100)/100);
-
-  }*/
-
-  
+ 
 };
