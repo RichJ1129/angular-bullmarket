@@ -9,6 +9,10 @@ const CurrencySchema = mongoose.Schema({
     type: Array,
     required: true
   },
+  ticker: {
+    type: String,
+    required: true
+  },
   timeStamp: {
     type: Array,
     required: true

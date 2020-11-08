@@ -79,6 +79,7 @@ function apiCurrencyCall() {
         if (currency_pairs[i][0] in apiResponse) {
           let currency = new Currency({
             currencyName: currency_pairs[i][1],
+            ticker: currency_pairs[i][0],
             rates: apiResponse[currency_pairs[i][0]]['rate'],
             timeStamp: new Date(Date.now())
           });
