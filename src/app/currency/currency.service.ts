@@ -19,7 +19,7 @@ export class CurrencyService {
   }
 
   // tslint:disable-next-line:typedef
-  getOneCurreny(currencyTicker: string) {
+  getOneCurrency(currencyTicker: string) {
     return this.http.get<{
       currencyName: string;
       ticker: string;

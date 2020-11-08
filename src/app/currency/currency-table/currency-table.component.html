@@ -1,1 +1,25 @@
-<p>currency-table works!</p>
+<hr>
+<div>
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="currencyName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Currency </th>
+      <td mat-cell *matCellDef="let currency "> {{currency.currencyName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="ticker">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Ticker</th>
+      <td mat-cell *matCellDef="let currency "> {{currency.ticker}} </td>
+    </ng-container>
+    <ng-container matColumnDef="rates">
+      <th mat-header-cell *matHeaderCellDef> Rate </th>
+      <td mat-cell *matCellDef="let currency "> {{currency.rates[currency.rates.length - 1] | number:'1.0-2'}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="['/currency-page', row.ticker]"></tr>
+  </table>
+  <div>
+    <a href="https://www.freeforexapi.com">
+      <img alt="Free Forex API" src="https://www.freeforexapi.com/Images/link.png" height="20">
+    </a>
+  </div>
+</div>
+

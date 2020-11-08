@@ -65,12 +65,12 @@ const routes: Routes = [
   },
   {
     path: 'currency-table',
-    component: CurrencyPageComponent,
+    component: CurrencyTableComponent,
     canActivate: [AuthGuard]
   },
   {
     path: 'currency-page/:currency_ticker',
-    component: CurrencyTableComponent,
+    component: CurrencyPageComponent,
     canActivate: [AuthGuard]
   }
 ];

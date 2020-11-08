@@ -1,6 +1,6 @@
 export interface Currency {
   currencyName: string;
   ticker: string;
-  ratio: Array<number>;
+  rates: Array<number>;
   closeDate: Array<string>;
 }
