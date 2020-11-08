@@ -4,11 +4,11 @@ const Investment = require("../models/investment");
 const router = express.Router();
 
 router.get("",(req, res) => {
-  Investment.find((error, data) => {
+  Investment.find({userID: req.query.userID},(error, data) => {
     if (error) {
-      return next(error)
+      return next(error);
     } else {
-      res.json(data)
+      res.json(data);
     }
   })
 })
@@ -18,8 +18,10 @@ router.post("",(req,res,next) => {
     userID: req.body.userID,
     name: req.body.name,
     symbol: req.body.symbol,
-    purchasePrice: req.body.purchasePrice,
-    shares: req.body.shares
+    transactionPrice: req.body.transactionPrice,
+    shares: req.body.shares,
+    transactionType: req.body.transactionType,
+    assetType: req.body.assetType
   });
   investment.save();
   res.status(201).json({

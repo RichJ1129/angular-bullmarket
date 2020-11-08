@@ -15,39 +15,51 @@ export class InvestmentPageComponent implements OnInit, OnDestroy{
 
   InvestmentData: any = [];
   investments: Investment[] =[];
-  displayedColumns: string[] = ['name', 'symbol', 'shares', 'currentPrice', 'purchasePrice', 'net'];
+  displayedColumns: string[] = ['name', 'symbol', 'shares', 'currentPrice', 'transactionPrice', 'net'];
   dataSource: MatTableDataSource<Investment>;
   investmentValue; netValue; cashValue;
   private investmentSub: Subscription;
-  
+  UID: string;
+  userObject: any;
 
     constructor(private investmentApi: InvestmentService) {
-      this.investmentApi.getInvestments().subscribe(data => {
+      
+      //Retrieve User ID
+      this.investmentApi.getUserID().subscribe(data => {
+        this.userObject=data;
+        this.UID = this.userObject._id;
+        console.log("??");
+        console.log(this.UID);
+
+
+      //Retrieve and Format User Investments
+      this.investmentApi.getInvestments(this.UID).subscribe(data => {
         this.InvestmentData = data;
         
         // Set a placeholder value in current price in order to test net value and netValue/cashValue/investmentValue variables at top of
         for(var x=0; x<this.InvestmentData.length; x++){
-          this.InvestmentData[x].currentPrice = +(this.InvestmentData[x].purchasePrice)+1;
-          this.InvestmentData[x].net = (+this.InvestmentData[x].currentPrice)-(+this.InvestmentData[x].purchasePrice);
+          this.InvestmentData[x].currentPrice = +(this.InvestmentData[x].transactionPrice)+1;
+          this.InvestmentData[x].net = (+this.InvestmentData[x].currentPrice)-(+this.InvestmentData[x].transactionPrice);
         }
-        //
+
+        
         this.dataSource = new MatTableDataSource<Investment>(this.InvestmentData);
 
-
-        this.investmentValue=1//Math.round((this.calculateAssets(this.dataSource) * 100)/100);
-        this.netValue=2//Math.round((this.calculateNet(this.dataSource) * 100)/100);
-        this.cashValue=3//Math.round((this.calculateAssets(this.dataSource) * 100)/100);
-        console.log("Hello");
+        console.log("dataSource");
         console.log(this.dataSource);
+        this.investmentValue="X"
+        this.netValue="X"
+        this.cashValue="X"
       });
+
+    });
+
     }
 
 
   ngOnInit() {
     this.investmentSub = this.investmentApi.getInvestmentUpdateListener()
       .subscribe((investments: Investment[]) => {
-        //this.InvestmentData[x].currentPrice = +(this.investments[x].purchasePrice)+1;
-        //this.InvestmentData[x].net = (+this.investments[x].currentPrice)-(+this.investments[x].purchasePrice);
         this.dataSource = new MatTableDataSource<Investment>(investments);
       });
 
@@ -57,6 +69,9 @@ export class InvestmentPageComponent implements OnInit, OnDestroy{
     this.investmentSub.unsubscribe();
   }
 
+  
+};
+/*
   calculateAssets(data){
     let assetValue=0;
     for (let i in data){
@@ -81,14 +96,10 @@ export class InvestmentPageComponent implements OnInit, OnDestroy{
   }
 
   getRowNet(data, i){
-      data[i].net = ((data[i].currentPrice - data[i].purchasePrice) * data[i].shares);
+      data[i].net = ((data[i].currentPrice - data[i].transactionPrice) * data[i].shares);
   }
 
-
-
-
-};
-
+*/
 
 /*
 const INVESTMENT_DATA: Investment[] = [

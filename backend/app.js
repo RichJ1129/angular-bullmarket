@@ -12,7 +12,8 @@ const investmentRoutes = require("./routes/investment");
 const app = express();
 mongoose
   .connect(
-    process.env.MONGO_ATLAS //Replace with mongo database url if running locally
+    // process.env.MONGO_ATLAS //Replace with mongo database url if running locally
+    'mongodb+srv://josephri:TempPass@cluster0.murwd.mongodb.net/bull_market?retryWrites=true&w=majority'
   )
   .then(() => {
     console.log("Connected to database!");

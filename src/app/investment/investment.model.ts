@@ -3,5 +3,7 @@ export interface Investment {
     name: string;
     symbol: string;
     shares: number;
-    purchasePrice: number;
+    transactionPrice: number;
+    transactionType: string;
+    assetType: string;
   }

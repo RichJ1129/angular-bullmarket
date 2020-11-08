@@ -1,9 +1,17 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Investment} from './investment.model';
 import {environment} from '../../environments/environment';
 import {Subject } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
+import { AuthData } from 'src/app/auth/auth-data.model';
+
+interface IDAuthData{
+  _id: string;
+  email: string;
+  userName: string;
+};
 
 const backendURL = environment.apiURL;
 
@@ -11,29 +19,59 @@ const backendURL = environment.apiURL;
 export class InvestmentService {
 
   private investments: Investment[] = [];
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
   private investmentsUpdated = new Subject<Investment[]>();
+  private userEmail: string;
+  private UID: string;
+  private queryUID: string;
 
-  // tslint:disable-next-line:typedef
-  getInvestments() {
-    console.log(this.http.get(backendURL + '/investment'));
-    return this.http.get(backendURL + '/investment');
-    //return [...this.investments];
+getUserID(){
+  // Get Current User's Email
+  this.userEmail = this.authService.getEmailID();
+
+  // Get '_id' to return
+  return this.http.get(backendURL + '/user/' + this.userEmail);
+
   }
 
-  buyInvestment(userID: string, name: string, symbol: string, purchasePrice: number, shares: number){
-    const newInvestment: Investment = { userID: userID, name: name, symbol: symbol, purchasePrice: purchasePrice, shares: shares }
-    //this.investments.push(newInvestment);
+  // tslint:disable-next-line:typedef
+  public getInvestments(UID: string) {
+    let params = new HttpParams();
+    params = params.append('userID',UID);
+    return this.http.get(backendURL + '/investment', {params: params});
+  }
+
+  buyInvestment(userID: string, name: string, symbol: string, transactionPrice: number, shares: number, transactionType: string, assetType: string){
+    const newInvestment: Investment = { 
+      userID: userID, 
+      name: name, 
+      symbol: symbol, 
+      transactionPrice: transactionPrice, 
+      shares: shares, 
+      transactionType: transactionType, 
+      assetType: assetType
+    }
     return this.http.post<{message: string}>(backendURL + '/investment', newInvestment)
       .subscribe((responseData) => {
         console.log(responseData.message);
       })
 
-      this.investmentsUpdated.next([...this.investments]);
   }
 
-  sellInvestment(){
-    console.log("sell");
+  sellInvestment(userID: string, name: string, symbol: string, transactionPrice: number, shares: number, transactionType: string, assetType: string){
+    const newSale: Investment = { 
+      userID: userID, 
+      name: name, 
+      symbol: symbol, 
+      transactionPrice: transactionPrice, 
+      shares: shares, 
+      transactionType: transactionType, 
+      assetType: assetType
+    }
+    return this.http.post<{message: string}>(backendURL + '/investment', newSale)
+    .subscribe((responseData) => {
+      console.log(responseData.message);
+    })
   }
 
   getInvestmentUpdateListener(){
