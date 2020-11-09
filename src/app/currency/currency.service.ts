@@ -23,8 +23,8 @@ export class CurrencyService {
     return this.http.get<{
       currencyName: string;
       ticker: string;
-      ratio: Array<number>;
-      closeDate: Array<string>;
+      rates: Array<number>;
+      timeStamp: Array<string>;
     }>(backendURL + '/currency/' + currencyTicker);
   }
 }

@@ -38,7 +38,7 @@ import { InvestmentPageComponent } from './investment/investment-page/investment
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {InvestmentService} from './investment/investment.service';
 import { CurrencyPageComponent } from './currency/currency-page/currency-page.component';
-import {CurrencyTableComponent} from "./currency/currency-table/currency-table.component";
+import {CurrencyTableComponent} from './currency/currency-table/currency-table.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +52,8 @@ import {CurrencyTableComponent} from "./currency/currency-table/currency-table.c
     StockPageComponent,
     InvestmentBuyButtonComponent,
     InvestmentPageComponent,
-    CurrencyTableComponent
+    CurrencyTableComponent,
+    CurrencyPageComponent
   ],
   imports: [
     BrowserModule,
