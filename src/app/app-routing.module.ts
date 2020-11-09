@@ -17,7 +17,7 @@ import { CurrencyPageComponent } from './currency/currency-page/currency-page.co
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
