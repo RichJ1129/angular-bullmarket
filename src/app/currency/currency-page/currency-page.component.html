@@ -1,0 +1,63 @@
+<br>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="container">
+        <h2 class="Currency_Name">{{currency.currencyName}}</h2>
+        <h2 class="Currency_Rate">{{currency.rates[currency.rates.length - 1]}}</h2>
+        <h6 class="Daily_Change">Daily Change: {{currency.rates[currency.rates.length - 1] - currency.rates[currency.rates.length - 2] | number:'1.0-2' }}
+          ({{(currency.rates[currency.rates.length - 1] - currency.rates[currency.rates.length - 2])/currency.rates[currency.rates.length - 2] * 100  | number:'1.0-2' }}%) Today</h6>
+      </div>
+      <div class="col-lg-12">
+        <br>
+        <canvas baseChart
+                [datasets]="chartData"
+                [labels]="chartLabels"
+                [chartType]="chartType"
+                [legend]="false"
+                [colors]="chartColor"
+                [options]="lineChartOptions">
+        </canvas>
+        <hr>
+<!--        <h2>About</h2>-->
+<!--        <div class="about_section" [class.show]="show">{{company.companySummary}}</div>-->
+<!--        <br>-->
+<!--        <button type="button" class="btn btn-dark" (click)="show = !show">{{ show ? 'Show less': 'Show More' }}</button>-->
+      </div>
+    </div>
+    <div class="col-lg-4" >
+      <mat-card class="currency-card">
+        <div>{{currency.currencyName}}</div>
+        <hr>
+        <div class="row">
+          <div class="col-lg-8">
+            <span class="align-baseline">Currency</span>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Number</mat-label>
+              <input [formControl]="currencyValue" matInput align="center" placeholder="0">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-8">Rate per USD</div>
+          <div class="col-lg-4">{{currency.rates[currency.rates.length - 1] | number: '1.0-2'}}</div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-lg-6">Estimated Cost</div>
+          <div class="col-lg-6">${{ currencyValue.value / currency.rates[currency.rates.length - 1] | number:'1.0-2'}} USD</div>
+        </div>
+        <mat-card-actions class="align-middle">
+          <hr>
+          <div align="center">
+            <button mat-button>Buy</button>
+            <button mat-button>Sell</button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

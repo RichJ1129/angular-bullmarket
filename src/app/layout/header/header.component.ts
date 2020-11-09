@@ -8,7 +8,6 @@ import {AuthService} from '../../auth/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
 
@@ -16,6 +15,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService) {
   }
 
+  // tslint:disable-next-line:typedef
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSubs = this.authService
@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
   }
 
+  // tslint:disable-next-line:typedef
   onLogout() {
     this.authService.logout();
   }
