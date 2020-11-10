@@ -7,20 +7,7 @@ const cron = require('node-cron');
 const crontab = require('node-crontab');
 const stocks = require("./backend/middleware/get-stocks");
 const companies = require("./backend/middleware/get-company");
-
-crontab.scheduleJob("00 18 * * 1,2,3,4,5" , function(){
-  console.log("It works")
-  stocks.getStocks();
-},{
-  schedule: true,
-  timezone: "America/New_York"
-});
-crontab.scheduleJob("30 07 * * 5" , function(){
-  companies.getCompanies();
-},{
-  schedule: true,
-  timezone: "America/New_York"
-});
+const currencies = require("./backend/middleware/get-currency");
 
 const normalizePort = val => {
   var port = parseInt(val, 10);

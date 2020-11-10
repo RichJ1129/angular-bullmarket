@@ -131,8 +131,8 @@ export class StockPageComponent implements OnInit {
             closeDate: stockData.closeDate,
             pERatio: stockData.pERatio
           };
-          this.changeAnnotation(this.stock.price[this.stock.price.length - 2]);
-          this.changeLineColor(this.stock.price[this.stock.price.length - 2], this.stock.price[this.stock.price.length - 1]);
+          this.changeAnnotation(this.stock.price[this.stock.price.length - 10]);
+          this.changeLineColor(this.stock.price[this.stock.price.length - 10], this.stock.price[this.stock.price.length - 1]);
           this.computeData();
         });
         this.stocksService.getOneCompany(this.stockTicker).subscribe(companyData => {

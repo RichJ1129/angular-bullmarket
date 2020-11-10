@@ -31,6 +31,14 @@ import {InvestmentComponent} from './investment/investment.component';
 import { StockPageComponent } from './stocks/stock-page/stock-page.component';
 import { ChartsModule } from 'ng2-charts';
 import { DatePipe } from '@angular/common';
+import { Injectable, EventEmitter } from '@angular/core';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { InvestmentBuyButtonComponent } from './investment/investment-button-buy/investment-button-buy.component'
+import { InvestmentPageComponent } from './investment/investment-page/investment-page.component'
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {InvestmentService} from './investment/investment.service';
+import { CurrencyPageComponent } from './currency/currency-page/currency-page.component';
+import {CurrencyTableComponent} from './currency/currency-table/currency-table.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +49,11 @@ import { DatePipe } from '@angular/common';
     BondTableComponent,
     StockTableComponent,
     InvestmentComponent,
-    StockPageComponent
+    StockPageComponent,
+    InvestmentBuyButtonComponent,
+    InvestmentPageComponent,
+    CurrencyTableComponent,
+    CurrencyPageComponent
   ],
   imports: [
     BrowserModule,
@@ -63,15 +75,16 @@ import { DatePipe } from '@angular/common';
     MatFormFieldModule,
     MatTableModule,
     MatSortModule,
-    ChartsModule
+    ChartsModule,
+    MatAutocompleteModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     StockService,
     CommodityService,
-    BondService
-    DatePipe
-
+    BondService,
+    DatePipe,
+    InvestmentService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-
 import {environment} from '../../environments/environment';
+import {Subscription} from 'rxjs';
 
 const backendURL = environment.apiURL;
 
@@ -13,7 +13,6 @@ export class StockService {
 
   // tslint:disable-next-line:typedef
   getStocks() {
-    // console.log(this.http.get(backendURL + '/stocks'));
     return this.http.get(backendURL + '/stocks');
   }
 

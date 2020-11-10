@@ -24,6 +24,16 @@ router.post("/signup", (req, res, next) => {
     });
 });
 
+//Get user by email address
+router.get("/:email", (req, res, next) => {
+  User.findOne({email: req.params.email}).then( email => {
+    if (email) {
+      res.status(200).json(email);
+    } else {
+      res.status(404).json({ message: "User not found!" });
+    }
+  });
+});
 
 router.post("/login", (req, res, next) => {
   let fetchedUser;
