@@ -82,7 +82,7 @@ function apiCurrencyCall() {
             ticker: currency_pairs[i][0],
             rates: apiResponse[currency_pairs[i][0]]['rate'],
             timeStamp: new Date(Date.now())
-          });
+          })
           Currency.count({currencyName: currency_pairs[i][1]}, function (err, count) {
             if (count > 0) {
               Currency.findOneAndUpdate(
@@ -92,7 +92,6 @@ function apiCurrencyCall() {
                   if (error) {
                     console.log(error);
                   } else {
-                    console.log(success);
                   }
                 }
               );
