@@ -10,21 +10,23 @@ const companies = require('./middleware/get-company');
 const currencies = require('./middleware/get-currency');
 const CronJob = require('cron').CronJob;
 
-// let stock_sched = new CronJob("00 18 * * 1,2,3,4,5" , function(){
-//   stocks.getStocks();
-// },{
-//   schedule: true,
-//   timezone: "America/New_York"
-// });
+let stock_sched = new CronJob("00 00 18 * * 1,2,3,4,5" , function(){
+  stocks.getStocks();
+},
+  null,
+  true,
+  "America/New_York"
+);
 
-// let commodity_sched = crontab.scheduleJob("45 01 * * 1,2,3,4,5,6" , function(){
-//   commodities.getCommodities();
-// },{
-//   schedule: true,
-//   timezone: "America/New_York"
-// });
+let commodity_sched = new CronJob("00 45 01 * * 1,2,3,4,5,6" , function(){
+  commodities.getCommodities();
+},
+  null,
+  true,
+  "America/New_York"
+);
 
-let currency_sched = new CronJob("00 21 * * 0,1,2,3,4,5" , function(){
+let currency_sched = new CronJob("00 00 21 * * 0,1,2,3,4,5" , function(){
   console.log("Scheduled Currency job started");
   currencies.getCurrency();
 },
@@ -33,20 +35,22 @@ let currency_sched = new CronJob("00 21 * * 0,1,2,3,4,5" , function(){
   "America/New_York"
 );
 
-// let bond_sched = crontab.scheduleJob("32 20 * * 1,2,3,4,5,6" , function(){
-//   console.log("Scheduled Bonds job started");
-//   bonds.getBonds();
-// },{
-//   schedule: true,
-//   timezone: "America/New_York"
-// });
+let bond_sched = new CronJob("00 01 11 * * 1,2,3,4,5,6" , function(){
+  console.log("Scheduled Bonds job started");
+  bonds.getBonds();
+},
+  null,
+  true,
+  "America/New_York"
+);
 
-// crontab.scheduleJob("30 08 * * 5" , function(){
-//   companies.getCompanies();
-// },{
-//   schedule: true,
-//   timezone: "America/New_York"
-// });
+let company_sched = new CronJob("00 30 08 * * 5" , function(){
+  companies.getCompanies();
+},
+  null,
+  true,
+  "America/New_York"
+);
 
 const normalizePort = val => {
   var port = parseInt(val, 10);
