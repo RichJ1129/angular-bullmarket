@@ -37,7 +37,7 @@ crontab.scheduleJob("30 08 * * 5" , function(){
   timezone: "America/New_York"
 });
 
-crontab.scheduleJob("30 19 * * 0,1,2,3,4,5" , function(){
+crontab.scheduleJob("55 19 * * 0,1,2,3,4,5" , function(){
   console.log("Scheduled Currency job started");
   currencies.getCurrency();
 },{

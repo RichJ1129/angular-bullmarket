@@ -62,37 +62,28 @@ const currency_pairs = [
   ['USDXAU', 'Gold']
 ]
 
-let pair_string_url = '';
-
-for (let i = 0; i <= currency_pairs.length - 1; i++) {
-  pair_string_url += currency_pairs[i][0];
-  if (i < currency_pairs.length - 1) {
-    pair_string_url += ',';
-  }
-}
-
-function apiCurrencyCall() {
-  axios.get('https://www.freeforexapi.com/api/live?pairs=' + pair_string_url)
+function apiCurrencyCall(current_currency) {
+  axios.get('https://www.freeforexapi.com/api/live?pairs=' + current_currency[0])
     .then(response => {
-      const apiResponse = response['data']['rates'];
-      for (let i = 0; i <= currency_pairs.length - 1; i++) {
-        if (currency_pairs[i][0] in apiResponse) {
+      const apiResponse = response.data;
+      console.log(apiResponse);
+        if (typeof apiResponse === 'object') {
           let currency = new Currency({
-            currencyName: currency_pairs[i][1],
-            ticker: currency_pairs[i][0],
-            rates: apiResponse[currency_pairs[i][0]]['rate'],
+            currencyName: current_currency[1],
+            ticker: current_currency[0],
+            rates: apiResponse['rates'][current_currency[0]]['rate'],
             timeStamp: new Date(Date.now())
           })
-          Currency.count({currencyName: currency_pairs[i][1]}, function (err, count) {
+          Currency.count({currencyName: current_currency[1]}, function (err, count) {
             if (count > 0) {
               Currency.findOneAndUpdate(
-                {currencyName: currency_pairs[i][1]},
+                {currencyName: current_currency[1]},
                 {$push: {rates: currency['rates'], timeStamp: currency['timeStamp']}},
                 function (error, success) {
                   if (error) {
                     console.log(error);
                   } else {
-                    console.log(currency['rates']);
+                    console.log(currency);
                   }
                 }
               );
@@ -101,14 +92,18 @@ function apiCurrencyCall() {
             }
           })
         }
-      }
+
     }).catch(error => {
     console.log(error);
   });
 }
 
+const interval = 1000;
+
 module.exports = {
   getCurrency: function () {
-    apiCurrencyCall();
+    for (let i = 0; i <= currency_pairs.length - 1; i++) {
+      setTimeout(function (i) {apiCurrencyCall(currency_pairs[i])}, interval * i, i);
+    }
   }
 };
