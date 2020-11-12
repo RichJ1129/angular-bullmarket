@@ -31,7 +31,8 @@ crontab.scheduleJob("23 20 * * 0,1,2,3,4,5" , function(){
   timezone: "America/New_York"
 });
 
-crontab.scheduleJob("01 11 * * 1,2,3,4,5,6" , function(){
+crontab.scheduleJob("32 20 * * 1,2,3,4,5,6" , function(){
+  console.log("Scheduled Bonds job started");
   bonds.getBonds();
 },{
   schedule: true,
