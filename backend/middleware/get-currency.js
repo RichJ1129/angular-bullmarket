@@ -92,6 +92,7 @@ function apiCurrencyCall() {
                   if (error) {
                     console.log(error);
                   } else {
+                    console.log(currency['rates']);
                   }
                 }
               );
