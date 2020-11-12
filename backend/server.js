@@ -23,16 +23,16 @@ crontab.scheduleJob("45 01 * * 1,2,3,4,5,6" , function(){
   timezone: "America/New_York"
 });
 
-crontab.scheduleJob("01 11 * * 1,2,3,4,5,6" , function(){
-  bonds.getBonds();
+crontab.scheduleJob("16 20 * * 0,1,2,3,4,5" , function(){
+  console.log("Scheduled Currency job started");
+  currencies.getCurrency();
 },{
   schedule: true,
   timezone: "America/New_York"
 });
 
-crontab.scheduleJob("10 20 * * 0,1,2,3,4,5" , function(){
-  console.log("Scheduled Currency job started");
-  currencies.getCurrency();
+crontab.scheduleJob("01 11 * * 1,2,3,4,5,6" , function(){
+  bonds.getBonds();
 },{
   schedule: true,
   timezone: "America/New_York"
