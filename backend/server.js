@@ -24,7 +24,7 @@ const CronJob = require('cron').CronJob;
 //   timezone: "America/New_York"
 // });
 
-let currency_sched = new CronJob("00 21 * * 0,1,2,3,4,5" , function(){
+let currency_sched = new CronJob("00 05 21 * * 0,1,2,3,4,5" , function(){
   console.log("Scheduled Currency job started");
   currencies.getCurrency();
 },
