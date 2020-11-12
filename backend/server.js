@@ -8,30 +8,32 @@ const commodities = require('./middleware/get-commodities');
 const bonds = require('./middleware/get-bonds')
 const companies = require('./middleware/get-company');
 const currencies = require('./middleware/get-currency');
+const CronJob = require('cron').CronJob;
 
-// crontab.scheduleJob("00 18 * * 1,2,3,4,5" , function(){
+// let stock_sched = new CronJob("00 18 * * 1,2,3,4,5" , function(){
 //   stocks.getStocks();
 // },{
 //   schedule: true,
 //   timezone: "America/New_York"
 // });
 
-// crontab.scheduleJob("45 01 * * 1,2,3,4,5,6" , function(){
+// let commodity_sched = crontab.scheduleJob("45 01 * * 1,2,3,4,5,6" , function(){
 //   commodities.getCommodities();
 // },{
 //   schedule: true,
 //   timezone: "America/New_York"
 // });
 
-crontab.scheduleJob("45 20 * * 0,1,2,3,4,5" , function(){
+let currency_sched = new CronJob("00 21 * * 0,1,2,3,4,5" , function(){
   console.log("Scheduled Currency job started");
   currencies.getCurrency();
-},{
-  schedule: true,
-  timezone: "America/New_York"
-});
+},
+  null,
+  true,
+  "America/New_York"
+);
 
-// crontab.scheduleJob("32 20 * * 1,2,3,4,5,6" , function(){
+// let bond_sched = crontab.scheduleJob("32 20 * * 1,2,3,4,5,6" , function(){
 //   console.log("Scheduled Bonds job started");
 //   bonds.getBonds();
 // },{
