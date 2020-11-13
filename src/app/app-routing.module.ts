@@ -3,7 +3,8 @@ import {Routes, RouterModule} from '@angular/router';
 import {BondTableComponent} from './bonds/bonds-table/bonds.component';
 import {CommodityTableComponent} from './commodities/commodities-table/commodities.component';
 import {StockTableComponent} from './stocks/stock-table/stock-table.component';
-import {RealestateComponent} from './realestate/realestate.component';
+import {RealEstateTableComponent} from './realestate/realestate-table/realestate-table.component';
+import {RealEstateComponent} from './realestate/realestate.component';
 import {InvestmentComponent} from './investment/investment.component';
 import {InvestmentPageComponent} from './investment/investment-page/investment-page.component';
 import {HomeComponent} from './home/home.component';
@@ -42,7 +43,7 @@ const routes: Routes = [
   },
   {
     path: 'realestate',
-    component: RealestateComponent,
+    component: RealEstateComponent,
     canActivate: [AuthGuard]
   },
   {

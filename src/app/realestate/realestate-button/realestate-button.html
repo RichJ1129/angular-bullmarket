@@ -1,0 +1,39 @@
+<div>
+    <mat-card class="stock-card">
+      <div class="row">
+        <div class="col-lg-8">
+          <span class="align-baseline">Symbol</span>
+        </div>
+        <div class="col-lg-4">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            <mat-form-field appearance="outline">
+            <mat-label>Symbol</mat-label>
+            <input matInput #symbol type="text" [formControl]="myControl" [matAutocomplete]="auto">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8">
+          <span class="align-baseline">Shares</span>
+        </div>
+        <div class="col-lg-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Shares</mat-label>
+            <input matInput #shares align="center" placeholder="0">
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-card-actions class="align-middle">
+        <hr>
+        <div align="center">
+          <button mat-button (click)="onClickBuy(symbol.value, shares.value)">Buy</button>
+          <button mat-button (click)="onClickSell(symbol.value, shares.value)">Sell</button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
