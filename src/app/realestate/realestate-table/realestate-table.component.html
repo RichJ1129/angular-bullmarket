@@ -1,0 +1,29 @@
+<br>
+<h1>Real Estate</h1>
+<hr>
+<div>
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="countryName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Country</th>
+      <td mat-cell *matCellDef="let realestate "> {{realestate.countryName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="urbanRent">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Urban Rent</th>
+      <td mat-cell *matCellDef="let realestate "> {{realestate.urbanRent}} </td>
+    </ng-container>
+    <ng-container matColumnDef="urbanPrice">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Urban Price</th>
+      <td mat-cell *matCellDef="let realestate "> {{realestate.urbanPrice}} </td>
+    </ng-container>
+    <ng-container matColumnDef="ruralRent">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Rural Rent</th>
+      <td mat-cell *matCellDef="let realestate "> {{realestate.ruralRent}} </td>
+    </ng-container>
+    <ng-container matColumnDef="ruralPrice">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Rural Price</th>
+      <td mat-cell *matCellDef="let realestate "> {{realestate.ruralPrice}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

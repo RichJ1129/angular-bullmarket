@@ -39,6 +39,10 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {InvestmentService} from './investment/investment.service';
 import { CurrencyPageComponent } from './currency/currency-page/currency-page.component';
 import {CurrencyTableComponent} from './currency/currency-table/currency-table.component';
+import { RealEstateTableComponent } from './realestate/realestate-table/realestate-table.component';
+import { RealEstateService } from './realestate/realestate.service';
+import { RealEstateComponent } from './realestate/realestate.component';
+import { RealEstateButton } from './realestate/realestate-button/realestate-button.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +57,11 @@ import {CurrencyTableComponent} from './currency/currency-table/currency-table.c
     InvestmentBuyButtonComponent,
     InvestmentPageComponent,
     CurrencyTableComponent,
-    CurrencyPageComponent
+    CurrencyPageComponent,
+    RealEstateTableComponent,
+    RealEstateComponent,
+    RealEstateButton
+    
   ],
   imports: [
     BrowserModule,
@@ -84,7 +92,8 @@ import {CurrencyTableComponent} from './currency/currency-table/currency-table.c
     CommodityService,
     BondService,
     DatePipe,
-    InvestmentService
+    InvestmentService,
+    RealEstateService
   ],
   bootstrap: [AppComponent]
 })
