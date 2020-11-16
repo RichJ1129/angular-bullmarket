@@ -43,6 +43,7 @@ import { RealEstateTableComponent } from './realestate/realestate-table/realesta
 import { RealEstateService } from './realestate/realestate.service';
 import { RealEstateComponent } from './realestate/realestate.component';
 import { RealEstateButton } from './realestate/realestate-button/realestate-button.component';
+import { CountryPageComponent } from './realestate/country-page/country-page.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { RealEstateButton } from './realestate/realestate-button/realestate-butt
     CurrencyPageComponent,
     RealEstateTableComponent,
     RealEstateComponent,
-    RealEstateButton
+    RealEstateButton,
+    CountryPageComponent
     
   ],
   imports: [
