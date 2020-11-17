@@ -3,13 +3,12 @@ const jwt = require("jsonwebtoken");
 const Country = require("../models/country");
 const router = express.Router();
 
-router.get("country/:country", (req, res, next) => {
-    console.log(req.params.country);
-        Country.findOne({countryName: req.params.country}).then( (error, data) => {
-            if (error) {
-              return next(error);
-          } else {
-              res.json(data);
+router.use("/:country", (req, res, next) => {
+        Country.findOne({countryName: req.params.country}).then( country => {
+            if (country) {
+                res.status(200).json(country);
+            } else {
+                res.status(404).json({ message: "Stock not found!" });
             }
         });
     });

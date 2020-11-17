@@ -30,21 +30,8 @@ export class RealEstateService {
     getOneCountry(countryName: string) {
       console.log("One Country ");
       console.log(countryName);
-      console.log(this.http.get(backendURL + '/country/' + countryName));
-        return this.http.get((backendURL + '/country/' + countryName));
+      console.log(backendURL + '/country/' + countryName);
+        return this.http.get<Country>(backendURL + '/country/' + countryName);
       }
 
 }
-/*
-{
-  countryName: string,
-  capitalCity: string,
-  population: number,
-  urbanRent: number,
-  urbanPE: number,
-  ruralRent: number,
-  ruralPE: number,
-  interestRate: number,
-  debtGDP: number,
-  inflation: number
-}*/

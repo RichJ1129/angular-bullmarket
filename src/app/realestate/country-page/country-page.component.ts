@@ -20,6 +20,7 @@ export class CountryPageComponent implements OnInit {
 
   countryName: string;
   country: Country;
+  countryData: Country;
   
 
   constructor(
@@ -36,8 +37,8 @@ export class CountryPageComponent implements OnInit {
       if (paramMap.has('country_name')) {
         this.countryName = paramMap.get('country_name');
         this.realEstateService.getOneCountry(this.countryName).subscribe(countryData => {
-          //this.country = {
-            /*countryName: countryData.countryName,
+          this.country = {
+            countryName: countryData.countryName,
             capitalCity: countryData.capitalCity,
             population: countryData.population,
             urbanRent: countryData.urbanRent,
@@ -46,8 +47,8 @@ export class CountryPageComponent implements OnInit {
             ruralPE: countryData.ruralPE,
             interestRate: countryData.interestRate,
             debtGDP: countryData.debtGDP,
-            inflation: countryData.inflation*/
-         // };
+            inflation: countryData.inflation
+          };
   })
     }});
   }
