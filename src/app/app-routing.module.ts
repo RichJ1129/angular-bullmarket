@@ -48,7 +48,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'country-page/:country_name',
+    path: 'country/:country_name',
     component: CountryPageComponent,
     canActivate: [AuthGuard]
   },

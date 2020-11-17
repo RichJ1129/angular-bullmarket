@@ -13,15 +13,5 @@ router.get("",(req, res) => {
   })
 });
 
-router.get("country-page/:country", (req, res, next) => {
-  console.log(req.params.country());
-  Country.findOne({countryName: req.params.country()}).then( country => {
-    if (country) {
-      res.status(200).json(country);
-    } else {
-      res.status(404).json({ message: "Country not found!" });
-    }
-  });
-});
 
 module.exports = router;
