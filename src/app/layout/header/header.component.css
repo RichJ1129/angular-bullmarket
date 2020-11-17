@@ -62,8 +62,8 @@ body {
   animation-timing-function: linear;
   -webkit-animation-name: ticker;
   animation-name: ticker;
-  -webkit-animation-duration: 160s;
-  animation-duration: 160s;
+  -webkit-animation-duration: 320s;
+  animation-duration: 320s;
 }
 
 .ticker-wrap .ticker__item {

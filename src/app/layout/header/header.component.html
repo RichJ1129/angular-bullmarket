@@ -46,6 +46,9 @@
               <div *ngIf="element.price[element.price.length - 1] < element.price[element.price.length - 2]">
                 {{element.symbol}} ↓ <p style="display:inline; color: red">{{element.price[element.price.length - 1]}} </p>
               </div>
+              <div *ngIf="element.price[element.price.length - 1] == element.price[element.price.length - 2]">
+                {{element.symbol}} → <p style="display:inline; color: grey">{{element.price[element.price.length - 1]}} </p>
+              </div>
             </div>
             <div class="ticker__item" *ngFor="let element of this.currencyData" >
               <div *ngIf="element.rates[element.rates.length - 1] > element.rates[element.rates.length - 2]">
@@ -54,6 +57,9 @@
               <div *ngIf="element.rates[element.rates.length - 1] < element.rates[element.rates.length - 2]">
                 {{element.ticker}} ↓ <p style="display:inline; color: red">{{element.rates[element.rates.length - 1]}} </p>
               </div>
+              <div *ngIf="element.rates[element.rates.length - 1] == element.rates[element.rates.length - 2]">
+                {{element.ticker}} → <p style="display:inline; color: grey">{{element.rates[element.rates.length - 1]}} </p>
+              </div>
             </div>
             <div class="ticker__item" *ngFor="let element of this.commodityData" >
               <div *ngIf="element.etfPrice[element.etfPrice.length - 1] > element.etfPrice[element.etfPrice.length - 2]">
@@ -61,6 +67,9 @@
               </div>
               <div *ngIf="element.etfPrice[element.etfPrice.length - 1] < element.etfPrice[element.etfPrice.length - 2]">
                 {{element.symbol}} ↓ <p style="display:inline; color: red">{{element.etfPrice[element.etfPrice.length - 1]}} </p>
+              </div>
+              <div *ngIf="element.etfPrice[element.etfPrice.length - 1] == element.etfPrice[element.etfPrice.length - 2]">
+                {{element.symbol}} → <p style="display:inline; color: grey">{{element.etfPrice[element.etfPrice.length - 1]}} </p>
               </div>
             </div>
 ]          </div>
