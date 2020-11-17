@@ -9,5 +9,4 @@ export interface Country {
     interestRate: number;
     debtGDP: number;
     inflation: number;
-    bondPE: number;
   }

@@ -9,6 +9,7 @@ const bonds = require('./middleware/get-bonds')
 const companies = require('./middleware/get-company');
 const currencies = require('./middleware/get-currency');
 const CronJob = require('cron').CronJob;
+const countries = require ('./middleware/get-country');
 
 let stock_sched = new CronJob("00 00 18 * * 1,2,3,4,5" , function(){
   stocks.getStocks();
@@ -44,6 +45,7 @@ let bond_sched = new CronJob("00 01 11 * * 1,2,3,4,5,6" , function(){
   "America/New_York"
 );
 
+
 let company_sched = new CronJob("00 30 08 * * 5" , function(){
   companies.getCompanies();
 },
@@ -51,6 +53,10 @@ let company_sched = new CronJob("00 30 08 * * 5" , function(){
   true,
   "America/New_York"
 );
+
+
+//Uncomment this if you want to update the country array.
+//countries.getCountries();
 
 const normalizePort = val => {
   var port = parseInt(val, 10);
