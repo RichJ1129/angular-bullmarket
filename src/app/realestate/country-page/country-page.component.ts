@@ -1,15 +1,10 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { Country } from '../country.model';
-import { RealEstateService } from '../realestate.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
+import {FeatureCollection, RealEstateService} from '../realestate.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import {FormControl} from '@angular/forms';
-
-import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
-import {DatePipe} from '@angular/common';
-import * as pluginAnnotations from 'chartjs-plugin-annotation';
-
+import {DxVectorMapComponent} from 'devextreme-angular';
+import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js';
+import component from 'devextreme/core/component';
 
 @Component({
   selector: 'app-country-page',
@@ -21,17 +16,26 @@ export class CountryPageComponent implements OnInit {
   countryName: string;
   country: Country;
   countryData: Country;
-  
+  countryMap: FeatureCollection;
+  countryCenter: Array<number>;
+
 
   constructor(
     public realEstateService: RealEstateService,
     public route: ActivatedRoute,
-    public datePipe: DatePipe
   ) {}
 
-    
+  // tslint:disable-next-line:typedef
+  customizeCoordinates(countryName: string) {
+    for (const country of mapsData.world.features) {
+      if (countryName === country.properties.name) {
+        this.countryMap = this.realEstateService.getCountryBorders(countryName, country.geometry.coordinates);
+        this.countryCenter = country.geometry.coordinates[0][0];
+      }
+    }
+  }
 
-  
+  // tslint:disable-next-line:typedef
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('country_name')) {
@@ -49,7 +53,10 @@ export class CountryPageComponent implements OnInit {
             debtGDP: countryData.debtGDP,
             inflation: countryData.inflation
           };
-  })
+          console.log(mapsData.world.features);
+          this.customizeCoordinates(this.countryName);
+          console.log(this.countryMap);
+        });
     }});
   }
 }
