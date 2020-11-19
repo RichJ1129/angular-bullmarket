@@ -19,11 +19,15 @@
       <dx-vector-map
         id="vector-map"
         [center]="countryCenter"
-        [zoomFactor]="1.75">
+        [zoomFactor]="3">
+        <dxo-tooltip
+          [enabled]="true"
+          [customizeTooltip]="customizeTooltip"></dxo-tooltip>
         <dxi-layer
           name="areas"
           palette="Violet"
           [dataSource]="countryMap"></dxi-layer>
+        <dxi-layer [dataSource]="capitalMarker"></dxi-layer>
       </dx-vector-map>
 
     </div>

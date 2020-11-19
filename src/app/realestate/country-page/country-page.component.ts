@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import {Component, OnInit, Input, Output, ViewChild} from '@angular/core';
 import { Country } from '../country.model';
-import {FeatureCollection, RealEstateService} from '../realestate.service';
+import {FeatureCollection, RealEstateService, Marker} from '../realestate.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {DxVectorMapComponent} from 'devextreme-angular';
 import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js';
@@ -12,25 +12,43 @@ import component from 'devextreme/core/component';
   styleUrls: ['./country-page.component.css']
 })
 export class CountryPageComponent implements OnInit {
-
+  @ViewChild(DxVectorMapComponent, { static: false }) vectorMap: DxVectorMapComponent;
   countryName: string;
   country: Country;
   countryData: Country;
   countryMap: FeatureCollection;
   countryCenter: Array<number>;
-
+  markers: Marker[];
+  capitalMarker: Marker[];
 
   constructor(
     public realEstateService: RealEstateService,
-    public route: ActivatedRoute,
-  ) {}
+    public route: ActivatedRoute
+  ) {
+    this.markers = realEstateService.getMarkers();
+  }
 
-  // tslint:disable-next-line:typedef
-  customizeCoordinates(countryName: string) {
+  customizeCoordinates(countryName: string): void {
     for (const country of mapsData.world.features) {
       if (countryName === country.properties.name) {
         this.countryMap = this.realEstateService.getCountryBorders(countryName, country.geometry.coordinates);
-        this.countryCenter = country.geometry.coordinates[0][0];
+      }
+    }
+  }
+
+  customizeTooltip(arg): { text: any } {
+    if (arg.layer.type === 'marker') {
+      return {
+        text: arg.attribute('name')
+      };
+    }
+  }
+
+  findCountryCenter(countryCapital: string): void {
+    for (const capital of this.markers){
+      if (capital.attributes.name === countryCapital) {
+        this.countryCenter = capital.coordinates;
+        this.capitalMarker = [capital];
       }
     }
   }
@@ -53,9 +71,8 @@ export class CountryPageComponent implements OnInit {
             debtGDP: countryData.debtGDP,
             inflation: countryData.inflation
           };
-          console.log(mapsData.world.features);
           this.customizeCoordinates(this.countryName);
-          console.log(this.countryMap);
+          this.findCountryCenter(countryData.capitalCity);
         });
     }});
   }
