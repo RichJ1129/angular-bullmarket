@@ -4,6 +4,8 @@
 <div class="container">
   <div class="row">
     <div class="col-4">
+      <br>
+      <br>
       <p>Country - {{country.countryName}}</p>
       <p>Capital City - {{country.capitalCity}}</p>
       <p>Population - {{country.population}}</p>
@@ -19,15 +21,17 @@
       <dx-vector-map
         id="vector-map"
         [center]="countryCenter"
-        [zoomFactor]="3">
+        [zoomFactor]="countryZoom"
+        [zoomingEnabled]="false">
+        <dxo-background
+          borderColor= ''></dxo-background>
         <dxo-tooltip
           [enabled]="true"
           [customizeTooltip]="customizeTooltip"></dxo-tooltip>
         <dxi-layer
-          name="areas"
-          palette="Violet"
           [dataSource]="countryMap"></dxi-layer>
         <dxi-layer [dataSource]="capitalMarker"></dxi-layer>
+        <dxo-control-bar [enabled]="false"></dxo-control-bar>
       </dx-vector-map>
 
     </div>

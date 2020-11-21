@@ -15,16 +15,14 @@ export class CountryPageComponent implements OnInit {
   @ViewChild(DxVectorMapComponent, { static: false }) vectorMap: DxVectorMapComponent;
   countryName: string;
   country: Country;
-  countryData: Country;
+  // countryData: Country;
   countryMap: FeatureCollection;
   countryCenter: Array<number>;
   markers: Marker[];
   capitalMarker: Marker[];
+  countryZoom: string;
 
-  constructor(
-    public realEstateService: RealEstateService,
-    public route: ActivatedRoute
-  ) {
+  constructor(public realEstateService: RealEstateService, public route: ActivatedRoute) {
     this.markers = realEstateService.getMarkers();
   }
 
@@ -49,6 +47,7 @@ export class CountryPageComponent implements OnInit {
       if (capital.attributes.name === countryCapital) {
         this.countryCenter = capital.coordinates;
         this.capitalMarker = [capital];
+        this.countryZoom = capital.zoom;
       }
     }
   }
@@ -76,4 +75,5 @@ export class CountryPageComponent implements OnInit {
         });
     }});
   }
+
 }
