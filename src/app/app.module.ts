@@ -44,6 +44,7 @@ import { RealEstateService } from './realestate/realestate.service';
 import { RealEstateComponent } from './realestate/realestate.component';
 import { RealEstateButton } from './realestate/realestate-button/realestate-button.component';
 import { CountryPageComponent } from './realestate/country-page/country-page.component';
+import {DxVectorMapModule} from 'devextreme-angular';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,7 @@ import { CountryPageComponent } from './realestate/country-page/country-page.com
     RealEstateComponent,
     RealEstateButton,
     CountryPageComponent
-    
+
   ],
   imports: [
     BrowserModule,
@@ -86,7 +87,8 @@ import { CountryPageComponent } from './realestate/country-page/country-page.com
     MatTableModule,
     MatSortModule,
     ChartsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    DxVectorMapModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

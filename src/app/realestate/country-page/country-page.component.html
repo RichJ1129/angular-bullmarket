@@ -1,13 +1,41 @@
 <br>
-<h1>Country Page</h1>
-<hr>
-<p>Country Name - {{country.countryName}}</p>
-<p>Capital City - {{country.capitalCity}}</p>
-<p>Population - {{country.population}}</p>
-<p>Urban Rent - {{country.urbanRent}}</p>
-<p>Urban PE - {{country.urbanPE}}</p>
-<p>Rural Rent - {{country.ruralRent}}</p>
-<p>Rural PE - {{country.ruralPE}}</p>
-<p>Interest Rate - {{country.interestRate}}</p>
-<p>Debt to GDP - {{country.debtGDP}}</p>
-<p>Inflation Rate - {{country.inflation}}</p>
+<br>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <br>
+      <br>
+      <p>Country - {{country.countryName}}</p>
+      <p>Capital City - {{country.capitalCity}}</p>
+      <p>Population - {{country.population}}</p>
+      <p>Urban Rent - {{country.urbanRent}}</p>
+      <p>Urban PE - {{country.urbanPE}}</p>
+      <p>Rural Rent - {{country.ruralRent}}</p>
+      <p>Rural PE - {{country.ruralPE}}</p>
+      <p>Interest Rate - {{country.interestRate}}</p>
+      <p>Debt to GDP - {{country.debtGDP}}</p>
+      <p>Inflation Rate - {{country.inflation}}</p>
+    </div>
+    <div class="col-8">
+      <dx-vector-map
+        id="vector-map"
+        [center]="countryCenter"
+        [zoomFactor]="countryZoom"
+        [zoomingEnabled]="false">
+        <dxo-background
+          borderColor= ''></dxo-background>
+        <dxo-tooltip
+          [enabled]="true"
+          [customizeTooltip]="customizeTooltip"></dxo-tooltip>
+        <dxi-layer
+          [dataSource]="countryMap"></dxi-layer>
+        <dxi-layer [dataSource]="capitalMarker"></dxi-layer>
+        <dxo-control-bar [enabled]="false"></dxo-control-bar>
+      </dx-vector-map>
+
+    </div>
+  </div>
+</div>
+
+

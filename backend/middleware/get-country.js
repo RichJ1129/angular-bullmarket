@@ -110,7 +110,7 @@ const country = [
     ['Slovakia','Bratislava','5000000','579.38','21.95','451.99','20.64', '-0.28','48', '1.40'],
     ['Somalia','Mogadishu','16000000','174','0','82.69','0', '0','0', '4.10'],
     ['South Africa','Cape Town','60000000','453.45','11.9','363.21','9.05', '9.48','62', '3.10'],
-    ['South Korea','Soeul','52000000','582.4','76.34','398.29','61.33', '1.45','37', '0.70'],
+    ['South Korea','Seoul','52000000','582.4','76.34','398.29','61.33', '1.45','37', '0.70'],
     ['Spain','Madrid','47000000','802.74','22.07','604.19','19.23', '0.23','96', '-0.40'],
     ['Sudan','Khartoum','42000000','377','0','204.38','0', '15.80','62', '166.80'],
     ['Sweden','Stockholm','10000000','957.47','30.42','678.73','27.86', '-0.12','35', '0.80'],
@@ -148,12 +148,12 @@ const country = [
       debtGDP: currentCountry[8],
       inflation: currentCountry[9]
     });
-  
+
     Country.count({countryName: currentCountry[0]}, function (err, count) {
       if (count > 0){
         Country.findOneAndUpdate(
           {countryName: currentCountry[0]},
-          {$set:{      
+          {$set:{
             countryName: country['countryName'],
             capitalCity: country['capitalCity'],
             population: country['population'],
@@ -177,10 +177,10 @@ const country = [
       }
     })
   }
-  
-  
+
+
   const interval = 1000;
-  
+
   module.exports = {
     getCountries: function () {
       for (let i = 0; i <= country.length - 1; i++) {
@@ -188,4 +188,3 @@ const country = [
       }
     }
   };
-  

@@ -9,3 +9,7 @@ h1{
 h3{
   text-align:center
 }
+
+.mat-row:hover {
+  background-color: #E8E8E8;
+}
