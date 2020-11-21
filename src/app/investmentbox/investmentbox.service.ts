@@ -34,6 +34,38 @@ getUserID(){
 
   }
 
+  addBaseCurrency(userID: string, currency: string, amount: number){
+    const currencyUpdate: Investment = { 
+      userID: userID, 
+      name: currency, 
+      symbol: currency, 
+      transactionPrice: 1, 
+      shares: amount, 
+      transactionType: "b", 
+      assetType: "baseCurrency"
+    }
+    return this.http.post<{message: string}>(backendURL + '/investment', currencyUpdate)
+      .subscribe((responseData) => {
+        console.log(responseData.message);
+      })
+  }
+  
+  removeBaseCurrency(userID: string, currency: string, amount: number){
+    const currencyUpdate: Investment = { 
+      userID: userID, 
+      name: currency, 
+      symbol: currency, 
+      transactionPrice: 1, 
+      shares: amount, 
+      transactionType: "s", 
+      assetType: "baseCurrency"
+    }
+    return this.http.post<{message: string}>(backendURL + '/investment', currencyUpdate)
+    .subscribe((responseData) => {
+      console.log(responseData.message);
+    })
+  }
+
   buyInvestment(userID: string, name: string, symbol: string, transactionPrice: number, shares: number, transactionType: string, assetType: string){
     const newInvestment: Investment = { 
       userID: userID, 
