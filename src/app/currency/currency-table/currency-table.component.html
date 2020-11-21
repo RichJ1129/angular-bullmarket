@@ -1,5 +1,6 @@
 <hr>
-<div>
+<div class="row">
+  <div class="col-lg-8">
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="currencyName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Currency </th>
@@ -16,6 +17,11 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="['/currency-page', row.ticker]"></tr>
   </table>
+</div>
+  <div class="col-lg-4">
+    <br><br><br><br>
+    <app-investmentbox></app-investmentbox>
+  </div>
   <div>
     Source: <a href="https://www.freeforexapi.com">
       <img alt="Free Forex API" src="https://www.freeforexapi.com/Images/link.png" height="20">

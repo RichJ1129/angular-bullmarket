@@ -33,7 +33,6 @@ import { ChartsModule } from 'ng2-charts';
 import { DatePipe } from '@angular/common';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { InvestmentBuyButtonComponent } from './investment/investment-button-buy/investment-button-buy.component'
 import { InvestmentPageComponent } from './investment/investment-page/investment-page.component'
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {InvestmentService} from './investment/investment.service';
@@ -45,6 +44,9 @@ import { RealEstateComponent } from './realestate/realestate.component';
 import { RealEstateButton } from './realestate/realestate-button/realestate-button.component';
 import { CountryPageComponent } from './realestate/country-page/country-page.component';
 import {DxVectorMapModule} from 'devextreme-angular';
+import { InvestmentBoxComponent } from './investmentbox/investmentbox.component'
+import { InvestmentBoxService } from './investmentbox/investmentbox.service'
+
 
 @NgModule({
   declarations: [
@@ -56,14 +58,14 @@ import {DxVectorMapModule} from 'devextreme-angular';
     StockTableComponent,
     InvestmentComponent,
     StockPageComponent,
-    InvestmentBuyButtonComponent,
     InvestmentPageComponent,
     CurrencyTableComponent,
     CurrencyPageComponent,
     RealEstateTableComponent,
     RealEstateComponent,
     RealEstateButton,
-    CountryPageComponent
+    CountryPageComponent,
+    InvestmentBoxComponent
 
   ],
   imports: [
@@ -97,7 +99,8 @@ import {DxVectorMapModule} from 'devextreme-angular';
     BondService,
     DatePipe,
     InvestmentService,
-    RealEstateService
+    RealEstateService,
+    InvestmentBoxService
   ],
   bootstrap: [AppComponent]
 })
