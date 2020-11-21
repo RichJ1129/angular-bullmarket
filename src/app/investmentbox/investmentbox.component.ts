@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Investment } from '../investment.model';
-import { InvestmentService } from '../investment.service';
+import { Investment } from './investment.model';
+import { InvestmentBoxService } from './investmentbox.service';
 import {MatTableDataSource} from '@angular/material/table';
 import { Injectable, EventEmitter } from '@angular/core';    
 import { Subscription } from 'rxjs/internal/Subscription';  
@@ -20,11 +20,11 @@ interface IDAuthData{
 };
 
 @Component({
-  selector: 'app-investment-button-buy',
-  templateUrl: './investment-button-buy.component.html',
-  styleUrls: ['./investment-button-buy.component.css'],
+  selector: 'app-investmentbox',
+  templateUrl: './investmentbox.component.html',
+  styleUrls: ['./investmentbox.component.css'],
 })
-export class InvestmentBuyButtonComponent {
+export class InvestmentBoxComponent {
 
   filteredOptions: Observable<string[]>;
   myControl = new FormControl();
@@ -37,13 +37,10 @@ export class InvestmentBuyButtonComponent {
 
   
 
-    constructor(private investmentApi: InvestmentService, private stockApi: StockService) {
+    constructor(private investmentApi: InvestmentBoxService, private stockApi: StockService) {
         this.investmentApi.getUserID().subscribe(data => {
           this.userObject=data;
           this.UID = this.userObject._id;
-          //console.log("?");
-          //console.log(this.UID);
-
       });
 
     }
@@ -54,20 +51,6 @@ export class InvestmentBuyButtonComponent {
       return this.options.filter(option => option.toLowerCase().includes(filterValue));
     }
 
-    
-
-    /*investmentTypes = [
-      {type: 'Bonds',
-      symbol: ['USA10Y', 'CAN10Y']},
-      {type: 'Commodity',
-      symbol: ['SLV','GLD','TIN']},
-      {type: 'Currency',
-      symbol: ['USDEUR', 'USDYEN']},
-      {type: 'Real Estate',
-      symbol: ['RRUSA','URMEX']},
-      {type: 'Stocks',
-      symbol: ['NOK','MSFT']}
-    ];*/
 
   ngOnInit() {
 
