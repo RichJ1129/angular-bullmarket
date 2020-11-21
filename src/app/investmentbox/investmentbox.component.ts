@@ -57,8 +57,9 @@ export class InvestmentBoxComponent {
   };
   
 
-
   onClickBuy(symbol, shares){
+    var currency = "DOLLAR";
+    var amount = 0;
     console.log("Buy ", shares, " shares of ", symbol);
     this.stockApi.getOneStock(symbol).subscribe(stockData2 => {
       this.stock2 = {
@@ -69,15 +70,23 @@ export class InvestmentBoxComponent {
         closeDate: stockData2.closeDate,
         pERatio: stockData2.pERatio
       };
-      console.log("stockData: ")
+      //Check Incoming Information
+      console.log("investmentData: ")
       console.log(this.stock2.price[0]);
       console.log(this.UID);
+
+      amount = -Math.abs((stockData2.price[0] * shares))
+      console.log("currency change of: ", amount);
+      this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
+
       this.investmentApi.buyInvestment(this.UID,this.stock2.stockName,this.stock2.symbol,this.stock2.price[0],shares,'b','stock');
     });
   }
 
 
   onClickSell(symbol, shares){
+    var currency = "DOLLAR";
+    var amount = 0;
     console.log("Sell ", shares, " shares of ", symbol);
     this.stockApi.getOneStock(symbol).subscribe(stockData2 => {
       this.stock2 = {
@@ -88,9 +97,16 @@ export class InvestmentBoxComponent {
         closeDate: stockData2.closeDate,
         pERatio: stockData2.pERatio
       };
-      console.log("stockData: ")
+      //Check Incoming Information
+      console.log("investmentData: ")
       console.log(this.stock2.price[0]);
       console.log(this.UID);
+
+      amount = (stockData2.price[0] * shares)
+      console.log("currency change of: ", amount);
+
+      this.investmentApi.addBaseCurrency(this.UID,currency,amount);
+
       this.investmentApi.sellInvestment(this.UID,this.stock2.stockName,this.stock2.symbol,this.stock2.price[0],-Math.abs(shares),'s','stock');
     });
   }

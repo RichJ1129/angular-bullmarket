@@ -7,7 +7,6 @@ import {RealEstateTableComponent} from './realestate/realestate-table/realestate
 import {CountryPageComponent} from './realestate/country-page/country-page.component';
 import {RealEstateComponent} from './realestate/realestate.component';
 import {InvestmentComponent} from './investment/investment.component';
-import {InvestmentPageComponent} from './investment/investment-page/investment-page.component';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './auth/login/login.component';
 import {SignupComponent} from './auth/signup/signup.component';

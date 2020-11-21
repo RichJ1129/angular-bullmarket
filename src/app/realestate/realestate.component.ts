@@ -7,7 +7,6 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import { StockService } from '../stocks/stock.service';
 import { AuthService } from '../auth/auth.service';
 import { RealEstateTableComponent } from 'src/app/realestate/realestate-table/realestate-table.component';
-import { RealEstateButton } from 'src/app/realestate/realestate-button/realestate-button.component';
 import { InvestmentBoxComponent } from 'src/app/investmentbox/investmentbox.component';
 
 

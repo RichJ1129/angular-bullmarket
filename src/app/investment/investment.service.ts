@@ -34,45 +34,21 @@ getUserID(){
 
   }
 
-  // tslint:disable-next-line:typedef
   public getInvestments(UID: string) {
     let params = new HttpParams();
     params = params.append('userID',UID);
     return this.http.get(backendURL + '/investment', {params: params});
   }
 
-  buyInvestment(userID: string, name: string, symbol: string, transactionPrice: number, shares: number, transactionType: string, assetType: string){
-    const newInvestment: Investment = { 
-      userID: userID, 
-      name: name, 
-      symbol: symbol, 
-      transactionPrice: transactionPrice, 
-      shares: shares, 
-      transactionType: transactionType, 
-      assetType: assetType
-    }
-    return this.http.post<{message: string}>(backendURL + '/investment', newInvestment)
-      .subscribe((responseData) => {
-        console.log(responseData.message);
-      })
-
+  public getCurrencyBalance(UID: string, baseCurrency: string) {
+    let params = new HttpParams();
+    params = params.append('userID',UID);
+    params = params.append('baseCurrency',baseCurrency);
+    console.log(backendURL+'/baseCurrency', params);
+    return this.http.get(backendURL + '/baseCurrency', {params: params});
   }
 
-  sellInvestment(userID: string, name: string, symbol: string, transactionPrice: number, shares: number, transactionType: string, assetType: string){
-    const newSale: Investment = { 
-      userID: userID, 
-      name: name, 
-      symbol: symbol, 
-      transactionPrice: transactionPrice, 
-      shares: shares, 
-      transactionType: transactionType, 
-      assetType: assetType
-    }
-    return this.http.post<{message: string}>(backendURL + '/investment', newSale)
-    .subscribe((responseData) => {
-      console.log(responseData.message);
-    })
-  }
+
 
   getInvestmentUpdateListener(){
     return this.investmentsUpdated.asObservable();

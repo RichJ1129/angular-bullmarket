@@ -11,12 +11,12 @@ const investmentRoutes = require("./routes/investment");
 const currencyRoutes = require('./routes/currency');
 const realestateRoutes = require('./routes/realestate');
 const countryRoutes = require('./routes/country');
-
+const baseCurrencyRoutes = require('./routes/baseCurrency');
 
 const app = express();
 mongoose
   .connect(
-    process.env.MONGO_ATLAS //Replace with mongo database url if running locally
+    'mongodb+srv://josephri:TempPass@cluster0.murwd.mongodb.net/bull_market?retryWrites=true&w=majority'
   )
   .then(() => {
     console.log("Connected to database!");
@@ -53,6 +53,7 @@ app.use("/api/investment", investmentRoutes);
 app.use("/api/currency", currencyRoutes);
 app.use("/api/realestate", realestateRoutes);
 app.use("/api/country", countryRoutes);
+app.use("/api/baseCurrency", baseCurrencyRoutes);
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'angular-bullmarket/index.html'));
 });
