@@ -20,6 +20,10 @@ body {
   color: grey;
 }
 
+a:hover {
+  color: black;
+}
+
 
 @-webkit-keyframes ticker {
   0% {
