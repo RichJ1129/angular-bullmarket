@@ -39,6 +39,11 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {InvestmentService} from './investment/investment.service';
 import { CurrencyPageComponent } from './currency/currency-page/currency-page.component';
 import {CurrencyTableComponent} from './currency/currency-table/currency-table.component';
+import {ProfileComponent} from './profile/profile.component'
+import {ProfileAnimalComponent} from "./profile/profile-animal/profile-animal.component";
+import {ProfileAnimalSelectorComponent} from "./profile/profile-animalSelector/profile-animalSelector.component";
+import {ProfileFeedAnimalComponent} from "./profile/profile-feedAnimal/profile-feedAnimal.component";
+import {ProfileAnimalPlayComponent} from "./profile/profile-animalPlay/profile-animalPlay.component";
 
 @NgModule({
   declarations: [
@@ -49,6 +54,11 @@ import {CurrencyTableComponent} from './currency/currency-table/currency-table.c
     BondTableComponent,
     StockTableComponent,
     InvestmentComponent,
+    ProfileComponent,
+    ProfileAnimalComponent,
+    ProfileAnimalSelectorComponent,
+    ProfileFeedAnimalComponent,
+    ProfileAnimalPlayComponent,
     StockPageComponent,
     InvestmentBuyButtonComponent,
     InvestmentPageComponent,

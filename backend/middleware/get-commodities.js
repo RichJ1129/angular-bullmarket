@@ -48,7 +48,7 @@ function apiCommodityCall (curr_commodity) {
   {
     params.exchange = 'ARCX';
   }
-  axios.get('http://api.marketstack.com/v1/tickers/' + curr_commodity[0] + '/eod/latest', {params})
+  axios.get('http://api..marketstack.com/v1/tickers/' + curr_commodity[0] + '/eod/latest', {params})
     .then(response => {
       const apiResponse = response.data;
       if (typeof apiResponse === 'object') {

@@ -32,6 +32,10 @@ export class AuthService {
     return this.getAuthData().emailID;
   }
   // tslint:disable-next-line:typedef
+  getUserName() {
+    return this.getAuthData().userName;
+  }
+  // tslint:disable-next-line:typedef
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
   }
@@ -66,7 +70,7 @@ export class AuthService {
           this.authStatusListener.next(true);
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-          this.saveAuthData(token, expirationDate, authData.email);
+          this.saveAuthData(token, expirationDate, authData.email, authData.userName);
           const data = this.getAuthData();
           this.router.navigate(['home']);
         }
@@ -106,16 +110,18 @@ export class AuthService {
     }, duration * 1000);
   }
 
-  private saveAuthData(token: string, expirationDate: Date, email: string): void {
+  private saveAuthData(token: string, expirationDate: Date, email: string, userName: string): void {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
     localStorage.setItem('email', email);
+    localStorage.setItem('userName', userName);
   }
 
   private clearAuthData(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
     localStorage.removeItem('email');
+    localStorage.removeItem('userName');
   }
 
   // tslint:disable-next-line:typedef
@@ -123,13 +129,15 @@ export class AuthService {
     const token = localStorage.getItem('token');
     const expirationDate = localStorage.getItem('expiration');
     const emailID = localStorage.getItem('email');
+    const userName = localStorage.getItem('userName');
     if (!token || !expirationDate) {
       return;
     }
     return {
       token,
       expirationDate: new Date(expirationDate),
-      emailID
+      emailID,
+      userName
     };
   }
 }
