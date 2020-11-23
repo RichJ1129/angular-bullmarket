@@ -12,12 +12,22 @@ import { StockService } from 'src/app/stocks/stock.service';
 import { Stock } from 'src/app/stocks/stock.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { AuthData } from 'src/app/auth/auth-data.model';
+import { FilteringEventArgs } from '@syncfusion/ej2-dropdowns';
+import { EmitType } from '@syncfusion/ej2-base';
+import { Query } from '@syncfusion/ej2-data';
+import { InvestmentList } from './investmentList';
 
 interface IDAuthData{
   _id: string;
   email: string;
   userName: string;
 };
+
+interface InvestmentForm {
+  symbol: string;
+  name: string;
+  type: string;
+}
 
 @Component({
   selector: 'app-investmentbox',
@@ -26,16 +36,14 @@ interface IDAuthData{
 })
 export class InvestmentBoxComponent {
 
-  filteredOptions: Observable<string[]>;
   myControl = new FormControl();
-  options=['SLV','GLD','TIN', 'USA10Y', 'CAN10Y','NOK','MSFT'];
-  stockTicker="MSFT";
   stock: Stock;
   stock2: Stock;
   UID: string;
   userObject: any;
-
+  filteredInvestments: Observable<InvestmentForm[]>;
   
+
 
     constructor(private investmentApi: InvestmentBoxService, private stockApi: StockService) {
         this.investmentApi.getUserID().subscribe(data => {
@@ -45,23 +53,58 @@ export class InvestmentBoxComponent {
 
     }
 
-    private _filter(value: string): string[] {
-      const filterValue = value.toLowerCase();
-
-      return this.options.filter(option => option.toLowerCase().includes(filterValue));
+    private _filter(name: string): InvestmentForm[] {
+      const filterValue = name.toLowerCase();
+  
+      return InvestmentList.filter(investment => investment.name.toLowerCase().indexOf(filterValue) === 0);
     }
 
 
-  ngOnInit() {
+    displayFn(investment: InvestmentForm): string {
+      return investment && investment.name ? investment.name : '';
+    }
 
+   /* public data: { [key: string]: Object }[] = [
+      { Id: "s3", Country: "Alaska" },
+      { Id: "s1", Country: "California" },
+      { Id: "s2", Country: "Florida" },
+      { Id: "s4", Country: "Georgia" }];
+  // maps the appropriate column to fields property
+  public fields: Object = { text: "Country", value: "Id" };
+  // set the placeholder to the DropDownList input
+  //public text: string = "Select a country";
+  //Bind the filter event
+  public onFiltering: EmitType<FilteringEventArgs> =  (e: FilteringEventArgs) => {
+      let query = new Query();
+      //frame the query based on search string with filter type.
+      query = (e.text != "") ? query.where("Country", "startswith", e.text, true) : query;
+      //pass the filter data source, filter query to updateData method.
+      e.updateData(this.data, query);
+  };*/
+
+
+  ngOnInit() {
+    this.filteredInvestments = this.myControl.valueChanges
+    .pipe(
+      startWith(''),
+      map(value => typeof value === 'string' ? value : value.name),
+      map(name => name ? this._filter(name) : InvestmentList.slice())
+    );
   };
   
 
-  onClickBuy(symbol, shares){
+  onClickBuy(name, shares){
     var currency = "DOLLAR";
     var amount = 0;
-    console.log("Buy ", shares, " shares of ", symbol);
-    this.stockApi.getOneStock(symbol).subscribe(stockData2 => {
+    console.log("Buy ", shares, " shares of ", name);
+
+    var result = InvestmentList.filter(obj => {
+      return obj.name === name;
+    })
+
+    console.log(result[0].type);
+
+    this.stockApi.getOneStock(result[0].symbol).subscribe(stockData2 => {
       this.stock2 = {
         stockName: stockData2.stockName,
         symbol: stockData2.symbol,
