@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, NgForm, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormBuilder, NgForm, Validators} from '@angular/forms';
 
-import { AuthService } from '../auth.service';
+import {AuthService} from '../auth.service';
 
 @Component({
   templateUrl: './login.component.html',
@@ -15,7 +15,8 @@ export class LoginComponent {
   loginForm: FormGroup;
   emailRegx = /^(([^<>+()\[\]\\.,;:\s@"-#$%&=]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,3}))$/;
 
-  constructor(private formBuilder: FormBuilder, public authService: AuthService) {}
+  constructor(private formBuilder: FormBuilder, public authService: AuthService) {
+  }
 
   // tslint:disable-next-line:typedef use-lifecycle-interface
   ngOnInit() {

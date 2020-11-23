@@ -3,6 +3,11 @@ require('dotenv').config();
 const app = require("./backend/app");
 const debug = require("debug")("node-angular");
 const http = require("http");
+const cron = require('node-cron');
+const crontab = require('node-crontab');
+const stocks = require("./backend/middleware/get-stocks");
+const companies = require("./backend/middleware/get-company");
+const currencies = require("./backend/middleware/get-currency");
 
 const normalizePort = val => {
   var port = parseInt(val, 10);

@@ -1,56 +1,60 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
+import {Subject} from 'rxjs';
 
-import { AuthData } from './auth-data.model';
-import { environment } from '../../environments/environment';
+import {AuthData} from './auth-data.model';
+import {environment} from '../../environments/environment';
 
 const backendURL = environment.apiURL;
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class AuthService {
   private isAuthenticated = false;
   private token: string;
   private tokenTimer: any;
-  private userId: string;
+  private emailID: string;
   private authStatusListener = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+  }
 
   // tslint:disable-next-line:typedef
   getToken() {
     return this.token;
   }
-
   // tslint:disable-next-line:typedef
   getIsAuth() {
     return this.isAuthenticated;
   }
-
   // tslint:disable-next-line:typedef
-  getUserId() {
-    return this.userId;
+  getEmailID() {
+    return this.getAuthData().emailID;
   }
-
+  // tslint:disable-next-line:typedef
+  getUserName() {
+    return this.getAuthData().userName;
+  }
   // tslint:disable-next-line:typedef
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
   }
 
+  // tslint:disable-next-line:typedef
   createUser(userName: string, email: string) {
-    const authData: AuthData = { userName: userName, email: email };
+    const authData: AuthData = {userName, email};
     this.http.post(backendURL + '/user/signup', authData).subscribe(() => {
-      this.router.navigate(['/']);
-    },
-    error => {
-      this.authStatusListener.next(false);
-    }
+        this.router.navigate(['/']);
+      },
+      error => {
+        this.authStatusListener.next(false);
+      }
     );
   }
 
+  // tslint:disable-next-line:typedef
   login(userName: string, email: string) {
-    const authData: AuthData = { userName: userName, email: email };
+    const authData: AuthData = {userName, email};
     this.http
       .post<{ token: string; expiresIn: number; userId: string }>(
         backendURL + '/user/login',
@@ -63,17 +67,17 @@ export class AuthService {
           const expiresInDuration = response.expiresIn;
           this.setAuthTimer(expiresInDuration);
           this.isAuthenticated = true;
-          this.userId = response.userId;
           this.authStatusListener.next(true);
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-          console.log(expirationDate);
-          this.saveAuthData(token, expirationDate, this.userId);
-          this.router.navigate(['/']);
+          this.saveAuthData(token, expirationDate, authData.email, authData.userName);
+          const data = this.getAuthData();
+          this.router.navigate(['home']);
         }
       });
   }
 
+  // tslint:disable-next-line:typedef
   autoAuthUser() {
     const authInformation = this.getAuthData();
     if (!authInformation) {
@@ -84,54 +88,56 @@ export class AuthService {
     if (expiresIn > 0) {
       this.token = authInformation.token;
       this.isAuthenticated = true;
-      this.userId = authInformation.userId;
+      this.emailID = authInformation.emailID;
       this.setAuthTimer(expiresIn / 1000);
       this.authStatusListener.next(true);
     }
   }
 
-  logout() {
-    console.log(this.userId);
+  logout(): void {
     this.token = null;
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
     clearTimeout(this.tokenTimer);
-    this.userId = null;
     this.clearAuthData();
-    console.log(this.token);
-    this.router.navigate(['/']);
+    this.router.navigate(['/login']);
   }
 
-  private setAuthTimer(duration: number) {
+  private setAuthTimer(duration: number): void {
     console.log('Setting timer: ' + duration);
     this.tokenTimer = setTimeout(() => {
       this.logout();
     }, duration * 1000);
   }
 
-  private saveAuthData(token: string, expirationDate: Date, userId: string) {
+  private saveAuthData(token: string, expirationDate: Date, email: string, userName: string): void {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
-    localStorage.setItem('userId', userId);
+    localStorage.setItem('email', email);
+    localStorage.setItem('userName', userName);
   }
 
-  private clearAuthData() {
+  private clearAuthData(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
-    localStorage.removeItem('userId');
+    localStorage.removeItem('email');
+    localStorage.removeItem('userName');
   }
 
+  // tslint:disable-next-line:typedef
   private getAuthData() {
     const token = localStorage.getItem('token');
     const expirationDate = localStorage.getItem('expiration');
-    const userId = localStorage.getItem('userId');
+    const emailID = localStorage.getItem('email');
+    const userName = localStorage.getItem('userName');
     if (!token || !expirationDate) {
       return;
     }
     return {
       token,
       expirationDate: new Date(expirationDate),
-      userId: userId
+      emailID,
+      userName
     };
   }
 }

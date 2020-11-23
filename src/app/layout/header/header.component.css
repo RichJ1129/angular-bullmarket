@@ -4,20 +4,20 @@ body {
   font-family: Calibri, sans-serif
 }
 
-.markets{
+.markets {
   margin-bottom: 5px;
 }
 
-.nav-link{
-  background-color:white;
-  color:black;
+.nav-link {
+  background-color: white;
+  color: black;
   font-family: Calibri, sans-serif;
-  font-size:28px;
+  font-size: 28px;
   font-weight: bold;
 }
 
 .nav-link:hover {
-  color:grey;
+  color: grey;
 }
 
 
@@ -32,6 +32,7 @@ body {
     transform: translate3d(-100%, 0, 0);
   }
 }
+
 @keyframes ticker {
   0% {
     -webkit-transform: translate3d(0, 0, 0);
@@ -43,11 +44,13 @@ body {
     transform: translate3d(-100%, 0, 0);
   }
 }
+
 .ticker-wrap {
   overflow: hidden;
   height: 3rem;
   background-color: rgba(0, 0, 0, 0.9);
 }
+
 .ticker-wrap .ticker {
   display: inline-block;
   height: 3rem;
@@ -62,6 +65,7 @@ body {
   -webkit-animation-duration: 40s;
   animation-duration: 40s;
 }
+
 .ticker-wrap .ticker__item {
   display: inline-block;
   padding: 0 2rem;
@@ -79,22 +83,23 @@ p {
   padding: 0 5%;
 }
 
-.symbolLink{
-  color:white;
-  text-decoration:none;
+.symbolLink {
+  color: white;
+  text-decoration: none;
 
 }
-.symbolLink:hover{
-  color:grey;
-  text-decoration:none;
+
+.symbolLink:hover {
+  color: grey;
+  text-decoration: none;
 }
 
-.assetSearchBox{
-  padding:10px;
+.assetSearchBox {
+  padding: 10px;
 }
 
-.assetSubmit{
-  color:black;
+.assetSubmit {
+  color: black;
   background-color: grey;
   border-radius: 10px;
   font-size: 16px;

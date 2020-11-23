@@ -1,0 +1,25 @@
+<h1 class="col-lg-8" align="center">{{userName}}'s Profile</h1>
+<div class="row">
+  <div class="col-lg-8" align="center">
+    <app-profile-animal></app-profile-animal>
+  </div>
+</div>
+<div class="col-lg-8" align="center">
+  <button class="buttons" mat-raised-button type="submit" (click)="showSelector()">Customize Animal</button>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <button class="buttons" mat-raised-button  type="submit" (click)="showFeed()">Feed Animal</button>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <button class="buttons" mat-raised-button type="submit" (click)="showPlay()">Play!</button>
+</div>
+&nbsp;
+<div class="col-lg-8" align="center" [hidden]="!isSelectorVisible">
+  <app-profile-animalSelector></app-profile-animalSelector>
+</div>
+&nbsp;
+<div class="col-lg-8" align="center" [hidden]="!isFeedVisible">
+  <app-profile-feedAnimal></app-profile-feedAnimal>
+</div>
+&nbsp;
+<div class="col-lg-8" align="center" [hidden]="!isPlayVisible">
+  <app-profile-animalPlay></app-profile-animalPlay>
+</div>

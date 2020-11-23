@@ -4,20 +4,20 @@ body {
   font-family: Calibri, sans-serif
 }
 
-.markets{
+.markets {
   margin-bottom: 5px;
 }
 
-.nav-link{
-  background-color:white;
-  color:black;
+.nav-link {
+  background-color: white;
+  color: black;
   font-family: Calibri, sans-serif;
-  font-size:28px;
+  font-size: 28px;
   font-weight: bold;
 }
 
 .nav-link:hover {
-  color:grey;
+  color: grey;
 }
 
 body {
@@ -30,22 +30,23 @@ p {
   padding: 0 5%;
 }
 
-.symbolLink{
-  color:white;
-  text-decoration:none;
+.symbolLink {
+  color: white;
+  text-decoration: none;
 
 }
-.symbolLink:hover{
-  color:grey;
-  text-decoration:none;
+
+.symbolLink:hover {
+  color: grey;
+  text-decoration: none;
 }
 
-.assetSearchBox{
-  padding:10px;
+.assetSearchBox {
+  padding: 10px;
 }
 
-.assetSubmit{
-  color:black;
+.assetSubmit {
+  color: black;
   background-color: grey;
   border-radius: 10px;
   font-size: 16px;
@@ -59,7 +60,12 @@ h4 {
   font-size: 14px;
   margin-bottom: 5px;
 }
+
 ::ng-deep #gdp-sectors {
   width: 400px;
   height: 200px;
+}
+
+img {
+  cursor: pointer
 }

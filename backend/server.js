@@ -1,6 +1,48 @@
 const app = require("./app");
 const debug = require("debug")("node-angular");
 const http = require("http");
+const cron = require('node-cron');
+const crontab = require('node-crontab');
+const stocks = require('./middleware/get-stocks');
+const commodities = require('./middleware/get-commodities');
+const bonds = require('./middleware/get-bonds')
+const companies = require('./middleware/get-company');
+const currencies = require('./middleware/get-currency');
+
+crontab.scheduleJob("00 18 * * 1,2,3,4,5" , function(){
+  stocks.getStocks();
+},{
+  schedule: true,
+  timezone: "America/New_York"
+});
+
+crontab.scheduleJob("45 01 * * 1,2,3,4,5,6" , function(){
+  commodities.getCommodities();
+},{
+  schedule: true,
+  timezone: "America/New_York"
+});
+
+crontab.scheduleJob("01 11 * * 1,2,3,4,5,6" , function(){
+  bonds.getBonds();
+},{
+  schedule: true,
+  timezone: "America/New_York"
+});
+
+crontab.scheduleJob("30 08 * * 5" , function(){
+  companies.getCompanies();
+},{
+  schedule: true,
+  timezone: "America/New_York"
+});
+
+crontab.scheduleJob("00 20 * * 0-5" , function(){
+  currencies.getCurrency();
+},{
+  schedule: true,
+  timezone: "America/New_York"
+});
 
 const normalizePort = val => {
   var port = parseInt(val, 10);

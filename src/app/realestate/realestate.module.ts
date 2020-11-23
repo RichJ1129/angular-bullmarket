@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { RealestateRoutingModule } from './realestate-routing.module';
-import { RealestateComponent } from './realestate.component';
+import {RealestateRoutingModule} from './realestate-routing.module';
+import {RealestateComponent} from './realestate.component';
 
 
 @NgModule({
@@ -12,4 +12,5 @@ import { RealestateComponent } from './realestate.component';
     RealestateRoutingModule
   ]
 })
-export class RealestateModule { }
+export class RealestateModule {
+}

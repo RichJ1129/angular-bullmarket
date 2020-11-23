@@ -12,6 +12,7 @@
     "nodemon": "^2.0.4"
   },
   "dependencies": {
+    "axios": "^0.20.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -19,7 +20,10 @@
     "jsonwebtoken": "^8.2.1",
     "mongoose": "^5.10.7",
     "mongoose-unique-validator": "^2.0.1",
+    "node-cron": "^2.0.3",
+    "node-crontab": "0.0.8",
     "multer": "^1.3.0",
+    "wikijs": "^6.0.1",
     "path": "^0.12.7"
   },
   "description": ""

@@ -6,28 +6,29 @@ mat-spinner {
   margin: auto;
 }
 
-mat-card{
+mat-card {
   margin-top: 10%;
 }
 
-.container{
+.container {
   text-align: center
 }
 
-.form-container{
+.form-container {
   width: 400px;
   margin: 75px auto 0px;
 }
 
-.form-field{
+.form-field {
   display: block
 }
 
-.login_welcome{
+.login_welcome {
   padding-top: 5%;
   font-size: 300%;
 }
-.sign_up{
+
+.sign_up {
   padding-top: 5%;
   font-size: 110%;
 }
