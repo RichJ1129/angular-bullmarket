@@ -9,4 +9,7 @@ export interface Country {
     interestRate: number;
     debtGDP: number;
     inflation: number;
+    bondSymbol: string;
+    urbanSymbol: string;
+    ruralSymbol: string;
   }

@@ -1,7 +1,8 @@
 <br>
 <h1 style="text-align: center">Stocks</h1>
 <hr>
-<div>
+<div class="row">
+  <div class="col-lg-8">
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="stockName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Company</th>
@@ -27,3 +28,9 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="['/stock-page', row.symbol]"></tr>
   </table>
 </div>
+  <div class="col-lg-4">
+    <br><br><br><br>
+    <app-investmentbox></app-investmentbox>
+  </div>
+</div>
+

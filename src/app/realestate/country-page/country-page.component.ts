@@ -75,7 +75,10 @@ export class CountryPageComponent implements OnInit {
             ruralPE: countryData.ruralPE,
             interestRate: countryData.interestRate,
             debtGDP: countryData.debtGDP,
-            inflation: countryData.inflation
+            inflation: countryData.inflation,
+            bondSymbol: countryData.bondSymbol,
+            urbanSymbol: countryData.urbanSymbol,
+            ruralSymbol: countryData.ruralSymbol
           };
           this.customizeCoordinates(this.countryName);
           this.findCountryCenter(countryData.capitalCity);

@@ -1,7 +1,8 @@
 <br>
 <h1 style="text-align: center">Bonds</h1>
 <hr>
-<div>
+<div class="row">
+  <div class="col-lg-8">
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="countryName">
       <th mat-header-cell *matHeaderCellDef> Country Name</th>
@@ -18,4 +19,9 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+</div>
+<div class="col-lg-4">
+  <br><br><br><br>
+  <app-investmentbox></app-investmentbox>
+</div>
 </div>

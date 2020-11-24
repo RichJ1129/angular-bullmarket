@@ -3,8 +3,9 @@ const jwt = require("jsonwebtoken");
 const Investment = require("../models/investment");
 const router = express.Router();
 
+
 router.get("",(req, res) => {
-  Investment.find({userID: req.query.userID},(error, data) => {
+  Investment.find({userID: req.query.userID, symbol: {'$ne':'DOLLAR'}},(error, data) => {
     if (error) {
       return next(error);
     } else {
@@ -12,6 +13,7 @@ router.get("",(req, res) => {
     }
   })
 })
+
 
 router.post("",(req,res,next) => {
   const investment = new Investment ({
