@@ -65,7 +65,6 @@ const country = [
     ['Ireland','Dublin','7000000','1475.87','16.06','1196.43','14.01', '-0.17','59', '1.00','IRLBOND','IRLUR','IRLRR'],
     ['Israel','Jerusalem','9000000','1062.84','34.28','816.80','33.95', '0.66','60', '0.80','ISRBOND','ISRUR','ISRRR'],
     ['Italy','Rome','60000000','726.42','26.32','544.91','20.82', '0.85','135', '0.50','ITABOND','ITAUR','ITARR'],
-    ['Ivory Coast','Yamoussoukro','26000000','623.14','0','197.82','0', '4.00','132', '2.70','CIVBOND','CIVUR','CIVRR'],
     ['Jamaica','Kingston','3000000','436.11','0','252.56','0', '0.50','103', '5.60','JAMBOND','JAMUR','JAMRR'],
     ['Japan','Tokyo','126000000','827.36','45.15','548.55','40.72', '0.01','237', '-0.20','JPNBOND','JPNUR','JPNRR'],
     ['Jordan','Amman','10000000','344.71','16.49','244.08','14', '4.68','92', '-0.60','JORBOND','JORUR','JORRR'],
@@ -73,7 +72,6 @@ const country = [
     ['Kenya','Nairobi','48000000','283.03','64.9','140.08','28.31', '12.02','57', '4.20','KENBOND','KENUR','KENRR'],
     ['Kuwait','Kuwait City','4000000','889.39','31.88','701.84','19.26', '1.50','15', '1.90','KWTBOND','KWTUR','KWTRR'],
     ['Kyrgyzstan','Bishkek','6500000','238.28','14.56','162.13','14.84', '5.00','54', '5.00','KGZBOND','KGZUR','KGZRR'],
-    ['Laos','Vientiane','7000000','628.50','0','335.58','0', '3.00','53', '5.10','LAOBOND','LAOUR','LAORR'],
     ['Lebanon','Beirut','7000000','803.92','18.71','405.54','17.87', '4.53','151', '120.00','LBNBOND','LBNUR','LBNRR'],
     ['Libya','Tripoli','7000000','494.32','0','302.08','0', '3.00','17', '1.30','LBYBOND','LBYUR','LBYRR'],
     ['Lithuania','Vilnius','3000000','521.52','25.51','348.13','22.85', '0.14','36', '1.30','LTUBOND','LTUUR','LTURR'],
@@ -130,6 +128,8 @@ const country = [
     ['Yemen','Sanaa','29000000','179.1','0','104.05','0', '27.00','63', '0.80','YEMBOND','YEMUR','YEMRR'],
     ['Zambia','Lusaka','17000000','142.33','0','125.02','0', '32.50','59', '15.70','ZMBBOND','ZMBUR','ZMBRR'],
     ['Zimbabwe','Harare','16000000','301.92','0','230.91','0', '35.00','53', '761.00','ZWEBOND','ZWEUR','ZWERR']
+    ['Côte d’Ivoire','Yamoussoukro','26000000','623.14','0','197.82','0', '4.00','132', '2.70','CIVBOND','CIVUR','CIVRR'],
+    ['Lao PDR','Vientiane','7000000','628.50','0','335.58','0', '3.00','53', '5.10','LAOBOND','LAOUR','LAORR'],
   ]
 
 
@@ -146,7 +146,10 @@ const country = [
       ruralPE: currentCountry[6],
       interestRate: currentCountry[7],
       debtGDP: currentCountry[8],
-      inflation: currentCountry[9]
+      inflation: currentCountry[9],
+      bondSymbol: currentCountry[10],
+      urbanSymbol: currentCountry[11],
+      ruralSymbol: currentCountry[12]
     });
 
     Country.count({countryName: currentCountry[0]}, function (err, count) {
@@ -163,7 +166,11 @@ const country = [
             ruralPE: country['ruralPE'],
             interestRate: country['interestRate'],
             debtGDP: country['debtGDP'],
-            inflation: country['inflation']}},
+            inflation: country['inflation'],
+            bondSymbol: country['bondSymbol'],
+            urbanSymbol: country['urbanSymbol'],
+            ruralSymbol: country['ruralSymbol']
+          }},{upsert:false},
           function (error, success) {
             if(error) {
               console.log(error);
