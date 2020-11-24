@@ -122,12 +122,12 @@ const markers: Marker[] = [
   { coordinates: [11.501346, 3.844119], attributes: { name: 'Yaounde' }, zoom: '28', center: [13.501346, 6.844119] },
   { coordinates: [-75.69812, 45.41117], attributes: { name: 'Ottawa' }, zoom: '2.75' , center: [0, 0]},
   { coordinates: [15.054325, 12.137752], attributes: { name: 'NDjamena' }, zoom: '18', center: [18.054325, 16.137752] },
-  { coordinates: [-70.673676, -33.447487], attributes: { name: 'Santiago' }, zoom: '7', center: [0, 0] }, //
+  { coordinates: [-70.673676, -33.447487], attributes: { name: 'Santiago' }, zoom: '7', center: [-70.673676, -39.447487] },
   { coordinates: [116.383331, 39.916668], attributes: { name: 'Beijing' }, zoom: '6', center: [0, 0] },
   { coordinates: [-74.063644, 4.624335], attributes: { name: 'Bogota' }, zoom: '20', center: [0, 0] },
   { coordinates: [15.223333, -4.303056], attributes: { name: 'Kinshasa' }, zoom: '30', center: [15.223333, -1.303056] },
   { coordinates: [-84.087502, 9.934739], attributes: { name: 'San Jose' }, zoom: '70', center: [0, 0] },
-  { coordinates: [15.966568, 45.815399], attributes: { name: 'Zagreb' }, zoom: '45', center: [0, 0] }, //
+  { coordinates: [15.966568, 45.815399], attributes: { name: 'Zagreb' }, zoom: '45', center: [15.966568, 44.815399] },
   { coordinates: [33.36667, 35.16667], attributes: { name: 'Nicosia' }, zoom: '100', center: [0, 0] },
   { coordinates: [-82.366592, 23.113592], attributes: { name: 'Havana' }, zoom: '41', center: [-80.366592, 21.113592] },
   { coordinates: [14.418540, 50.073658], attributes: { name: 'Prague' }, zoom: '42', center: [0, 0] },
@@ -140,39 +140,39 @@ const markers: Marker[] = [
   { coordinates: [24.753574, 59.436962], attributes: { name: 'Tallinn' }, zoom: '40', center: [0, 0] },
   { coordinates: [38.763611, 9.005401], attributes: { name: 'Addis Ababa' }, zoom: '20', center: [0, 0] },
   { coordinates: [24.945831, 60.192059], attributes: { name: 'Helsinki' }, zoom: '42', center: [0, 0] },
-  { coordinates: [2.349014, 48.864716], attributes: { name: 'Paris' }, zoom: '25', center: [0, 0] }, //
+  { coordinates: [2.349014, 48.864716], attributes: { name: 'Paris' }, zoom: '23', center: [2.349014, 46.864716] },
   { coordinates: [44.783333, 41.716667], attributes: { name: 'Tbilisi' }, zoom: '50', center: [0, 0] },
-  { coordinates: [13.404954, 52.520008], attributes: { name: 'Berlin' }, zoom: '25', center: [0, 0] }, //
+  { coordinates: [13.404954, 52.520008], attributes: { name: 'Berlin' }, zoom: '25', center: [13.404954, 51.520008] },
   { coordinates: [-0.181784, 5.589254], attributes: { name: 'Accra' }, zoom: '42', center: [-0.181784, 7.589254] },
   { coordinates: [23.727539, 37.983810], attributes: { name: 'Athens' }, zoom: '35', center: [0, 0] },
-  { coordinates: [-90.522713, 14.628434], attributes: { name: 'Guatemala City' }, zoom: '53', center: [0, 0] }, //
+  { coordinates: [-90.522713, 14.628434], attributes: { name: 'Guatemala City' }, zoom: '53', center: [-90.522713, 15.628434] },
   { coordinates: [-13.712222, 9.509167], attributes: { name: 'Conakry' }, zoom: '42', center: [-10.712222, 9.509167] },
   { coordinates: [-87.202438, 14.081999], attributes: { name: 'Tegucigalpa' }, zoom: '55', center: [0, 0] },
   { coordinates: [19.040236, 47.497913], attributes: { name: 'Budapest' }, zoom: '50', center: [0, 0] },
-  { coordinates: [-21.827774, 64.128288], attributes: { name: 'Reykjavik' }, zoom: '32', center: [0, 0] }, //
-  { coordinates: [77.216721, 28.644800], attributes: { name: 'New Delhi' }, zoom: '10', center: [0, 0] }, //
-  { coordinates: [106.798553, -6.225588], attributes: { name: 'Jakarta' }, zoom: '10', center: [0, 0] }, //
-  { coordinates: [51.404343, 35.715298], attributes: { name: 'Tehran' }, zoom: '14', center: [0, 0] }, //
+  { coordinates: [-21.827774, 64.128288], attributes: { name: 'Reykjavik' }, zoom: '32', center: [-19.827774, 65.128288] },
+  { coordinates: [77.216721, 28.644800], attributes: { name: 'New Delhi' }, zoom: '10', center: [77.216721, 23.644800] },
+  { coordinates: [106.798553, -6.225588], attributes: { name: 'Jakarta' }, zoom: '10', center: [116.798553, -6.225588] },
+  { coordinates: [51.404343, 35.715298], attributes: { name: 'Tehran' }, zoom: '14', center: [53.404343, 30.715298] },
   { coordinates: [44.361488, 33.312805], attributes: { name: 'Baghdad' }, zoom: '35', center: [0, 0] },
   { coordinates: [-6.266155, 53.350140], attributes: { name: 'Dublin' }, zoom: '47', center: [0, 0] },
   { coordinates: [35.217018, 31.771959], attributes: { name: 'Jerusalem' }, zoom: '60', center: [0, 0] },
   { coordinates: [12.496366, 41.902782], attributes: { name: 'Rome' }, zoom: '23', center: [0, 0] },
   { coordinates: [-5.296440, 6.811558], attributes: { name: 'Yamoussoukro' }, zoom: '42', center: [0, 0] },
   { coordinates: [-76.79358, 17.99702], attributes: { name: 'Kingston' }, zoom: '70', center: [0, 0] },
-  { coordinates: [139.839478, 35.652832], attributes: { name: 'Tokyo' }, zoom: '17', center: [0, 0] }, //
-  { coordinates: [35.930359, 31.963158], attributes: { name: 'Amman' }, zoom: '50', center: [0, 0] }, //
+  { coordinates: [139.839478, 35.652832], attributes: { name: 'Tokyo' }, zoom: '17', center: [139.839478, 38.652832] },
+  { coordinates: [35.930359, 31.963158], attributes: { name: 'Amman' }, zoom: '50', center: [37.930359, 30.963158] },
   { coordinates: [71.44598, 51.1801], attributes: { name: 'Nur-Sultan' }, zoom: '10', center: [0, 0] },
-  { coordinates: [36.817223, -1.286389], attributes: { name: 'Nairobi' }, zoom: '30', center: [0, 0] }, //
+  { coordinates: [36.817223, -1.286389], attributes: { name: 'Nairobi' }, zoom: '30', center: [36.817223, -0.286389] },
   { coordinates: [47.990341, 29.378586], attributes: { name: 'Kuwait City' }, zoom: '100', center: [0, 0] },
-  { coordinates: [74.582748, 42.882004], attributes: { name: 'Bishkek' }, zoom: '42', center: [0, 0] }, //
+  { coordinates: [74.582748, 42.882004], attributes: { name: 'Bishkek' }, zoom: '42', center: [74.582748, 40.882004] },
   { coordinates: [102.630867, 17.974855], attributes: { name: 'Vientiane' }, zoom: '38', center: [0, 0] },
   { coordinates: [35.495480, 33.888630], attributes: { name: 'Beirut' }, zoom: '90', center: [0, 0] },
   { coordinates: [13.180161, 32.885353], attributes: { name: 'Tripoli' }, zoom: '20', center: [17.180161, 25.885353] },
-  { coordinates: [25.279652, 54.687157], attributes: { name: 'Vilnius' }, zoom: '50', center: [0, 0] }, //
+  { coordinates: [25.279652, 54.687157], attributes: { name: 'Vilnius' }, zoom: '50', center: [25.279652, 54.787157] },
   { coordinates: [47.53613, -18.91368], attributes: { name: 'Antananarivo' }, zoom: '22', center: [0, 0] },
   { coordinates: [33.777218, -13.783934], attributes: { name: 'Lilongwe' }, zoom: '38', center: [0, 0] },
-  { coordinates: [101.693207, 3.140853], attributes: { name: 'Kuala Lumpur' }, zoom: '42', center: [0, 0] }, //
-  { coordinates: [-99.133209, 19.432608], attributes: { name: 'Mexico City' }, zoom: '15', center: [0, 0] }, //
+  { coordinates: [101.693207, 3.140853], attributes: { name: 'Kuala Lumpur' }, zoom: '44', center: [0, 0] },
+  { coordinates: [-99.133209, 19.432608], attributes: { name: 'Mexico City' }, zoom: '15', center: [-100.133209, 22.432608] },
   { coordinates: [106.918556, 47.921230], attributes: { name: 'Ulanbaatar' }, zoom: '12', center: [0, 0] },
   { coordinates: [-6.841650, 34.020882], attributes: { name: 'Rabat' }, zoom: '20', center: [-6.841650, 28.020882] },
   { coordinates: [17.08323, -22.55941], attributes: { name: 'Windhoek' }, zoom: '23', center: [0, 0] },
