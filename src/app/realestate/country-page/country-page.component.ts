@@ -28,6 +28,9 @@ export class CountryPageComponent implements OnInit {
 
   customizeCoordinates(countryName: string): void {
     for (const country of mapsData.world.features) {
+      if (countryName === 'South Korea'){
+        countryName = 'Korea';
+      }
       if (countryName === country.properties.name) {
         this.countryMap = this.realEstateService.getCountryBorders(countryName, country.geometry.coordinates);
       }
@@ -46,6 +49,10 @@ export class CountryPageComponent implements OnInit {
     for (const capital of this.markers){
       if (capital.attributes.name === countryCapital) {
         this.countryCenter = capital.coordinates;
+        const defaultCenter = [0, 0];
+        if (capital.center[0] !== defaultCenter[0] && capital.center[1] !== defaultCenter[1]) {
+          this.countryCenter = capital.center;
+        }
         this.capitalMarker = [capital];
         this.countryZoom = capital.zoom;
       }
