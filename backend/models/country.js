@@ -40,6 +40,18 @@ const CountrySchema = mongoose.Schema({
   inflation: {
     type: Number,
     required: false
+  },
+  bondSymbol: {
+    type: String,
+    required: false
+  },
+  urbanSymbol: {
+    type: String,
+    required: false
+  },
+  ruralSymbol: {
+    type: String,
+    required: false
   }
 });
 
