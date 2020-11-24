@@ -16,6 +16,10 @@ const CommoditySchema = mongoose.Schema({
   commodityUnit: {
     type: String,
     required: true,
+  },
+  closeDate: {
+    type: Array,
+    required: true
   }
 });
 

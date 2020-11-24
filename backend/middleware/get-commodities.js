@@ -57,6 +57,7 @@ function apiCommodityCall (curr_commodity) {
           symbol: curr_commodity[0],
           etfPrice: apiResponse['close'],
           commodityUnit: curr_commodity[2],
+          closeDate: new Date(Date.now())
         });
         Commodity.count({commodityName: curr_commodity[1]}, function (err, count) {
           if (count > 0){

@@ -43,7 +43,8 @@ import { RealEstateComponent } from './realestate/realestate.component';
 import { CountryPageComponent } from './realestate/country-page/country-page.component';
 import {DxVectorMapModule} from 'devextreme-angular';
 import { InvestmentBoxComponent } from './investmentbox/investmentbox.component'
-import { InvestmentBoxService } from './investmentbox/investmentbox.service'
+import { InvestmentBoxService } from './investmentbox/investmentbox.service';
+import { CommoditiesPageComponent } from './commodities/commodities-page/commodities-page.component'
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { InvestmentBoxService } from './investmentbox/investmentbox.service'
     RealEstateTableComponent,
     RealEstateComponent,
     CountryPageComponent,
-    InvestmentBoxComponent
+    InvestmentBoxComponent,
+    CommoditiesPageComponent
 
   ],
   imports: [
