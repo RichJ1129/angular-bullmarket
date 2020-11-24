@@ -16,4 +16,15 @@ export class CommodityService {
     console.log(this.http.get(backendURL + '/commodities'));
     return this.http.get(backendURL + '/commodities');
   }
+
+  getOneCommodity(commoditySymbol: string) {
+    return this.http.get<{
+      commodityName: string;
+      symbol: string;
+      etfPrice: Array<number>;
+      commodityUnit: string;
+      closeDate: Array<string>;
+      pERatio: Array<number>;
+    }>(backendURL + '/commodities/' + commoditySymbol);
+  }
 }
