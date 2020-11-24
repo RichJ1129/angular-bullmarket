@@ -12,9 +12,6 @@ import { StockService } from 'src/app/stocks/stock.service';
 import { Stock } from 'src/app/stocks/stock.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { AuthData } from 'src/app/auth/auth-data.model';
-import { FilteringEventArgs } from '@syncfusion/ej2-dropdowns';
-import { EmitType } from '@syncfusion/ej2-base';
-import { Query } from '@syncfusion/ej2-data';
 import { InvestmentList } from './investmentList';
 
 //User ID Interface
