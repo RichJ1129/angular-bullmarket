@@ -10,6 +10,7 @@ import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js';
 import {ProfileService} from '../profile.service';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../auth/auth.service";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-profile-animalSelector',
@@ -22,44 +23,52 @@ export class ProfileAnimalSelectorComponent implements OnInit {
 
   animalList: any = ['', 'Bear', 'Bull'];
   selectedAnimal = '';
-  isValidAnimal = false;
   showMessage = false;
+  showSuccess = false;
 
+  userAnimalObject;
   userAnimal;
   userName;
 
   constructor(private authService: AuthService, private profileService: ProfileService) {
-    this.userAnimal = this.profileService.getAnimal(this.userName);
+    this.userAnimalObject = this.profileService.getAnimal()
+      .subscribe(val => {this.userAnimal = val;})
+
     this.userName = this.authService.getUserName();
   }
 
   ngOnInit(): void {
   }
 
+
   selectChangeHandler(event: any) {
     this.selectedAnimal = event.target.value;
-
-    //Validating for future "validateChoice()" calls
-    if (this.selectedAnimal != '' && this.selectedAnimal != this.userAnimal)
-      this.isValidAnimal = true;
-    else
-      this.isValidAnimal = false;
+    this.showSuccess = false;
+    this.showMessage = false;
   }
 
   updateAnimal() {
     if (!this.validateChoice())
       return;
     this.profileService.updateAnimal(this.userName, this.selectedAnimal);
-  }
+    location.reload();
+    }
+
 
   validateChoice() {
-    //Choose whether to display message or not
-    if (this.isValidAnimal)
+    //Validating for future "validateChoice()" calls
+    if (this.selectedAnimal != '' && this.selectedAnimal != this.userAnimal) {
+      this.showSuccess = true;
       this.showMessage = false;
-    else
+      console.log(this.selectedAnimal + '  ' + this.userAnimal)
+    }
+    else {
+      this.showSuccess = false;
       this.showMessage = true;
+    }
 
-    //Validate if the update request can go through or not
-    return this.isValidAnimal;
+    //The success boolean also validates whether an animal can be updated or not
+    return this.showSuccess;
   }
+
 }

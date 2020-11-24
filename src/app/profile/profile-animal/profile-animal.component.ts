@@ -16,17 +16,16 @@ import {AuthService} from "../../auth/auth.service";
 export class ProfileAnimalComponent implements OnInit {
 
   userAnimal;
+  animalDecider;
 
   constructor(private profileService: ProfileService, private authService: AuthService) {
-    this.userAnimal = this.profileService.userAnimal;
-  }
+    this.userAnimal = this.profileService.getAnimal()
+      .subscribe(val => {this.animalDecider = val;
+        })
+    }
+
 
   ngOnInit(): void {
-  }
-
-  test()
-  {
-    console.log(this.userAnimal);
   }
 
 }

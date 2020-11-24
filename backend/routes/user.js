@@ -55,23 +55,15 @@ router.post("/updateAnimal", (req, res, next) => {
     });
 });
 
-//Retrieve the user animal
-router.post("/getAnimal", (req, res, next) => {
-  User.find({userName: req.body.userName}, {animal: 1, _id: 0})
-    .then(user => {
-      if (!user) {
-        return res.status(401).json({
-          message: "Auth failed"
-        });
-      }
-      res.status(200).json({
-      });
-    })
-    .catch(err => {
-      return res.status(401).json({
-        message: "Auth failed"
-      });
-    });
+//Get users current animal
+router.get("/getAnimal/:email", (req, res, next) => {
+  User.findOne({email: req.params.email}).then( userAnimal => {
+    if (userAnimal) {
+      res.status(200).json(userAnimal['animal']);
+    } else {
+      res.status(404).json({ message: "User's Animal not found here!" });
+    }
+  });
 });
 
 router.post("/login", (req, res, next) => {
