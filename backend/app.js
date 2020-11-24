@@ -11,7 +11,6 @@ const investmentRoutes = require("./routes/investment");
 const currencyRoutes = require('./routes/currency');
 
 const app = express();
-process.env.MONGO_ATLAS = "mongodb+srv://josephri:TempPass@cluster0.murwd.mongodb.net/bull_market?retryWrites=true&w=majority";
 mongoose
   .connect(
     process.env.MONGO_ATLAS //Replace with mongo database url if running locally
