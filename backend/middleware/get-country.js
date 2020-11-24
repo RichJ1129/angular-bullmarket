@@ -128,7 +128,7 @@ const country = [
     ['Yemen','Sanaa','29000000','179.1','0','104.05','0', '27.00','63', '0.80','YEMBOND','YEMUR','YEMRR'],
     ['Zambia','Lusaka','17000000','142.33','0','125.02','0', '32.50','59', '15.70','ZMBBOND','ZMBUR','ZMBRR'],
     ['Zimbabwe','Harare','16000000','301.92','0','230.91','0', '35.00','53', '761.00','ZWEBOND','ZWEUR','ZWERR']
-    ['Côte d’Ivoire','Yamoussoukro','26000000','623.14','0','197.82','0', '4.00','132', '2.70','CIVBOND','CIVUR','CIVRR'],
+    ['Côte d\'Ivoire','Yamoussoukro','26000000','623.14','0','197.82','0', '4.00','132', '2.70','CIVBOND','CIVUR','CIVRR'],
     ['Lao PDR','Vientiane','7000000','628.50','0','335.58','0', '3.00','53', '5.10','LAOBOND','LAOUR','LAORR'],
   ]
 

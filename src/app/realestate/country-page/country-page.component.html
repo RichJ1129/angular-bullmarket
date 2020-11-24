@@ -22,14 +22,16 @@
         id="vector-map"
         [center]="countryCenter"
         [zoomFactor]="countryZoom"
-        [zoomingEnabled]="false">
+        [zoomingEnabled]="false"
+        [panningEnabled]="false">
         <dxo-background
           borderColor= ''></dxo-background>
         <dxo-tooltip
           [enabled]="true"
           [customizeTooltip]="customizeTooltip"></dxo-tooltip>
         <dxi-layer
-          [dataSource]="countryMap"></dxi-layer>
+          [dataSource]="countryMap"
+          borderColor="#030303"></dxi-layer>
         <dxi-layer [dataSource]="capitalMarker"></dxi-layer>
         <dxo-control-bar [enabled]="false"></dxo-control-bar>
       </dx-vector-map>
