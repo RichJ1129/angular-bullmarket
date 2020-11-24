@@ -4,6 +4,7 @@ import {DxVectorMapComponent} from 'devextreme-angular';
 
 import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js';
 import {Service} from './home.service';
+import {ProfileService} from "../profile/profile.service";
 
 @Component({
   selector: 'app-home',
@@ -15,10 +16,14 @@ import {Service} from './home.service';
 export class HomeComponent implements OnInit {
   worldMap: any = mapsData.world;
   gdp: Object;
+  animalDecider;
 
-  constructor(service: Service) {
+  constructor(service: Service, private profileService: ProfileService) {
     this.gdp = service.getGDP();
     this.customizeLayers = this.customizeLayers.bind(this);
+    this.profileService.getAnimal()
+      .subscribe(val => {this.animalDecider = val;
+      })
   }
 
   customizeTooltip(arg) {

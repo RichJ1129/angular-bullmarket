@@ -37,6 +37,11 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {InvestmentService} from './investment/investment.service';
 import { CurrencyPageComponent } from './currency/currency-page/currency-page.component';
 import {CurrencyTableComponent} from './currency/currency-table/currency-table.component';
+import {ProfileComponent} from './profile/profile.component'
+import {ProfileAnimalComponent} from "./profile/profile-animal/profile-animal.component";
+import {ProfileAnimalSelectorComponent} from "./profile/profile-animalSelector/profile-animalSelector.component";
+import {ProfileFeedAnimalComponent} from "./profile/profile-feedAnimal/profile-feedAnimal.component";
+import {ProfileAnimalPlayComponent} from "./profile/profile-animalPlay/profile-animalPlay.component";
 import { RealEstateTableComponent } from './realestate/realestate-table/realestate-table.component';
 import { RealEstateService } from './realestate/realestate.service';
 import { RealEstateComponent } from './realestate/realestate.component';
@@ -44,7 +49,6 @@ import { CountryPageComponent } from './realestate/country-page/country-page.com
 import {DxVectorMapModule} from 'devextreme-angular';
 import { InvestmentBoxComponent } from './investmentbox/investmentbox.component'
 import { InvestmentBoxService } from './investmentbox/investmentbox.service'
-
 
 @NgModule({
   declarations: [
@@ -55,6 +59,11 @@ import { InvestmentBoxService } from './investmentbox/investmentbox.service'
     BondTableComponent,
     StockTableComponent,
     InvestmentComponent,
+    ProfileComponent,
+    ProfileAnimalComponent,
+    ProfileAnimalSelectorComponent,
+    ProfileFeedAnimalComponent,
+    ProfileAnimalPlayComponent,
     StockPageComponent,
     CurrencyTableComponent,
     CurrencyPageComponent,

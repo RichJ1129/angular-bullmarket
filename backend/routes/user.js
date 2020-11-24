@@ -8,7 +8,8 @@ const router = express.Router();
 router.post("/signup", (req, res, next) => {
   const user = new User({
     userName: req.body.userName,
-    email: req.body.email
+    email: req.body.email,
+    animal: "Bear"
   });
   user.save().then(
     result => {
@@ -31,6 +32,36 @@ router.get("/:email", (req, res, next) => {
       res.status(200).json(email);
     } else {
       res.status(404).json({ message: "User not found!" });
+    }
+  });
+});
+
+//Update user animal
+router.post("/updateAnimal", (req, res, next) => {
+  User.updateOne({userName: req.body.userName}, {$set: {animal: req.body.userAnimal}})
+    .then(user => {
+      if (!user) {
+        return res.status(401).json({
+          message: "Auth failed"
+        });
+      }
+      res.status(200).json({
+      });
+    })
+    .catch(err => {
+      return res.status(401).json({
+        message: "Auth failed"
+      });
+    });
+});
+
+//Get users current animal
+router.get("/getAnimal/:email", (req, res, next) => {
+  User.findOne({email: req.params.email}).then( userAnimal => {
+    if (userAnimal) {
+      res.status(200).json(userAnimal['animal']);
+    } else {
+      res.status(404).json({ message: "User's Animal not found here!" });
     }
   });
 });

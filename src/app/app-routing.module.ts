@@ -14,6 +14,7 @@ import {AuthGuard} from './auth/auth.guard';
 import { StockPageComponent } from './stocks/stock-page/stock-page.component';
 import { CurrencyTableComponent } from './currency/currency-table/currency-table.component';
 import { CurrencyPageComponent } from './currency/currency-page/currency-page.component';
+import {ProfileComponent} from "./profile/profile.component";
 
 const routes: Routes = [
   {
@@ -62,6 +63,11 @@ const routes: Routes = [
   {
     path: 'investment',
     component: InvestmentComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
     canActivate: [AuthGuard]
   },
   {

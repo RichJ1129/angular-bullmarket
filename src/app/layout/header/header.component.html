@@ -3,6 +3,7 @@
   <br>
   <div style="display: flex; justify-content: flex-end">
     <a *ngIf="userIsAuthenticated" style="font-size: 16px; text-align:right; color: black;" routerLink="/investment"> Investments|</a>
+    <a *ngIf="userIsAuthenticated"  style="font-size: 16px; text-align:right; color: black;" routerLink="/profile">Profile|</a>
     <a *ngIf="userIsAuthenticated"  style="font-size: 16px; text-align:right; color: black;" (click)="onLogout()">Logout</a>
   </div>
   <div class="col-12" *ngIf="userIsAuthenticated">

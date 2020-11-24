@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="form-group">
+      <label>Choose an Animal:</label>
+      <select class="form-control" (change) ="selectChangeHandler($event)">
+        <option *ngFor="let animal of animalList">{{animal}}</option>
+      </select>
+    </div>
+
+    <button class="btn btn-primary" type="submit" (click)="updateAnimal()">Submit</button>
+</div>
+<h6 [hidden]="!showMessage">*Please select a valid animal or one that is not your current animal.</h6>
+<h6 [hidden] ="!showSuccess"> Animal successfully updated!</h6>
