@@ -17,12 +17,14 @@ import { EmitType } from '@syncfusion/ej2-base';
 import { Query } from '@syncfusion/ej2-data';
 import { InvestmentList } from './investmentList';
 
+//User ID Interface
 interface IDAuthData{
   _id: string;
   email: string;
   userName: string;
 };
 
+//Symbol + Type Lookup Interface
 interface InvestmentForm {
   symbol: string;
   name: string;
@@ -43,8 +45,7 @@ export class InvestmentBoxComponent {
   userObject: any;
   filteredInvestments: Observable<InvestmentForm[]>;
   
-
-
+  //Get UserID and Setup Services
     constructor(private investmentApi: InvestmentBoxService, private stockApi: StockService) {
         this.investmentApi.getUserID().subscribe(data => {
           this.userObject=data;
@@ -53,36 +54,19 @@ export class InvestmentBoxComponent {
 
     }
 
+  //Filter Search Query - Source Angular Docs AutoComplete
     private _filter(name: string): InvestmentForm[] {
       const filterValue = name.toLowerCase();
-  
       return InvestmentList.filter(investment => investment.name.toLowerCase().indexOf(filterValue) === 0);
     }
 
-
+  //Attach Search Query to InvestmentForm object
     displayFn(investment: InvestmentForm): string {
       return investment && investment.name ? investment.name : '';
     }
 
-   /* public data: { [key: string]: Object }[] = [
-      { Id: "s3", Country: "Alaska" },
-      { Id: "s1", Country: "California" },
-      { Id: "s2", Country: "Florida" },
-      { Id: "s4", Country: "Georgia" }];
-  // maps the appropriate column to fields property
-  public fields: Object = { text: "Country", value: "Id" };
-  // set the placeholder to the DropDownList input
-  //public text: string = "Select a country";
-  //Bind the filter event
-  public onFiltering: EmitType<FilteringEventArgs> =  (e: FilteringEventArgs) => {
-      let query = new Query();
-      //frame the query based on search string with filter type.
-      query = (e.text != "") ? query.where("Country", "startswith", e.text, true) : query;
-      //pass the filter data source, filter query to updateData method.
-      e.updateData(this.data, query);
-  };*/
-
-
+  
+//Filter Search Query - Source Angular Docs AutoComplete
   ngOnInit() {
     this.filteredInvestments = this.myControl.valueChanges
     .pipe(
@@ -98,12 +82,13 @@ export class InvestmentBoxComponent {
     var amount = 0;
     console.log("Buy ", shares, " shares of ", name);
 
+    //Retrieve Symbol, Type, Name
     var result = InvestmentList.filter(obj => {
       return obj.name === name;
     })
 
-    console.log(result[0].type);
-
+    if(result[0].type=="Stock"){
+      //Retrieve Stock Information
     this.stockApi.getOneStock(result[0].symbol).subscribe(stockData2 => {
       this.stock2 = {
         stockName: stockData2.stockName,
@@ -113,17 +98,78 @@ export class InvestmentBoxComponent {
         closeDate: stockData2.closeDate,
         pERatio: stockData2.pERatio
       };
-      //Check Incoming Information
+      /*Check Incoming Information
       console.log("investmentData: ")
       console.log(this.stock2.price[0]);
       console.log(this.UID);
+      console.log("currency change of: ", amount);*/
 
+      // Update Cash Balance
       amount = -Math.abs((stockData2.price[0] * shares))
-      console.log("currency change of: ", amount);
       this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
 
+      // Buy Stock
       this.investmentApi.buyInvestment(this.UID,this.stock2.stockName,this.stock2.symbol,this.stock2.price[0],shares,'b','stock');
+    
     });
+    }
+    else if(result[0].type=="Bond"){
+      console.log(result[0].type);
+      console.log(result[0].name);
+      console.log(result[0].symbol);
+
+    //Retrieve Information
+
+
+    //Update Currency
+
+
+    //Sell Investment
+
+
+    }
+    else if(result[0].type=="Currency"){
+      console.log(result[0].type);
+      console.log(result[0].name);
+      console.log(result[0].symbol);
+
+    //Retrieve Information
+
+
+    //Update Currency
+
+
+    //Sell Investment
+
+    }
+    else if(result[0].type=="Commodity"){
+      console.log(result[0].type);
+      console.log(result[0].name);
+      console.log(result[0].symbol);
+
+    //Retrieve Information
+
+
+    //Update Currency
+
+
+    //Sell Investment
+
+    }
+    else if(result[0].type=="Real Estate"){
+      console.log(result[0].type);
+      console.log(result[0].name);
+      console.log(result[0].symbol);
+
+    //Retrieve Information
+
+
+    //Update Currency
+
+
+    //Sell Investment
+
+    }
   }
 
 
@@ -131,6 +177,14 @@ export class InvestmentBoxComponent {
     var currency = "DOLLAR";
     var amount = 0;
     console.log("Sell ", shares, " shares of ", symbol);
+
+    //Retrieve Symbol, Type, Name
+    var result = InvestmentList.filter(obj => {
+      return obj.name === name;
+    })
+
+    if(result[0].type=="Stock"){
+    //Retrieve Stock Information
     this.stockApi.getOneStock(symbol).subscribe(stockData2 => {
       this.stock2 = {
         stockName: stockData2.stockName,
@@ -140,18 +194,77 @@ export class InvestmentBoxComponent {
         closeDate: stockData2.closeDate,
         pERatio: stockData2.pERatio
       };
-      //Check Incoming Information
+      /*Check Incoming Information
       console.log("investmentData: ")
       console.log(this.stock2.price[0]);
       console.log(this.UID);
+      console.log("currency change of: ", amount); */
 
+      //Update Currency
       amount = (stockData2.price[0] * shares)
-      console.log("currency change of: ", amount);
-
       this.investmentApi.addBaseCurrency(this.UID,currency,amount);
 
+      //Sell Investment
       this.investmentApi.sellInvestment(this.UID,this.stock2.stockName,this.stock2.symbol,this.stock2.price[0],-Math.abs(shares),'s','stock');
     });
+  }
+  else if(result[0].type=="Bond"){
+    console.log(result[0].type);
+    console.log(result[0].name);
+    console.log(result[0].symbol);
+
+    //Retrieve Information
+
+
+    //Update Currency
+
+
+    //Sell Investment
+
+  }
+  else if(result[0].type=="Currency"){
+    console.log(result[0].type);
+    console.log(result[0].name);
+    console.log(result[0].symbol);
+
+    //Retrieve Information
+
+
+    //Update Currency
+
+
+    //Sell Investment
+
+  }
+  else if(result[0].type=="Commodity"){
+    console.log(result[0].type);
+    console.log(result[0].name);
+    console.log(result[0].symbol);
+
+    //Retrieve Information
+
+
+    //Update Currency
+
+
+    //Sell Investment
+
+  }
+  else if(result[0].type=="Real Estate"){
+    console.log(result[0].type);
+    console.log(result[0].name);
+    console.log(result[0].symbol);
+
+    //Retrieve Information
+
+
+    //Update Currency
+
+
+    //Sell Investment
+
+  }
+  
   }
 
  
