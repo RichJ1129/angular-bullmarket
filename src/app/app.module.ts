@@ -33,8 +33,6 @@ import { ChartsModule } from 'ng2-charts';
 import { DatePipe } from '@angular/common';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { InvestmentBuyButtonComponent } from './investment/investment-button-buy/investment-button-buy.component'
-import { InvestmentPageComponent } from './investment/investment-page/investment-page.component'
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {InvestmentService} from './investment/investment.service';
 import { CurrencyPageComponent } from './currency/currency-page/currency-page.component';
@@ -44,6 +42,13 @@ import {ProfileAnimalComponent} from "./profile/profile-animal/profile-animal.co
 import {ProfileAnimalSelectorComponent} from "./profile/profile-animalSelector/profile-animalSelector.component";
 import {ProfileFeedAnimalComponent} from "./profile/profile-feedAnimal/profile-feedAnimal.component";
 import {ProfileAnimalPlayComponent} from "./profile/profile-animalPlay/profile-animalPlay.component";
+import { RealEstateTableComponent } from './realestate/realestate-table/realestate-table.component';
+import { RealEstateService } from './realestate/realestate.service';
+import { RealEstateComponent } from './realestate/realestate.component';
+import { CountryPageComponent } from './realestate/country-page/country-page.component';
+import {DxVectorMapModule} from 'devextreme-angular';
+import { InvestmentBoxComponent } from './investmentbox/investmentbox.component'
+import { InvestmentBoxService } from './investmentbox/investmentbox.service'
 
 @NgModule({
   declarations: [
@@ -60,10 +65,13 @@ import {ProfileAnimalPlayComponent} from "./profile/profile-animalPlay/profile-a
     ProfileFeedAnimalComponent,
     ProfileAnimalPlayComponent,
     StockPageComponent,
-    InvestmentBuyButtonComponent,
-    InvestmentPageComponent,
     CurrencyTableComponent,
-    CurrencyPageComponent
+    CurrencyPageComponent,
+    RealEstateTableComponent,
+    RealEstateComponent,
+    CountryPageComponent,
+    InvestmentBoxComponent
+
   ],
   imports: [
     BrowserModule,
@@ -86,7 +94,8 @@ import {ProfileAnimalPlayComponent} from "./profile/profile-animalPlay/profile-a
     MatTableModule,
     MatSortModule,
     ChartsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    DxVectorMapModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
@@ -94,7 +103,9 @@ import {ProfileAnimalPlayComponent} from "./profile/profile-animalPlay/profile-a
     CommodityService,
     BondService,
     DatePipe,
-    InvestmentService
+    InvestmentService,
+    RealEstateService,
+    InvestmentBoxService
   ],
   bootstrap: [AppComponent]
 })

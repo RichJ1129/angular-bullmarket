@@ -1,6 +1,8 @@
-<h1>Commodities</h1>
+<br>
+<h1 style="text-align: center">Commodities</h1>
 <hr>
-<div>
+<div class="row">
+  <div class="col-lg-8">
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="commodityName">
       <th mat-header-cell *matHeaderCellDef> Commodity Name</th>
@@ -22,3 +24,8 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>
+  <div class="col-lg-4">
+    <br><br><br><br>
+    <app-investmentbox></app-investmentbox>
+  </div>
+  </div>

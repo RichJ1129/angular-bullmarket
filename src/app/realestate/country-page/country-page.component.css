@@ -1,0 +1,14 @@
+.mat-form-field{
+  width:75% !important;
+  font-size: 10px;
+}
+
+.stock-card {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+
+::ng-deep #vector-map {
+  height: 500px;
+}
