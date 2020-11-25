@@ -13,6 +13,9 @@ import { Stock } from 'src/app/stocks/stock.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { AuthData } from 'src/app/auth/auth-data.model';
 import { InvestmentList } from './investmentList';
+import { RealEstateService } from 'src/app/realestate/realestate.service';
+import { Country } from 'src/app/realestate/country.model';
+
 
 //User ID Interface
 interface IDAuthData{
@@ -26,6 +29,7 @@ interface InvestmentForm {
   symbol: string;
   name: string;
   type: string;
+  country: string;
 }
 
 @Component({
@@ -41,9 +45,13 @@ export class InvestmentBoxComponent {
   UID: string;
   userObject: any;
   filteredInvestments: Observable<InvestmentForm[]>;
+  country: Country;
+  countryname: string;
+  realEstatePrice: number;
+  tempvar: string;
   
   //Get UserID and Setup Services
-    constructor(private investmentApi: InvestmentBoxService, private stockApi: StockService) {
+    constructor(private investmentApi: InvestmentBoxService, private stockApi: StockService, private countryApi: RealEstateService) {
         this.investmentApi.getUserID().subscribe(data => {
           this.userObject=data;
           this.UID = this.userObject._id;
@@ -95,13 +103,8 @@ export class InvestmentBoxComponent {
         closeDate: stockData2.closeDate,
         pERatio: stockData2.pERatio
       };
-      /*Check Incoming Information
-      console.log("investmentData: ")
-      console.log(this.stock2.price[0]);
-      console.log(this.UID);
-      console.log("currency change of: ", amount);*/
 
-      // Update Cash Balance
+      // Update Currency
       amount = -Math.abs((stockData2.price[0] * shares))
       this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
 
@@ -114,16 +117,35 @@ export class InvestmentBoxComponent {
       console.log(result[0].type);
       console.log(result[0].name);
       console.log(result[0].symbol);
+      console.log(result[0].country);
+      this.countryname = result[0].country;
 
     //Retrieve Information
+    this.countryApi.getOneCountry(this.countryname).subscribe(countryData => {
+      this.country = {
+        countryName: countryData.countryName,
+        capitalCity: countryData.capitalCity,
+        population: countryData.population,
+        urbanRent: countryData.urbanRent,
+        urbanPE: countryData.urbanPE,
+        ruralRent: countryData.ruralRent,
+        ruralPE: countryData.ruralPE,
+        interestRate: countryData.interestRate,
+        debtGDP: countryData.debtGDP,
+        inflation: countryData.inflation,
+        bondSymbol: countryData.bondSymbol,
+        urbanSymbol: countryData.urbanSymbol,
+        ruralSymbol: countryData.ruralSymbol,
+      };
 
+      //Update Currency
+      amount = -Math.abs(shares)
+      this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
 
-    //Update Currency
+      // Buy Bond
+      this.investmentApi.buyInvestment(this.UID,result[0].name,result[0].symbol,1,shares,'b','bond');
 
-
-    //Sell Investment
-
-
+    });
     }
     else if(result[0].type=="Currency"){
       console.log(result[0].type);
@@ -136,7 +158,7 @@ export class InvestmentBoxComponent {
     //Update Currency
 
 
-    //Sell Investment
+    //Buy Investment
 
     }
     else if(result[0].type=="Commodity"){
@@ -150,39 +172,110 @@ export class InvestmentBoxComponent {
     //Update Currency
 
 
-    //Sell Investment
+    //Buy Investment
 
     }
-    else if(result[0].type=="Real Estate"){
+    else if(result[0].type=="Urban Real Estate"){
       console.log(result[0].type);
       console.log(result[0].name);
       console.log(result[0].symbol);
 
     //Retrieve Information
+      console.log(result[0].type);
+      console.log(result[0].name);
+      console.log(result[0].symbol);
+      console.log(result[0].country);
+      this.countryname = result[0].country;
 
+    //Retrieve Information
+    this.countryApi.getOneCountry(this.countryname).subscribe(countryData => {
+      this.country = {
+        countryName: countryData.countryName,
+        capitalCity: countryData.capitalCity,
+        population: countryData.population,
+        urbanRent: countryData.urbanRent,
+        urbanPE: countryData.urbanPE,
+        ruralRent: countryData.ruralRent,
+        ruralPE: countryData.ruralPE,
+        interestRate: countryData.interestRate,
+        debtGDP: countryData.debtGDP,
+        inflation: countryData.inflation,
+        bondSymbol: countryData.bondSymbol,
+        urbanSymbol: countryData.urbanSymbol,
+        ruralSymbol: countryData.ruralSymbol,
+      };
+     
+      //Update Currency
+      this.realEstatePrice = ((countryData.urbanPE * countryData.urbanRent ) * 12);
 
-    //Update Currency
+      amount = -Math.abs(Math.round((shares * this.realEstatePrice)*100) / 100);
+      this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
 
+      // Buy Real Estate
+      this.investmentApi.buyInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,shares,'b','realestate');
+      this.realEstatePrice = 0;
+    });
+    }
+    else if(result[0].type=="Rural Real Estate"){
+      console.log(result[0].type);
+      console.log(result[0].name);
+      console.log(result[0].symbol);
 
-    //Sell Investment
+    //Retrieve Information
+      console.log(result[0].type);
+      console.log(result[0].name);
+      console.log(result[0].symbol);
+      console.log(result[0].country);
+      this.countryname = result[0].country;
 
+    //Retrieve Information
+    this.countryApi.getOneCountry(this.countryname).subscribe(countryData => {
+      this.country = {
+        countryName: countryData.countryName,
+        capitalCity: countryData.capitalCity,
+        population: countryData.population,
+        urbanRent: countryData.urbanRent,
+        urbanPE: countryData.urbanPE,
+        ruralRent: countryData.ruralRent,
+        ruralPE: countryData.ruralPE,
+        interestRate: countryData.interestRate,
+        debtGDP: countryData.debtGDP,
+        inflation: countryData.inflation,
+        bondSymbol: countryData.bondSymbol,
+        urbanSymbol: countryData.urbanSymbol,
+        ruralSymbol: countryData.ruralSymbol,
+      };
+     
+      //Update Currency
+      this.realEstatePrice = ((countryData.ruralPE * countryData.ruralRent ) * 12);
+
+      amount = -Math.abs(Math.round((shares * this.realEstatePrice)*100) / 100);
+      this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
+
+      // Buy Real Estate
+      this.investmentApi.buyInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,shares,'b','realestate');
+      this.realEstatePrice = 0;
+    });
     }
   }
 
 
-  onClickSell(symbol, shares){
+  onClickSell(name, shares){
     var currency = "DOLLAR";
     var amount = 0;
-    console.log("Sell ", shares, " shares of ", symbol);
+    console.log("Sell ", shares, " shares of ", name);
 
     //Retrieve Symbol, Type, Name
     var result = InvestmentList.filter(obj => {
       return obj.name === name;
     })
 
+    console.log("Type:");
+    console.log(result[0].type);
+
     if(result[0].type=="Stock"){
     //Retrieve Stock Information
-    this.stockApi.getOneStock(symbol).subscribe(stockData2 => {
+    this.stockApi.getOneStock(result[0].symbol).subscribe(stockData2 => {
       this.stock2 = {
         stockName: stockData2.stockName,
         symbol: stockData2.symbol,
@@ -191,11 +284,6 @@ export class InvestmentBoxComponent {
         closeDate: stockData2.closeDate,
         pERatio: stockData2.pERatio
       };
-      /*Check Incoming Information
-      console.log("investmentData: ")
-      console.log(this.stock2.price[0]);
-      console.log(this.UID);
-      console.log("currency change of: ", amount); */
 
       //Update Currency
       amount = (stockData2.price[0] * shares)
@@ -209,15 +297,35 @@ export class InvestmentBoxComponent {
     console.log(result[0].type);
     console.log(result[0].name);
     console.log(result[0].symbol);
+    console.log(result[0].country);
+    this.countryname = result[0].country;
 
-    //Retrieve Information
-
+  //Retrieve Information
+  this.countryApi.getOneCountry(this.countryname).subscribe(countryData => {
+    this.country = {
+      countryName: countryData.countryName,
+      capitalCity: countryData.capitalCity,
+      population: countryData.population,
+      urbanRent: countryData.urbanRent,
+      urbanPE: countryData.urbanPE,
+      ruralRent: countryData.ruralRent,
+      ruralPE: countryData.ruralPE,
+      interestRate: countryData.interestRate,
+      debtGDP: countryData.debtGDP,
+      inflation: countryData.inflation,
+      bondSymbol: countryData.bondSymbol,
+      urbanSymbol: countryData.urbanSymbol,
+      ruralSymbol: countryData.ruralSymbol,
+    };
 
     //Update Currency
+    amount = Math.abs(shares)
+    this.investmentApi.addBaseCurrency(this.UID,currency,amount);
 
+    // Sell Bond
+    this.investmentApi.sellInvestment(this.UID,result[0].name,result[0].symbol,1,-(shares),'s','bond');
 
-    //Sell Investment
-
+  });
   }
   else if(result[0].type=="Currency"){
     console.log(result[0].type);
@@ -247,19 +355,89 @@ export class InvestmentBoxComponent {
     //Sell Investment
 
   }
-  else if(result[0].type=="Real Estate"){
+  else if(result[0].type=="Urban Real Estate"){
     console.log(result[0].type);
     console.log(result[0].name);
     console.log(result[0].symbol);
 
-    //Retrieve Information
+  //Retrieve Information
+    console.log(result[0].type);
+    console.log(result[0].name);
+    console.log(result[0].symbol);
+    console.log(result[0].country);
+    this.countryname = result[0].country;
 
-
+  //Retrieve Information
+  this.countryApi.getOneCountry(this.countryname).subscribe(countryData => {
+    this.country = {
+      countryName: countryData.countryName,
+      capitalCity: countryData.capitalCity,
+      population: countryData.population,
+      urbanRent: countryData.urbanRent,
+      urbanPE: countryData.urbanPE,
+      ruralRent: countryData.ruralRent,
+      ruralPE: countryData.ruralPE,
+      interestRate: countryData.interestRate,
+      debtGDP: countryData.debtGDP,
+      inflation: countryData.inflation,
+      bondSymbol: countryData.bondSymbol,
+      urbanSymbol: countryData.urbanSymbol,
+      ruralSymbol: countryData.ruralSymbol,
+    };
+   
     //Update Currency
+    this.realEstatePrice = ((countryData.urbanPE * countryData.urbanRent ) * 12);
+
+    amount = Math.abs(Math.round((shares * this.realEstatePrice)*100) / 100);
+    this.investmentApi.addBaseCurrency(this.UID,currency,amount);
+
+    // Sell Real Estate
+    this.investmentApi.sellInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,-(shares),'s','realestate');
+    this.realEstatePrice = 0;
 
 
-    //Sell Investment
+  });
+  }
+  else if(result[0].type=="Rural Real Estate"){
+    console.log(result[0].type);
+    console.log(result[0].name);
+    console.log(result[0].symbol);
 
+  //Retrieve Information
+    console.log(result[0].type);
+    console.log(result[0].name);
+    console.log(result[0].symbol);
+    console.log(result[0].country);
+    this.countryname = result[0].country;
+
+  //Retrieve Information
+  this.countryApi.getOneCountry(this.countryname).subscribe(countryData => {
+    this.country = {
+      countryName: countryData.countryName,
+      capitalCity: countryData.capitalCity,
+      population: countryData.population,
+      urbanRent: countryData.urbanRent,
+      urbanPE: countryData.urbanPE,
+      ruralRent: countryData.ruralRent,
+      ruralPE: countryData.ruralPE,
+      interestRate: countryData.interestRate,
+      debtGDP: countryData.debtGDP,
+      inflation: countryData.inflation,
+      bondSymbol: countryData.bondSymbol,
+      urbanSymbol: countryData.urbanSymbol,
+      ruralSymbol: countryData.ruralSymbol,
+    };
+   
+    //Update Currency
+    this.realEstatePrice = ((countryData.ruralPE * countryData.ruralRent ) * 12);
+
+    amount = Math.abs(Math.round((shares * this.realEstatePrice)*100) / 100);
+    this.investmentApi.addBaseCurrency(this.UID,currency,amount);
+
+    // Sell Real Estate
+    this.investmentApi.sellInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,-(shares),'s','realestate');
+    this.realEstatePrice = 0;
+  });
   }
   
   }
