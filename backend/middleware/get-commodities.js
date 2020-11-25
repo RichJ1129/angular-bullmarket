@@ -63,7 +63,7 @@ function apiCommodityCall (curr_commodity) {
           if (count > 0){
             Commodity.findOneAndUpdate(
               {commodityName: curr_commodity[1]},
-              {$push:{etfPrice: commodity['etfPrice']}},
+              {$push:{etfPrice: commodity['etfPrice'], closeDate: commodity['closeDate']}},
               function (error, success) {
                 if(error) {
                   console.log(error);
