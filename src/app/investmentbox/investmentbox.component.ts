@@ -84,11 +84,11 @@ export class InvestmentBoxComponent {
   };
   
   onClickPrice(name, shares){
-    var currency = "DOLLAR"; var amount = 0;
+    let currency = "DOLLAR"; let amount = 0;
     //console.log("Buy ", shares, " shares of ", name);
 
     //Retrieve Symbol, Type, Name
-    var result = InvestmentList.filter(obj => {
+    let result = InvestmentList.filter(obj => {
       return obj.name === name;
     })
 
@@ -186,11 +186,11 @@ export class InvestmentBoxComponent {
 
 
   onClickBuy(name, shares){
-    var currency = "DOLLAR"; var amount = 0;
+    let currency = "DOLLAR"; let amount = 0;
     //console.log("Buy ", shares, " shares of ", name);
 
     //Retrieve Symbol, Type, Name
-    var result = InvestmentList.filter(obj => {
+    let result = InvestmentList.filter(obj => {
       return obj.name === name;
     })
 
@@ -302,12 +302,12 @@ export class InvestmentBoxComponent {
 
 
   onClickSell(name, shares){
-    var currency = "DOLLAR";
-    var amount = 0;
+    let currency = "DOLLAR";
+    let amount = 0;
     console.log("Sell ", shares, " shares of ", name);
 
     //Retrieve Symbol, Type, Name
-    var result = InvestmentList.filter(obj => {
+    let result = InvestmentList.filter(obj => {
       return obj.name === name;
     })
 
