@@ -19,7 +19,7 @@ let stock_sched = new CronJob("00 00 18 * * 1,2,3,4,5" , function(){
   "America/New_York"
 );
 
-let commodity_sched = new CronJob("00 15 12 * * 1,2,3,4,5,6" , function(){
+let commodity_sched = new CronJob("00 45 12 * * 1,2,3,4,5,6" , function(){
   commodities.getCommodities();
 },
   null,
