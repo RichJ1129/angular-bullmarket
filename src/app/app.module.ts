@@ -4,7 +4,6 @@ import {AppComponent} from './app.component';
 import {LayoutModule} from './layout/layout.module';
 import {AppRoutingModule} from './app-routing.module';
 import {RouterModule} from '@angular/router';
-import {HomeModule} from './home/home.module';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -37,19 +36,20 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {InvestmentService} from './investment/investment.service';
 import { CurrencyPageComponent } from './currency/currency-page/currency-page.component';
 import {CurrencyTableComponent} from './currency/currency-table/currency-table.component';
-import {ProfileComponent} from './profile/profile.component'
-import {ProfileAnimalComponent} from "./profile/profile-animal/profile-animal.component";
-import {ProfileAnimalSelectorComponent} from "./profile/profile-animalSelector/profile-animalSelector.component";
-import {ProfileFeedAnimalComponent} from "./profile/profile-feedAnimal/profile-feedAnimal.component";
-import {ProfileAnimalPlayComponent} from "./profile/profile-animalPlay/profile-animalPlay.component";
+import {ProfileComponent} from './profile/profile.component';
+import {ProfileAnimalComponent} from './profile/profile-animal/profile-animal.component';
+import {ProfileAnimalSelectorComponent} from './profile/profile-animalSelector/profile-animalSelector.component';
+import {ProfileFeedAnimalComponent} from './profile/profile-feedAnimal/profile-feedAnimal.component';
+import {ProfileAnimalPlayComponent} from './profile/profile-animalPlay/profile-animalPlay.component';
 import { RealEstateTableComponent } from './realestate/realestate-table/realestate-table.component';
 import { RealEstateService } from './realestate/realestate.service';
 import { RealEstateComponent } from './realestate/realestate.component';
 import { CountryPageComponent } from './realestate/country-page/country-page.component';
 import {DxVectorMapModule} from 'devextreme-angular';
-import { InvestmentBoxComponent } from './investmentbox/investmentbox.component'
+import { InvestmentBoxComponent } from './investmentbox/investmentbox.component';
 import { InvestmentBoxService } from './investmentbox/investmentbox.service';
-import { CommoditiesPageComponent } from './commodities/commodities-page/commodities-page.component'
+import { CommoditiesPageComponent } from './commodities/commodities-page/commodities-page.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +72,8 @@ import { CommoditiesPageComponent } from './commodities/commodities-page/commodi
     RealEstateComponent,
     CountryPageComponent,
     InvestmentBoxComponent,
-    CommoditiesPageComponent
+    CommoditiesPageComponent,
+    HomeComponent
 
   ],
   imports: [
@@ -80,7 +81,6 @@ import { CommoditiesPageComponent } from './commodities/commodities-page/commodi
     RouterModule.forRoot([]),
     AppRoutingModule,
     LayoutModule,
-    HomeModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
