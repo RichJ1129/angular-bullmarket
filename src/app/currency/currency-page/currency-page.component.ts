@@ -30,7 +30,7 @@ export class CurrencyPageComponent implements OnInit {
   currencyValue = new FormControl('');
   chartType = 'line';
   chartData: ChartDataSets[] =  [
-    {data: [], label: '10 Day Currency Prices', fill: true, lineTension: 0},
+    {data: [], label: '10 Day Currency Prices', fill: false, lineTension: 0},
   ];
 
   chartLabels = [];
