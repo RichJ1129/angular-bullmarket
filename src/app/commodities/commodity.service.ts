@@ -17,6 +17,7 @@ export class CommodityService {
     return this.http.get(backendURL + '/commodities');
   }
 
+  // tslint:disable-next-line:typedef
   getOneCommodity(commoditySymbol: string) {
     return this.http.get<{
       commodityName: string;

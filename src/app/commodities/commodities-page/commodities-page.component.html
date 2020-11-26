@@ -1,1 +1,64 @@
-<p>commodities-page works!</p>
+<br>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="container">
+        <h2 class="Commodity_Name">{{commodity.commodityName}}</h2>
+        <h2 class="Commodity_Price">${{commodity.etfPrice[commodity.etfPrice.length - 1]}}</h2>
+        <h6 class="Daily_Change">${{commodity.etfPrice[commodity.etfPrice.length - 1] - commodity.etfPrice[commodity.etfPrice.length - 2] | number:'1.0-2' }}
+          ({{(commodity.etfPrice[commodity.etfPrice.length - 1] - commodity.etfPrice[commodity.etfPrice.length - 2])/commodity.etfPrice[commodity.etfPrice.length - 2] * 100  | number:'1.0-2' }}%) Today</h6>
+      </div>
+      <div class="col-lg-12">
+        <br>
+        <canvas baseChart
+                [datasets]="chartData"
+                [labels]="chartLabels"
+                [chartType]="chartType"
+                [legend]="false"
+                [colors]="chartColor"
+                [options]="lineChartOptions">
+        </canvas>
+<!--        <hr>-->
+<!--        <h2>About</h2>-->
+<!--        <div class="about_section" [class.show]="show">{{company.companySummary}}</div>-->
+<!--        <br>-->
+<!--        <button type="button" class="btn btn-dark" (click)="show = !show">{{ show ? 'Show less': 'Show More' }}</button>-->
+      </div>
+    </div>
+    <div class="col-lg-4" >
+      <mat-card class="commodity-card">
+        <div>Buy {{commodity.commodityName}}</div>
+        <hr>
+        <div class="row">
+          <div class="col-lg-8">
+            <span class="align-baseline">Shares</span>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Shares</mat-label>
+              <input [formControl]="commodityValue" matInput align="center" placeholder="0">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-8">Market Price</div>
+          <div class="col-lg-4">${{commodity.etfPrice[commodity.etfPrice.length - 1]}}</div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-lg-6">Estimated Cost</div>
+          <div class="col-lg-6">${{commodity.etfPrice[commodity.etfPrice.length - 1] * commodityValue.value | number:'1.0-2'}}</div>
+        </div>
+        <mat-card-actions class="align-middle">
+          <hr>
+          <div align="center">
+            <button mat-button>Buy</button>
+            <button mat-button>Sell</button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+

@@ -14,7 +14,8 @@ import {AuthGuard} from './auth/auth.guard';
 import { StockPageComponent } from './stocks/stock-page/stock-page.component';
 import { CurrencyTableComponent } from './currency/currency-table/currency-table.component';
 import { CurrencyPageComponent } from './currency/currency-page/currency-page.component';
-import {ProfileComponent} from "./profile/profile.component";
+import {ProfileComponent} from './profile/profile.component';
+import {CommoditiesPageComponent} from './commodities/commodities-page/commodities-page.component';
 
 const routes: Routes = [
   {
@@ -83,6 +84,11 @@ const routes: Routes = [
   {
     path: 'currency-page/:currency_ticker',
     component: CurrencyPageComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'commodities-page/:commodity_symbol',
+    component: CommoditiesPageComponent,
     canActivate: [AuthGuard]
   }
 ];
