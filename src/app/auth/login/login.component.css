@@ -8,6 +8,17 @@ mat-spinner {
 
 mat-card {
   margin-top: 10%;
+  width: 60%;
+}
+
+.bullmarket_def{
+  font-style: italic;
+}
+
+.main-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
@@ -16,7 +27,7 @@ mat-card {
 
 .form-container {
   width: 400px;
-  margin: 75px auto 0px;
+  margin: 30px auto 0px;
 }
 
 .form-field {
