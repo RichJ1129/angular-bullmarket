@@ -7,32 +7,19 @@ import {RouterModule} from '@angular/router';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatInputModule} from '@angular/material/input';
-import {MatCardModule} from '@angular/material/card';
-import {MatButtonModule} from '@angular/material/button';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatPaginatorModule} from '@angular/material/paginator';
 import {LoginComponent} from './auth/login/login.component';
 import {SignupComponent} from './auth/signup/signup.component';
 import {AuthInterceptor} from './auth/auth-interceptor';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatTableModule} from '@angular/material/table';
 import {CommodityTableComponent} from './commodities/commodities-table/commodities.component';
 import {CommodityService} from './commodities/commodity.service';
 import {BondTableComponent} from './bonds/bonds-table/bonds.component';
 import {BondService} from './bonds/bond.service';
 import {StockTableComponent} from './stocks/stock-table/stock-table.component';
 import {StockService} from './stocks/stock.service';
-import {MatSortModule} from '@angular/material/sort';
 import {InvestmentComponent} from './investment/investment.component';
 import { StockPageComponent } from './stocks/stock-page/stock-page.component';
 import { ChartsModule } from 'ng2-charts';
 import { DatePipe } from '@angular/common';
-import { Injectable, EventEmitter } from '@angular/core';
-import { Subscription } from 'rxjs/internal/Subscription';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {InvestmentService} from './investment/investment.service';
 import { CurrencyPageComponent } from './currency/currency-page/currency-page.component';
 import {CurrencyTableComponent} from './currency/currency-table/currency-table.component';
@@ -50,6 +37,9 @@ import { InvestmentBoxComponent } from './investmentbox/investmentbox.component'
 import { InvestmentBoxService } from './investmentbox/investmentbox.service';
 import { CommoditiesPageComponent } from './commodities/commodities-page/commodities-page.component';
 import { HomeComponent } from './home/home.component';
+import { ErrorComponent } from './error/error.component';
+import { ErrorInterceptor } from './error-interceptor';
+import { AngularMaterialModule } from './angular-material.module';
 
 @NgModule({
   declarations: [
@@ -73,8 +63,8 @@ import { HomeComponent } from './home/home.component';
     CountryPageComponent,
     InvestmentBoxComponent,
     CommoditiesPageComponent,
-    HomeComponent
-
+    HomeComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -85,22 +75,13 @@ import { HomeComponent } from './home/home.component';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatInputModule,
-    MatCardModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatExpansionModule,
-    MatProgressSpinnerModule,
-    MatPaginatorModule,
-    MatFormFieldModule,
-    MatTableModule,
-    MatSortModule,
     ChartsModule,
-    MatAutocompleteModule,
-    DxVectorMapModule
+    DxVectorMapModule,
+    AngularMaterialModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     StockService,
     CommodityService,
     BondService,
@@ -109,7 +90,8 @@ import { HomeComponent } from './home/home.component';
     RealEstateService,
     InvestmentBoxService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorComponent]
 })
 export class AppModule {
 }
