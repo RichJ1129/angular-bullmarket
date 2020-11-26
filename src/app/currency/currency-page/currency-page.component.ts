@@ -30,7 +30,7 @@ export class CurrencyPageComponent implements OnInit {
   currencyValue = new FormControl('');
   chartType = 'line';
   chartData: ChartDataSets[] =  [
-    {data: [], label: 'All Currency Prices', fill: false, lineTension: 0},
+    {data: [], label: '10 Day Currency Prices', fill: true, lineTension: 0},
   ];
 
   chartLabels = [];
@@ -96,7 +96,9 @@ export class CurrencyPageComponent implements OnInit {
 
 
   public computeData(): void {
-    this.chartData[0].data = this.currency.rates;
+    // this.chartData[0].data = this.currency.rates;
+    this.chartData[0].data = this.currency.rates.slice(this.currency.rates.length - 10);
+
 
     const transformedDates = [];
     console.log(this.currency.timeStamp);
@@ -105,7 +107,7 @@ export class CurrencyPageComponent implements OnInit {
       transformedDates.push(this.datePipe.transform(i, 'MM-dd'));
     }
 
-    this.chartLabels = transformedDates;
+    this.chartLabels = transformedDates.slice(transformedDates.length - 10);
   }
 
   // tslint:disable-next-line:typedef
@@ -120,7 +122,7 @@ export class CurrencyPageComponent implements OnInit {
             rates: currencyData.rates,
             timeStamp: currencyData.timeStamp
           };
-          this.changeAnnotation(this.currency.rates[this.currency.rates.length - 1]);
+          this.changeAnnotation(this.currency.rates[this.currency.rates.length - 10]);
           this.changeLineColor(this.currency.rates[this.currency.rates.length - 2], this.currency.rates[this.currency.rates.length - 1]);
           this.computeData();
         });
