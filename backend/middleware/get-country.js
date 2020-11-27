@@ -20,7 +20,7 @@ const country = [
     ['Belgium','Brussels','11000000','867.5','20.47','713.14','19.98', '-0.28','99', '0.90','BELBOND','BELUR','BELRR'],
     ['Benin','Porto-Novo','11000000','57.86','0','53.41','0', '4.00','22', '3.90','BENBOND','BENUR','BENRR'],
     ['Bolivia','La Paz','11000000','350.82','14.44','246.6','13.75', '3.34','58', '1.40','BOLBOND','BOLUR','BOLRR'],
-    ['Bosnia and Herzegovina','Sarajevo','3000000','229.50','31.06','157.53','31.01', '3.05','25', '1.30','BIHBOND','BIHUR','BIHRR'],
+    ['Bosnia and Herz.','Sarajevo','3000000','229.50','31.06','157.53','31.01', '3.05','25', '1.30','BIHBOND','BIHUR','BIHRR'],
     ['Botswana','Gaborone','2000000','281.44','0','232.90','0', '3.63','23', '1.40','BWABOND','BWAUR','BWARR'],
     ['Brazil','Brasilia','210000000','237.19','23.9','166.26','23.3', '7.20','76', '2.40','BRABOND','BRAUR','BRARR'],
     ['Bulgaria','Sofia','7000000','327.76','20.17','245.55','17.46', '0.28','21', '1.28','BGRBOND','BGRUR','BGRRR'],

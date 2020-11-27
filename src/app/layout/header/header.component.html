@@ -2,9 +2,11 @@
 <div class="container">
   <br>
   <div style="display: flex; justify-content: flex-end">
-    <a *ngIf="userIsAuthenticated" style="font-size: 16px; text-align:right; color: black;" routerLink="/investment"> Investments|</a>
-    <a *ngIf="userIsAuthenticated"  style="font-size: 16px; text-align:right; color: black;" routerLink="/profile">Profile|</a>
-    <a *ngIf="userIsAuthenticated"  style="font-size: 16px; text-align:right; color: black;" (click)="onLogout()">Logout</a>
+    <a *ngIf="userIsAuthenticated" style="font-size: 16px; text-align:right; color: black;" routerLink="/investment"> Investments</a>
+    <span *ngIf="userIsAuthenticated">|</span>
+    <a *ngIf="userIsAuthenticated"  style="font-size: 16px; text-align:right; color: black;" routerLink="/profile">Profile</a>
+    <span *ngIf="userIsAuthenticated">|</span>
+    <a *ngIf="userIsAuthenticated" class="logout_click"  style="font-size: 16px; text-align:right; color: black; " (click)="onLogout()" routerLink="">Logout</a>
   </div>
   <div class="col-12" *ngIf="userIsAuthenticated">
     <a class="nav-link" style="font-size: 75px; font-family: Calibri, sans-serif; text-align:center;"

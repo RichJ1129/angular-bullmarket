@@ -25,34 +25,6 @@ export class StockTableComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
-  // stocks: Stock[] = [];
-  // isLoading = false;
-  // totalStocks = 0;
-  // userIsAuthenticated = false;
-  // private stockSub: Subscription;
-  // private authStatusSub: Subscription;
-  //
-  // constructor(
-  //   public stocksService: StockService
-  // ) { }
-  //
-  // ngOnInit() {
-  //   this.isLoading = true;
-  //   this.stocksService.getStocks();
-  //   this.stockSub = this.stocksService
-  //     .getStockUpdateListener()
-  //     .subscribe((stockData: { stocks: Stock[]; stockCount: number }) => {
-  //       this.isLoading = false;
-  //       this.totalStocks = stockData.stockCount;
-  //       this.stocks = stockData.stocks;
-  //     });
-    // this.userIsAuthenticated = this.authService.getIsAuth();
-    // this.authStatusSub = this.authService
-    //   .getAuthStatusListener()
-    //   .subscribe(isAuthenticated => {
-    //     this.userIsAuthenticated = isAuthenticated;
-    //   });
-  // }
+  ngOnInit(): void { }
 
 }

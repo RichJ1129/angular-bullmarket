@@ -6,6 +6,10 @@ mat-spinner {
   margin: auto;
 }
 
+mat-card {
+  margin-top: 10%;
+  width: 60%;
+}
 
 mat-form-field {
   width: 100%;
@@ -15,8 +19,10 @@ mat-spinner {
   margin: auto;
 }
 
-mat-card {
-  margin-top: 10%;
+.main-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
