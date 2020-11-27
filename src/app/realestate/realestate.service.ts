@@ -125,7 +125,7 @@ const markers: Marker[] = [
   { coordinates: [-70.673676, -33.447487], attributes: { name: 'Santiago' }, zoom: '7', center: [-70.673676, -39.447487] },
   { coordinates: [116.383331, 39.916668], attributes: { name: 'Beijing' }, zoom: '6', center: [0, 0] },
   { coordinates: [-74.063644, 4.624335], attributes: { name: 'Bogota' }, zoom: '20', center: [0, 0] },
-  { coordinates: [15.223333, -4.303056], attributes: { name: 'Kinshasa' }, zoom: '30', center: [15.223333, -1.303056] },
+  { coordinates: [15.223333, -4.303056], attributes: { name: 'Kinshasa' }, zoom: '15', center: [24.223333, -5.303056] },
   { coordinates: [-84.087502, 9.934739], attributes: { name: 'San Jose' }, zoom: '70', center: [0, 0] },
   { coordinates: [15.966568, 45.815399], attributes: { name: 'Zagreb' }, zoom: '45', center: [15.966568, 44.815399] },
   { coordinates: [33.36667, 35.16667], attributes: { name: 'Nicosia' }, zoom: '100', center: [0, 0] },
@@ -133,13 +133,13 @@ const markers: Marker[] = [
   { coordinates: [14.418540, 50.073658], attributes: { name: 'Prague' }, zoom: '42', center: [0, 0] },
   { coordinates: [12.568337, 55.676098], attributes: { name: 'Copenhagen' }, zoom: '45', center: [0, 0] },
   { coordinates: [-69.929611, 18.483402], attributes: { name: 'Santo Domingo' }, zoom: '42', center: [0, 0] },
-  { coordinates: [-78.467834, -0.180653], attributes: { name: 'Quito' }, zoom: '42', center: [0, 0] },
-  { coordinates: [31.233334, 30.033333], attributes: { name: 'Cairo' }, zoom: '42', center: [0, 0] },
+  { coordinates: [-78.467834, -0.180653], attributes: { name: 'Quito' }, zoom: '42', center: [-78.467834, -2.180653] }, // Checked
+  { coordinates: [31.233334, 30.033333], attributes: { name: 'Cairo' }, zoom: '20', center: [31.233334, 27.033333] },
   { coordinates: [-89.18718, 13.68935], attributes: { name: 'San Salvador' }, zoom: '80', center: [0, 0] },
-  { coordinates: [38.93184, 15.33805], attributes: { name: 'Asmara' }, zoom: '42', center: [0, 0] },
+  { coordinates: [38.93184, 15.33805], attributes: { name: 'Asmara' }, zoom: '42', center: [0, 0] }, // Checked
   { coordinates: [24.753574, 59.436962], attributes: { name: 'Tallinn' }, zoom: '40', center: [0, 0] },
   { coordinates: [38.763611, 9.005401], attributes: { name: 'Addis Ababa' }, zoom: '20', center: [0, 0] },
-  { coordinates: [24.945831, 60.192059], attributes: { name: 'Helsinki' }, zoom: '42', center: [0, 0] },
+  { coordinates: [24.945831, 60.192059], attributes: { name: 'Helsinki' }, zoom: '12', center: [25.945831, 65.192059] }, // Checked
   { coordinates: [2.349014, 48.864716], attributes: { name: 'Paris' }, zoom: '23', center: [2.349014, 46.864716] },
   { coordinates: [44.783333, 41.716667], attributes: { name: 'Tbilisi' }, zoom: '50', center: [0, 0] },
   { coordinates: [13.404954, 52.520008], attributes: { name: 'Berlin' }, zoom: '25', center: [13.404954, 51.520008] },
@@ -157,8 +157,8 @@ const markers: Marker[] = [
   { coordinates: [-6.266155, 53.350140], attributes: { name: 'Dublin' }, zoom: '47', center: [0, 0] },
   { coordinates: [35.217018, 31.771959], attributes: { name: 'Jerusalem' }, zoom: '60', center: [0, 0] },
   { coordinates: [12.496366, 41.902782], attributes: { name: 'Rome' }, zoom: '23', center: [0, 0] },
-  { coordinates: [-5.296440, 6.811558], attributes: { name: 'Yamoussoukro' }, zoom: '42', center: [0, 0] },
-  { coordinates: [-76.79358, 17.99702], attributes: { name: 'Kingston' }, zoom: '70', center: [0, 0] },
+  { coordinates: [-5.296440, 6.811558], attributes: { name: 'Yamoussoukro' }, zoom: '42', center: [0, 0] }, // Checked
+  { coordinates: [-76.79358, 17.99702], attributes: { name: 'Kingston' }, zoom: '70', center: [0, 0] }, // Checked
   { coordinates: [139.839478, 35.652832], attributes: { name: 'Tokyo' }, zoom: '17', center: [139.839478, 38.652832] },
   { coordinates: [35.930359, 31.963158], attributes: { name: 'Amman' }, zoom: '50', center: [37.930359, 30.963158] },
   { coordinates: [71.44598, 51.1801], attributes: { name: 'Nur-Sultan' }, zoom: '10', center: [0, 0] },
@@ -176,7 +176,7 @@ const markers: Marker[] = [
   { coordinates: [106.918556, 47.921230], attributes: { name: 'Ulanbaatar' }, zoom: '12', center: [0, 0] },
   { coordinates: [-6.841650, 34.020882], attributes: { name: 'Rabat' }, zoom: '20', center: [-6.841650, 28.020882] },
   { coordinates: [17.08323, -22.55941], attributes: { name: 'Windhoek' }, zoom: '23', center: [0, 0] },
-  { coordinates: [85.300140, 27.700769], attributes: { name: 'Kathmandu' }, zoom: '42', center: [0, 0] },
+  { coordinates: [85.300140, 27.700769], attributes: { name: 'Kathmandu' }, zoom: '42', center: [0, 0] }, // Checked
   { coordinates: [4.897070, 52.377956], attributes: { name: 'Amsterdam' }, zoom: '50', center: [0, 0] },
   { coordinates: [174.777969, -41.276825], attributes: { name: 'Wellington' }, zoom: '15', center: [0, 0] },
   { coordinates: [-86.251389, 12.136389], attributes: { name: 'Managua' }, zoom: '60', center: [-84.251389, 12.136389] },
@@ -198,7 +198,6 @@ const markers: Marker[] = [
   { coordinates: [-17.467686, 14.716677], attributes: { name: 'Dakar' }, zoom: '45', center: [-13.467686, 14.716677] },
   { coordinates: [20.457273, 44.787197], attributes: { name: 'Belgrade' }, zoom: '50', center: [0, 0] },
   { coordinates: [-13.17994, 8.484444], attributes: { name: 'Freetown' }, zoom: '50', center: [-12.17994, 8.484444] },
-  { coordinates: [103.851959, 1.290270], attributes: { name: 'Singapore' }, zoom: '42', center: [0, 0] },
   { coordinates: [17.107767, 48.149345], attributes: { name: 'Bratislava' }, zoom: '50', center: [20.107767, 48.149345] },
   { coordinates: [45.318161, 2.046934], attributes: { name: 'Mogadishu' }, zoom: '20', center: [45.318161, 5.046934] },
   { coordinates: [18.423300, -33.918861], attributes: { name: 'Cape Town' }, zoom: '22', center: [23.423300, -28.918861] },
