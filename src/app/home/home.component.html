@@ -29,17 +29,18 @@
     <div class="col-8">
       <dx-vector-map
         id="vector-map"
+        (onClick)="onClick($event)"
         [bounds]="[-180, 85, 180, -60]">
         <dxo-tooltip
           [enabled]="true"
           [customizeTooltip]="customizeTooltip"></dxo-tooltip>
         <dxi-layer
           name="areas"
-          [palette]="['#FFFFFF','#202020']"
+          [palette]="['#B1BFD8','#202020']"
           colorGroupingField="gdp"
           [colorGroups]="[0, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000]"
           [dataSource]="worldMap"
-          [customize]="customizeLayers"></dxi-layer>
+          [customize]="customizeLayers" id="my_country"></dxi-layer>
         <!--        <dxi-legend [customizeText]="customizeText">-->
         <!--          <dxo-source layer="areas" grouping="color"></dxo-source>-->
         <!--        </dxi-legend>-->
