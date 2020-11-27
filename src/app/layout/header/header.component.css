@@ -8,6 +8,10 @@ body {
   margin-bottom: 5px;
 }
 
+.logout_click:hover{
+  text-decoration: underline;
+}
+
 .nav-link {
   background-color: white;
   color: black;
