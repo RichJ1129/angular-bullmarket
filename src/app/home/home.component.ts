@@ -35,9 +35,7 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  onClick(e) {
-    console.log(e);
-    console.log(this.vectorMap.instance.convertToGeo(e.event.x, e.event.y));
+  onClick(e): void {
     const target = e.target;
 
     if (target && this.gdp[target.attribute('name')] && target.attribute('name') !== 'Greenland') {
