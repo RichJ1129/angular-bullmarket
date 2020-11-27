@@ -17,6 +17,8 @@ import { RealEstateService } from 'src/app/realestate/realestate.service';
 import { Country } from 'src/app/realestate/country.model';
 import { CurrencyService } from 'src/app/currency/currency.service'
 import { Currency } from 'src/app/currency/currency.model'
+import { CommodityService } from 'src/app/commodities/commodity.service'
+import { Commodity } from 'src/app/commodities/commodity.model'
 
 //User ID Interface
 interface IDAuthData{
@@ -51,9 +53,12 @@ export class InvestmentBoxComponent {
   realEstatePrice: number;
   tempvar: string;
   currency: Currency;
+  commodity: Commodity;
+  perSharePrice = "$";
+  totalPrice = "$";
 
   //Get UserID and Setup Services
-    constructor(private investmentApi: InvestmentBoxService, private stockApi: StockService, private countryApi: RealEstateService, private currencyApi: CurrencyService) {
+    constructor(private investmentApi: InvestmentBoxService, private stockApi: StockService, private countryApi: RealEstateService, private currencyApi: CurrencyService, private commodityApi: CommodityService) {
         this.investmentApi.getUserID().subscribe(data => {
           this.userObject=data;
           this.UID = this.userObject._id;
@@ -85,7 +90,6 @@ export class InvestmentBoxComponent {
   
   onClickPrice(name, shares){
     let currency = "DOLLAR"; let amount = 0;
-    //console.log("Buy ", shares, " shares of ", name);
 
     //Retrieve Symbol, Type, Name
     let result = InvestmentList.filter(obj => {
@@ -97,9 +101,10 @@ export class InvestmentBoxComponent {
       this.stockApi.getOneStock(result[0].symbol).subscribe(stockData2 => {
         this.stock2 = { stockName: stockData2.stockName, symbol: stockData2.symbol, price: stockData2.price, marketCap: stockData2.marketCap, closeDate: stockData2.closeDate, pERatio: stockData2.pERatio };
 
-      //Log Price
-      console.log("Stock Price: ")
-      console.log(stockData2.price[0]);
+        setTimeout(() => {
+          this.perSharePrice="$ "+ (stockData2.price[0]).toString();
+          this.totalPrice="$ "+ (stockData2.price[0] * shares).toString();
+          },500);
     
     });
     }
@@ -114,10 +119,10 @@ export class InvestmentBoxComponent {
          interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
       };
 
-      //Log Price
-      console.log("Bond Price (interest, inflation): ")
-      console.log(countryData.interestRate);
-      console.log(countryData.inflation);
+      setTimeout(() => {
+        this.perSharePrice="$ "+ (1).toString();
+        this.totalPrice="$ "+ (shares).toString();
+        },500);
 
 
     });
@@ -128,24 +133,25 @@ export class InvestmentBoxComponent {
     this.currencyApi.getOneCurrency(result[0].symbol).subscribe(currencyData => {
       this.currency = { currencyName: currencyData.currencyName, ticker: currencyData.ticker, rates: currencyData.rates, timeStamp: currencyData.timeStamp};
 
-      //Log Price
-      console.log("Currency Price")
-      console.log(currencyData.rates[0]);
+      setTimeout(() => {
+        this.perSharePrice="$ "+ (this.currency.rates[0]).toString();
+        this.totalPrice="$ "+ (this.currency.rates[0] * shares).toString();
+        },500);
     });
     }
     else if(result[0].type=="Commodity"){
-      console.log(result[0].type);
-      console.log(result[0].name);
-      console.log(result[0].symbol);
 
     //Retrieve Information
+    this.commodityApi.getOneCommodity(result[0].symbol).subscribe(commodityData => {
+      this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: "", closeDate: [] };
 
-
-    //Update Currency
-
-
-    //Buy Investment
-
+          });
+      
+      //Update Share and Total Price after 0.5s Delay for Data Retrieval
+      setTimeout(() => {
+      this.perSharePrice="$ "+this.commodity.etfPrice[0].toString();
+      this.totalPrice="$ "+(this.commodity.etfPrice[0] * shares).toString();
+      },500);
     }
     else if(result[0].type=="Urban Real Estate"){
       this.countryname = result[0].country;
@@ -156,12 +162,12 @@ export class InvestmentBoxComponent {
         countryName: countryData.countryName, capitalCity: countryData.capitalCity, population: countryData.population, urbanRent: countryData.urbanRent, urbanPE: countryData.urbanPE, ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE, interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
       };
      
-    //Update Currency
-    this.realEstatePrice = ((countryData.urbanPE * countryData.urbanRent ) * 12);
-
-      //Log Price
-      console.log("Urban Real Estate Price: ")
-      console.log(this.realEstatePrice);
+      //Calculate Real Estate Price, Display Result after 0.5s Delay
+      this.realEstatePrice = ((countryData.urbanPE * countryData.urbanRent ) * 12);
+      setTimeout(() => {
+        this.perSharePrice="$ "+ (this.realEstatePrice).toString();
+        this.totalPrice="$ "+ (this.realEstatePrice * shares).toString();
+        },500);
     });
     }
     else if(result[0].type=="Rural Real Estate"){
@@ -176,10 +182,12 @@ export class InvestmentBoxComponent {
         bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
       };
      
-      //Log Price
+      //Calculate Real Estate Price, Display Result after 0.5s Delay
       this.realEstatePrice = ((countryData.ruralPE * countryData.ruralRent ) * 12);
-      console.log("Rural Real Estate Price: ")
-      console.log(this.realEstatePrice);
+      setTimeout(() => {
+        this.perSharePrice="$ "+ (this.realEstatePrice).toString();
+        this.totalPrice="$ "+ (this.realEstatePrice * shares).toString();
+        },500);
     });
     }
   }
@@ -243,18 +251,20 @@ export class InvestmentBoxComponent {
     });
     }
     else if(result[0].type=="Commodity"){
-      console.log(result[0].type);
-      console.log(result[0].name);
-      console.log(result[0].symbol);
 
     //Retrieve Information
+    this.commodityApi.getOneCommodity(result[0].symbol).subscribe(commodityData => {
+      this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: "", closeDate: [] };
+    });
 
 
     //Update Currency
-
+    amount = -Math.abs(shares * this.commodity.etfPrice[0]);
+    this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
 
     //Buy Investment
-
+    this.investmentApi.buyInvestment(this.UID,this.commodity.commodityName,this.commodity.symbol,this.commodity.etfPrice[0],shares,'b','commodity');
+    
     }
     else if(result[0].type=="Urban Real Estate"){
       this.countryname = result[0].country;
@@ -391,17 +401,19 @@ export class InvestmentBoxComponent {
   });
   }
   else if(result[0].type=="Commodity"){
-    console.log(result[0].type);
-    console.log(result[0].name);
-    console.log(result[0].symbol);
 
-    //Retrieve Information
-
-
-    //Update Currency
-
-
-    //Sell Investment
+  //Retrieve Information
+  this.commodityApi.getOneCommodity(result[0].symbol).subscribe(commodityData => {
+   this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: "", closeDate: [] };
+   });
+    
+    
+  //Update Currency
+  amount = Math.abs(shares * this.commodity.etfPrice[0]);
+  this.investmentApi.addBaseCurrency(this.UID,currency,amount);
+    
+  //Buy Investment
+  this.investmentApi.sellInvestment(this.UID,this.commodity.commodityName,this.commodity.symbol,this.commodity.etfPrice[0],-(shares),'s','commodity');
 
   }
   else if(result[0].type=="Urban Real Estate"){
@@ -493,3 +505,4 @@ export class InvestmentBoxComponent {
 
  
 };
+
