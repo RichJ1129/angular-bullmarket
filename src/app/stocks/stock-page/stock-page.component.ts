@@ -35,9 +35,6 @@ export class StockPageComponent implements OnInit {
   chartType = 'line';
   chartData: ChartDataSets[] =  [
     {data: [], label: '10 day Stock Price', fill: false, lineTension: 0},
-    // {data: [], label: '10 day Stock Prices', fill: false, lineTension: 0}
-    // {data: [], label: '5 Day Stock Prices', fill: false, lineTension: 0},
-    // {data: [], label: '3 Day Stock Prices', fill: false, lineTension: 0}
   ];
 
   chartLabels = [];
@@ -104,9 +101,6 @@ export class StockPageComponent implements OnInit {
 
   public computeData(): void {
     this.chartData[0].data = this.stock.price.slice(this.stock.price.length - 10);
-    // this.chartData[1].data = this.stock.price.slice(this.stock.price.length - 5);
-    // this.chartData[2].data = this.stock.price.slice(this.stock.price.length - 5);
-    // this.chartData[3].data = this.stock.price.slice(this.stock.price.length - 3);
 
     const transformedDates = [];
 
@@ -117,8 +111,7 @@ export class StockPageComponent implements OnInit {
     this.chartLabels = transformedDates.slice(transformedDates.length - 10);
   }
 
-  // tslint:disable-next-line:typedef
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('stock_ticker')) {
         this.stockTicker = paramMap.get('stock_ticker');
@@ -131,7 +124,7 @@ export class StockPageComponent implements OnInit {
             closeDate: stockData.closeDate,
             pERatio: stockData.pERatio
           };
-          this.changeAnnotation(this.stock.price[this.stock.price.length - 10]);
+          this.changeAnnotation(this.stock.price[this.stock.price.length - 9]);
           this.changeLineColor(this.stock.price[this.stock.price.length - 10], this.stock.price[this.stock.price.length - 1]);
           this.computeData();
         });
