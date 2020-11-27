@@ -4,6 +4,7 @@ import {DxVectorMapComponent} from 'devextreme-angular';
 import { DxVectorMapModule, DxSelectBoxModule, DxTextBoxModule } from 'devextreme-angular';
 import { DxDataGridComponent } from 'devextreme-angular';
 import { Router } from '@angular/router';
+import { RealEstateService } from '../realestate/realestate.service';
 
 
 import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js';
@@ -37,7 +38,6 @@ export class HomeComponent implements OnInit {
 
   onClick(e): void {
     const target = e.target;
-
     if (target && this.gdp[target.attribute('name')] && target.attribute('name') !== 'Greenland') {
       this.router.navigate(['/country/' + target.attribute('name')]);
     }
