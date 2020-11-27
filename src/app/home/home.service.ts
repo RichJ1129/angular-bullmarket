@@ -47,7 +47,7 @@ let gdp: Object = {
   'Congo': 13502,
   'Cook Islands': 78.5,
   'Costa Rica': 48144,
-  'Ivory Coast': 32000,
+  'Côte d\'Ivoire': 32000,
   'Croatia': 57159,
   'Cuba': 75200,
   'Curacao': 83.8,

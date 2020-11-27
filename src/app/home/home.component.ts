@@ -4,7 +4,7 @@ import {DxVectorMapComponent} from 'devextreme-angular';
 
 import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js';
 import {Service} from './home.service';
-import {ProfileService} from "../profile/profile.service";
+import {ProfileService} from '../profile/profile.service';
 
 @Component({
   selector: 'app-home',
