@@ -35,7 +35,7 @@ import { CountryPageComponent } from './realestate/country-page/country-page.com
 import {DxVectorMapModule} from 'devextreme-angular';
 import { InvestmentBoxComponent } from './investmentbox/investmentbox.component';
 import { InvestmentBoxHomeComponent } from './investmentbox/investmentboxhome.component';
-
+import {InvestmentPortfolioComponent} from './investment/investmentportfolio.component';
 import { InvestmentBoxService } from './investmentbox/investmentbox.service';
 import { CommoditiesPageComponent } from './commodities/commodities-page/commodities-page.component';
 import { HomeComponent } from './home/home.component';
@@ -52,6 +52,7 @@ import { AngularMaterialModule } from './angular-material.module';
     BondTableComponent,
     StockTableComponent,
     InvestmentComponent,
+    InvestmentPortfolioComponent,
     ProfileComponent,
     ProfileAnimalComponent,
     ProfileAnimalSelectorComponent,

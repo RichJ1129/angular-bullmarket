@@ -6,22 +6,32 @@ import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';   
 import {Subject } from 'rxjs';
 
+interface InvestmentMath{
+    name: string;
+    symbol: string;
+    type: string;
+    shares: number;
+    currentPrice: number;
+    transactionPrice: number;
+  };
+
 @Component({
-  selector: 'app-investment',
-  templateUrl: './investment.component.html',
+  selector: 'app-investmentportfolio',
+  templateUrl: './investmentportfolio.component.html',
   styleUrls: ['./investment.component.css'],
 })
-export class InvestmentComponent implements OnInit, OnDestroy{
+export class InvestmentPortfolioComponent implements OnInit, OnDestroy{
 
   InvestmentData: any = [];
   CurrencyData: any = [];
-  FormattedCurrency: MatTableDataSource<Investment>;
+  FormattedCurrency: MatTableDataSource<InvestmentMath>;
 
-  investments: Investment[] =[];
-  displayedColumns: string[] = ['name', 'symbol', 'shares', 'transactionPrice'];
-  dataSource: MatTableDataSource<Investment>;
+  investments: InvestmentMath[] =[];
+  displayedColumns: string[] = ['name', 'symbol', 'type', 'shares', 'currentPrice', 'transactionPrice'];
+  dataSource: MatTableDataSource<InvestmentMath>;
   investmentValue=0;
   currencyValue: number;
+  portfolio: any[]=[];
   
   
   private investmentSub: Subscription;
@@ -35,11 +45,14 @@ export class InvestmentComponent implements OnInit, OnDestroy{
         this.userObject=data;
         this.UID = this.userObject._id;
       
-     //Transaction History
-      this.investmentApi.transactionHistory(this.UID).subscribe(data => {
-        this.InvestmentData = data;
-        this.dataSource = new MatTableDataSource<Investment>(this.InvestmentData);
+     //Portfolio History
+      this.investmentApi.getInvestments(this.UID).then(data => {
+        this.portfolio=data;
+        //console.log("did it work?",data);
+        this.dataSource = new MatTableDataSource<InvestmentMath>(data);
+
       });
+
 
      //Total Investment Value
       this.investmentApi.getInvestmentValue(this.UID).then(result => {
@@ -54,9 +67,9 @@ export class InvestmentComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit() {
-    this.investmentSub = this.investmentApi.getInvestmentUpdateListener()
-      .subscribe((investments: Investment[]) => {
-        this.dataSource = new MatTableDataSource<Investment>(investments);
+    this.investmentSub = this.investmentApi.getInvestmentUpdateListener2()
+      .subscribe((investments: InvestmentMath[]) => {
+        this.dataSource = new MatTableDataSource<InvestmentMath>(investments);
       });
   }
 

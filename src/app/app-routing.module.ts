@@ -16,6 +16,7 @@ import { CurrencyTableComponent } from './currency/currency-table/currency-table
 import { CurrencyPageComponent } from './currency/currency-page/currency-page.component';
 import {ProfileComponent} from './profile/profile.component';
 import {CommoditiesPageComponent} from './commodities/commodities-page/commodities-page.component';
+import {InvestmentPortfolioComponent} from './investment/investmentportfolio.component';
 
 const routes: Routes = [
   {
@@ -64,6 +65,11 @@ const routes: Routes = [
   {
     path: 'investment',
     component: InvestmentComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'portfolio',
+    component: InvestmentPortfolioComponent,
     canActivate: [AuthGuard]
   },
   {
