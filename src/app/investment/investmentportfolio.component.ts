@@ -27,7 +27,7 @@ export class InvestmentPortfolioComponent implements OnInit, OnDestroy{
   FormattedCurrency: MatTableDataSource<InvestmentMath>;
 
   investments: InvestmentMath[] =[];
-  displayedColumns: string[] = ['name', 'symbol', 'type', 'shares', 'currentPrice', 'transactionPrice'];
+  displayedColumns: string[] = ['name', 'symbol', 'type', 'shares', 'currentPrice'];
   dataSource: MatTableDataSource<InvestmentMath>;
   investmentValue=0;
   currencyValue: number;
