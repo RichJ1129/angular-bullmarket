@@ -4,6 +4,7 @@ import {AuthService} from '../../auth/auth.service';
 import { StockService } from '../../stocks/stock.service';
 import { CurrencyService } from '../../currency/currency.service';
 import { CommodityService } from '../../commodities/commodity.service';
+import { InvestmentService } from 'src/app/investment/investment.service'
 
 @Component({
   selector: 'app-header',
@@ -17,13 +18,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
   StockData: any = [];
   currencyData: any = [];
   commodityData: any = [];
-
+  UID: string;
+  userObject: any;
+  availableBalance: number;
+  balanceString="Balance: $";
 
 
   constructor(private authService: AuthService,
               private stockService: StockService,
               private currencyService: CurrencyService,
-              private commoditySevice: CommodityService) {}
+              private commoditySevice: CommodityService,
+              private investmentService: InvestmentService) {}
 
   // tslint:disable-next-line:typedef
   ngOnInit() {
@@ -42,6 +47,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.commoditySevice.getCommodities().subscribe(data => {
       this.commodityData = data;
       // console.log(this.commodityData);
+    });
+    this.investmentService.getUserID().subscribe(data => {
+      this.userObject=data;
+      this.UID = this.userObject._id;
+
+       this.investmentService.getCurrencyBalance(this.UID,"DOLLAR").then(result =>{
+         this.availableBalance = result;
+       });
+       
     });
   }
 

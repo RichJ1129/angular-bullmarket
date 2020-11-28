@@ -212,7 +212,7 @@ export class InvestmentBoxComponent {
         this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
 
         // Buy Stock
-        this.investmentApi.buyInvestment(this.UID,this.stock2.stockName,this.stock2.symbol,this.stock2.price[0],shares,'b','stock');
+        this.investmentApi.buyInvestment(this.UID,this.stock2.stockName,this.stock2.symbol,this.stock2.price[0],shares,'b','Stock');
     
     });
     }
@@ -232,7 +232,7 @@ export class InvestmentBoxComponent {
       this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
 
       // Buy Bond
-      this.investmentApi.buyInvestment(this.UID,result[0].name,result[0].symbol,1,shares,'b','bond');
+      this.investmentApi.buyInvestment(this.UID,result[0].name,result[0].symbol,1,shares,'b','Bond');
 
     });
     }
@@ -247,7 +247,7 @@ export class InvestmentBoxComponent {
     this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
 
     // Buy Investment Currency
-    this.investmentApi.buyInvestment(this.UID,currencyData.currencyName,currencyData.ticker,currencyData.rates[0],shares,'b','currency');
+    this.investmentApi.buyInvestment(this.UID,currencyData.currencyName,currencyData.ticker,currencyData.rates[0],shares,'b','Currency');
     });
     }
     else if(result[0].type=="Commodity"){
@@ -263,7 +263,7 @@ export class InvestmentBoxComponent {
     this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
 
     //Buy Investment
-    this.investmentApi.buyInvestment(this.UID,this.commodity.commodityName,this.commodity.symbol,this.commodity.etfPrice[0],shares,'b','commodity');
+    this.investmentApi.buyInvestment(this.UID,this.commodity.commodityName,this.commodity.symbol,this.commodity.etfPrice[0],shares,'b','Commodity');
     
     }
     else if(result[0].type=="Urban Real Estate"){
@@ -282,7 +282,7 @@ export class InvestmentBoxComponent {
     this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
 
     // Buy Real Estate
-    this.investmentApi.buyInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,shares,'b','realestate');
+    this.investmentApi.buyInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,shares,'b','Real Estate');
     this.realEstatePrice = 0;
     });
     }
@@ -304,7 +304,7 @@ export class InvestmentBoxComponent {
       this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
 
       // Buy Real Estate
-      this.investmentApi.buyInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,shares,'b','realestate');
+      this.investmentApi.buyInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,shares,'b','Real Estate');
       this.realEstatePrice = 0;
     });
     }
@@ -341,7 +341,7 @@ export class InvestmentBoxComponent {
       this.investmentApi.addBaseCurrency(this.UID,currency,amount);
 
       //Sell Investment
-      this.investmentApi.sellInvestment(this.UID,this.stock2.stockName,this.stock2.symbol,this.stock2.price[0],-Math.abs(shares),'s','stock');
+      this.investmentApi.sellInvestment(this.UID,this.stock2.stockName,this.stock2.symbol,this.stock2.price[0],-Math.abs(shares),'s','Stock');
     });
   }
   else if(result[0].type=="Bond"){
@@ -374,7 +374,7 @@ export class InvestmentBoxComponent {
     this.investmentApi.addBaseCurrency(this.UID,currency,amount);
 
     // Sell Bond
-    this.investmentApi.sellInvestment(this.UID,result[0].name,result[0].symbol,1,-(shares),'s','bond');
+    this.investmentApi.sellInvestment(this.UID,result[0].name,result[0].symbol,1,-(shares),'s','Bond');
 
   });
   }
@@ -397,7 +397,7 @@ export class InvestmentBoxComponent {
   this.investmentApi.addBaseCurrency(this.UID,currency,amount);
 
   // Sell Investment Currency
-  this.investmentApi.sellInvestment(this.UID,currencyData.currencyName,currencyData.ticker,currencyData.rates[0],-(shares),'b','currency');
+  this.investmentApi.sellInvestment(this.UID,currencyData.currencyName,currencyData.ticker,currencyData.rates[0],-(shares),'b','Currency');
   });
   }
   else if(result[0].type=="Commodity"){
@@ -413,7 +413,7 @@ export class InvestmentBoxComponent {
   this.investmentApi.addBaseCurrency(this.UID,currency,amount);
     
   //Buy Investment
-  this.investmentApi.sellInvestment(this.UID,this.commodity.commodityName,this.commodity.symbol,this.commodity.etfPrice[0],-(shares),'s','commodity');
+  this.investmentApi.sellInvestment(this.UID,this.commodity.commodityName,this.commodity.symbol,this.commodity.etfPrice[0],-(shares),'s','Commodity');
 
   }
   else if(result[0].type=="Urban Real Estate"){
@@ -453,7 +453,7 @@ export class InvestmentBoxComponent {
     this.investmentApi.addBaseCurrency(this.UID,currency,amount);
 
     // Sell Real Estate
-    this.investmentApi.sellInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,-(shares),'s','realestate');
+    this.investmentApi.sellInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,-(shares),'s','Real Estate');
     this.realEstatePrice = 0;
 
 
@@ -496,7 +496,7 @@ export class InvestmentBoxComponent {
     this.investmentApi.addBaseCurrency(this.UID,currency,amount);
 
     // Sell Real Estate
-    this.investmentApi.sellInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,-(shares),'s','realestate');
+    this.investmentApi.sellInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,-(shares),'s','Real Estate');
     this.realEstatePrice = 0;
   });
   }
