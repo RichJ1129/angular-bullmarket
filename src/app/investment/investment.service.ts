@@ -6,6 +6,14 @@ import {environment} from '../../environments/environment';
 import {Subject } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { AuthData } from 'src/app/auth/auth-data.model';
+import { RealEstateService } from 'src/app/realestate/realestate.service';
+import { Country } from 'src/app/realestate/country.model';
+import { CurrencyService } from 'src/app/currency/currency.service';
+import { Currency } from 'src/app/currency/currency.model';
+import { CommodityService } from 'src/app/commodities/commodity.service';
+import { Commodity } from 'src/app/commodities/commodity.model';
+import { StockService } from 'src/app/stocks/stock.service';
+import { Stock } from 'src/app/stocks/stock.model';
 
 interface IDAuthData{
   _id: string;
@@ -28,7 +36,7 @@ const backendURL = environment.apiURL;
 export class InvestmentService {
 
   private investments: Investment[] = [];
-  constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService,private stockApi: StockService, private countryApi: RealEstateService, private currencyApi: CurrencyService, private commodityApi: CommodityService) {}
   private investmentsUpdated = new Subject<Investment[]>();
   private investmentsUpdated2 = new Subject<InvestmentMath[]>();
   private userEmail: string;
@@ -40,6 +48,10 @@ export class InvestmentService {
   private investmentValue: number;
   private portfolio: InvestmentMath[] = [];
   private add: number;
+  stock2: Stock;
+  country: Country;
+  currency: Currency;
+  commodity: Commodity;
 
 
 getUserID(){
@@ -58,37 +70,104 @@ getUserID(){
   }
 
   public async getInvestments(UID: string) : Promise<InvestmentMath[]> {
+    //Retrieve Investment List
     let params = new HttpParams();
     params = params.append('userID',UID);
-
     this.result = await this.http.get(backendURL + '/investment', {params: params}).toPromise();
-    var temp2:InvestmentMath;
+    
+   //Create Net Investment Portfolio from Investment List
+   var temp2:InvestmentMath;
+   for(let x=0;x<this.result.length;x++){
+   this.add=1; // Reset Check for each Result Investment
+   temp2={ 
+     "currentPrice":this.result[x].transactionPrice, 
+     "name":this.result[x].name, 
+     "symbol":this.result[x].symbol,
+     "shares":this.result[x].shares,
+     "type":this.result[x].assetType, 
+     "transactionPrice":this.result[x].transactionPrice
+   };
+   for(let y=0;y<this.portfolio.length;y++){ //Look to see if this has been add
+     if(this.portfolio[y].symbol==temp2.symbol){
+       this.portfolio[y].shares = (+this.portfolio[y].shares + +temp2.shares); // Add or Subtract Shares from this Symbol
+       this.add=0; //Jump to Next Investment
+       y=+(this.portfolio.length);// Symbols Match, Exit 'y' For Loop
+     }
+   }
+   if(this.add==1){ //Investment Doesn't Exist in Portfolio Array, Add it
+     this.portfolio.push(temp2);
+     console.log("Added ", temp2.symbol);
+   }
+ }
 
-    for(let x=0;x<this.result.length;x++){
-    this.add=1; // Reset Portfolio Symbol Check for each Result Investment Object
-    temp2={ 
-      "currentPrice":this.result[x].transactionPrice, 
-      "name":this.result[x].name, 
-      "symbol":this.result[x].symbol,
-      "shares":this.result[x].shares,
-      "type":this.result[x].assetType, 
-      "transactionPrice":this.result[x].transactionPrice
-    };
-    for(let y=0;y<this.portfolio.length;y++){ //Look to see if this has been add
-      if(this.portfolio[y].symbol==temp2.symbol){
-        this.portfolio[y].shares = (+this.portfolio[y].shares + +temp2.shares); // Add or Subtract Shares from this Symbol
-        this.add=0; //Jump to Next Investment
-        y=+(this.portfolio.length);// Symbols Match, Exit 'y' For Loop
-      }
-    }
-    if(this.add==1){ //Investment Doesn't Exist in Portfolio Array, Add it
-      this.portfolio.push(temp2);
-      console.log("Added ", temp2.symbol);
-    }
-  }
+ console.group("Current Prices:");
+ //Update Current Price for Each Investment
+ for(let z=0;z<this.portfolio.length;z++)
+ {
+   if(this.portfolio[z].type =="Stock" || this.portfolio[z].type=="stock"){
+     console.log(this.portfolio[z].currentPrice);
+     console.log(this.portfolio[z].type);
 
-  return this.portfolio;
-  }
+     //Retrieve Stock Information
+     this.stockApi.getOneStock(this.portfolio[z].symbol).subscribe(stockData2 => {
+       this.stock2 = { stockName: stockData2.stockName, symbol: stockData2.symbol, price: stockData2.price, marketCap: stockData2.marketCap, closeDate: stockData2.closeDate, pERatio: stockData2.pERatio };
+
+       this.portfolio[z].currentPrice=this.stock2.price[0];
+     })
+   }
+   if(this.portfolio[z].type =="Bond" || this.portfolio[z].type=="bond"){
+     console.log(this.portfolio[z].currentPrice);
+     console.log(this.portfolio[z].type);
+   /*
+     //Retrieve Bond-Country Current Price
+     this.countryApi.getOneCountry(this.countryname).subscribe(countryData => {
+       this.country = {
+        countryName: countryData.countryName, capitalCity: countryData.capitalCity, population: countryData.population, urbanRent: countryData.urbanRent, urbanPE: countryData.urbanPE, ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE,
+        interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
+     };
+   })*/
+   }
+   if(this.portfolio[z].type =="Commodities" || this.portfolio[z].type=="commodities"){
+     console.log(this.portfolio[z].currentPrice);
+     console.log(this.portfolio[z].type);
+
+   //Retrieve Commodity Current Price
+   this.commodityApi.getOneCommodity(this.portfolio[z].symbol).subscribe(commodityData => {
+     this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: "", closeDate: [] };
+   
+     this.portfolio[z].currentPrice=this.commodity.etfPrice[0];
+   });
+
+
+   }
+   if(this.portfolio[z].type =="Real Estate" || this.portfolio[z].type=="realestate"){
+     console.log(this.portfolio[z].currentPrice);
+     console.log(this.portfolio[z].type);
+     /*
+     //Retrieve Real Estate-Country Current Price
+     this.countryApi.getOneCountry(this.countryname).subscribe(countryData => {
+       this.country = {
+        countryName: countryData.countryName, capitalCity: countryData.capitalCity, population: countryData.population, urbanRent: countryData.urbanRent, urbanPE: countryData.urbanPE, ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE,
+        interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
+     };*/
+
+   }
+   if(this.portfolio[z].type =="Currency" || this.portfolio[z].type=="currency"){
+     console.log(this.portfolio[z].currentPrice);
+     console.log(this.portfolio[z].type);
+
+   //Retrieve Currency Current Price
+   this.currencyApi.getOneCurrency(this.portfolio[z].symbol).subscribe(currencyData => {
+     this.currency = { currencyName: currencyData.currencyName, ticker: currencyData.ticker, rates: currencyData.rates, timeStamp: currencyData.timeStamp};
+
+     this.portfolio[z].currentPrice=this.currency.rates[0];
+   })
+   }
+ }
+
+ //Return Portfolio Object
+ return this.portfolio;
+ }
 
   public async getInvestmentValue(UID: string) {
     let params = new HttpParams();
