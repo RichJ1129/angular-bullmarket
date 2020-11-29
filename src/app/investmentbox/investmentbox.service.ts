@@ -83,12 +83,6 @@ getUserID(){
 
   }
 
-  //Function to add investment to User Collection
-  /*
-  addUserInvestment(){
-    //STUB
-  }
-  */
 
   sellInvestment(userID: string, name: string, symbol: string, transactionPrice: number, shares: number, transactionType: string, assetType: string){
     const newSale: Investment = { 
@@ -105,13 +99,6 @@ getUserID(){
       console.log(responseData.message);
     })
   }
-
-  //Function to add investment to User Collection
-  /*
-  removeUserInvestment(){
-    //STUB
-  }
-  */
 
   getInvestmentUpdateListener(){
     return this.investmentsUpdated.asObservable();

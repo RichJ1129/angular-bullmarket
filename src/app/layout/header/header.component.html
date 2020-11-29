@@ -5,7 +5,7 @@
   <div>
     <a *ngIf="!userIsAuthenticated" style="font-size: 16px; text-align:right; color: black;" routerLink="/login"> Home </a>
     <span *ngIf="!userIsAuthenticated">|</span>
-    <a *ngIf="userIsAuthenticated" style="font-size: 16px; text-align:right; color: black;" routerLink="/investment"> Investments </a>
+    <a *ngIf="userIsAuthenticated" style="font-size: 16px; text-align:right; color: black;" routerLink="/portfolio"> Investments </a>
     <span *ngIf="userIsAuthenticated">|</span>
     <a *ngIf="userIsAuthenticated"  style="font-size: 16px; text-align:right; color: black;" routerLink="/profile"> Profile </a>
     <span *ngIf="userIsAuthenticated">|</span>

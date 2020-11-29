@@ -21,7 +21,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   UID: string;
   userObject: any;
   availableBalance: number;
-  balanceString = 'Balance: $';
+  balanceString: string;
+
 
 
   constructor(private authService: AuthService,
@@ -52,8 +53,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.userObject = data;
       this.UID = this.userObject._id;
 
-      this.investmentService.getCurrencyBalance(this.UID, 'DOLLAR').then(result => {
+       
+         this.investmentService.getCurrencyBalance(this.UID,"DOLLAR").then(result =>{
          this.availableBalance = result;
+                            this.balanceString="Balance: $"
+                        
        });
 
     });
@@ -62,6 +66,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line:typedef
   onLogout() {
     this.authService.logout();
+    this.availableBalance=null;
+    this.balanceString=null;
   }
 
   ngOnDestroy() {

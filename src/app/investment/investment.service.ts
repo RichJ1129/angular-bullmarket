@@ -52,6 +52,7 @@ export class InvestmentService {
   country: Country;
   currency: Currency;
   commodity: Commodity;
+  tempshares = 0;
 
 
 getUserID(){
@@ -67,6 +68,21 @@ getUserID(){
     let params = new HttpParams();
     params = params.append('userID',UID);
     return this.http.get(backendURL + '/investment', {params: params});
+  }
+
+  public async numberOfShares(UID: string, symbol: string) : Promise<number> {
+    this.tempshares = 0;
+    let params = new HttpParams();
+    params = params.append('userID',UID);
+    this.result = await this.http.get(backendURL + '/investment', {params: params}).toPromise();
+
+    for(let x=0;x<this.result.length;x++){ 
+      if(this.result[x].symbol == symbol)
+      {
+        this.tempshares += +(this.result[x].shares);
+      }
+    }
+    return this.tempshares;
   }
 
   public async getInvestments(UID: string) : Promise<InvestmentMath[]> {
@@ -96,7 +112,6 @@ getUserID(){
    }
    if(this.add==1){ //Investment Doesn't Exist in Portfolio Array, Add it
      this.portfolio.push(temp2);
-     console.log("Added ", temp2.symbol);
    }
  }
 
@@ -105,9 +120,6 @@ getUserID(){
  for(let z=0;z<this.portfolio.length;z++)
  {
    if(this.portfolio[z].type =="Stock" || this.portfolio[z].type=="stock"){
-     console.log(this.portfolio[z].currentPrice);
-     console.log(this.portfolio[z].type);
-
      //Retrieve Stock Information
      this.stockApi.getOneStock(this.portfolio[z].symbol).subscribe(stockData2 => {
        this.stock2 = { stockName: stockData2.stockName, symbol: stockData2.symbol, price: stockData2.price, marketCap: stockData2.marketCap, closeDate: stockData2.closeDate, pERatio: stockData2.pERatio };
@@ -116,20 +128,9 @@ getUserID(){
      })
    }
    if(this.portfolio[z].type =="Bond" || this.portfolio[z].type=="bond"){
-     console.log(this.portfolio[z].currentPrice);
-     console.log(this.portfolio[z].type);
-   /*
-     //Retrieve Bond-Country Current Price
-     this.countryApi.getOneCountry(this.countryname).subscribe(countryData => {
-       this.country = {
-        countryName: countryData.countryName, capitalCity: countryData.capitalCity, population: countryData.population, urbanRent: countryData.urbanRent, urbanPE: countryData.urbanPE, ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE,
-        interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
-     };
-   })*/
+    //No change
    }
    if(this.portfolio[z].type =="Commodities" || this.portfolio[z].type=="commodities"){
-     console.log(this.portfolio[z].currentPrice);
-     console.log(this.portfolio[z].type);
 
    //Retrieve Commodity Current Price
    this.commodityApi.getOneCommodity(this.portfolio[z].symbol).subscribe(commodityData => {
@@ -141,20 +142,9 @@ getUserID(){
 
    }
    if(this.portfolio[z].type =="Real Estate" || this.portfolio[z].type=="realestate"){
-     console.log(this.portfolio[z].currentPrice);
-     console.log(this.portfolio[z].type);
-     /*
-     //Retrieve Real Estate-Country Current Price
-     this.countryApi.getOneCountry(this.countryname).subscribe(countryData => {
-       this.country = {
-        countryName: countryData.countryName, capitalCity: countryData.capitalCity, population: countryData.population, urbanRent: countryData.urbanRent, urbanPE: countryData.urbanPE, ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE,
-        interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
-     };*/
-
+      //No change
    }
    if(this.portfolio[z].type =="Currency" || this.portfolio[z].type=="currency"){
-     console.log(this.portfolio[z].currentPrice);
-     console.log(this.portfolio[z].type);
 
    //Retrieve Currency Current Price
    this.currencyApi.getOneCurrency(this.portfolio[z].symbol).subscribe(currencyData => {
@@ -181,7 +171,6 @@ getUserID(){
     }
 
     this.returnValue = (+(Math.round(this.investmentValue * 100) / 100).toFixed(2))
-    console.log("service check investment", this.returnValue);
     return this.returnValue;
 
   }
@@ -198,13 +187,7 @@ getUserID(){
     }
 
     this.returnValue = (+(Math.round(this.currencyBalance * 100) / 100).toFixed(2))
-    console.log("service check balance", this.returnValue);
-
-
     return this.returnValue;
-
-
-
   }
 
 
