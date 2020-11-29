@@ -8,7 +8,10 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {FormControl} from '@angular/forms';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
-
+import { InvestmentService } from '../../investment/investment.service';
+import { HeaderComponent } from '../../layout/header/header.component';
+import {InvestmentBoxService} from '../../investmentbox/investmentbox.service';
+import { Currency } from '../../currency/currency.model';
 
 
 @Component({
@@ -21,16 +24,27 @@ export class StockPageComponent implements OnInit {
   constructor(
     public stocksService: StockService,
     public route: ActivatedRoute,
-    public datePipe: DatePipe
-  ) {}
+    public datePipe: DatePipe,
+    private investmentServiceApi: InvestmentService,
+    private investmentApi: InvestmentBoxService
+  ) {
+    this.investmentApi.getUserID().subscribe(data => {
+      this.userObject = data;
+      this.UID = this.userObject._id;
+    });
+  }
+  headerComponent: HeaderComponent;
 
   show = false;
 
   displayedColumns: any[] = ['stockName', 'symbol', 'price', 'pERatio', 'marketCap'];
   stock: Stock;
+  currency: Currency;
   company: { companyCurrency: string; companySummary: string; companyCountry: string };
   private stockTicker: string;
   stockValue = new FormControl('');
+  UID: string;
+  userObject: any;
 
   chartType = 'line';
   chartData: ChartDataSets[] =  [
@@ -109,6 +123,46 @@ export class StockPageComponent implements OnInit {
     }
 
     this.chartLabels = transformedDates.slice(transformedDates.length - 10);
+  }
+
+  public buyStock(stockShares): void {
+    let currencyBalance;
+    const currency = 'DOLLAR';
+
+    this.investmentServiceApi.getCurrencyBalance(this.UID, currency).then(data => {
+      currencyBalance = data;
+      const purchaseAmount =  stockShares * this.stock.price[this.stock.price.length - 1];
+      if (currencyBalance < purchaseAmount) {
+
+      } else {
+        this.investmentApi.removeBaseCurrency(this.UID, currency, -purchaseAmount);
+        this.investmentApi.buyInvestment(this.UID, this.stock.stockName,
+          this.stock.symbol, 1,
+          stockShares, 'b', 'Stock');
+      }
+    });
+  }
+
+
+
+  public sellStock(stockShares): void {
+    let numberShares;
+    const currency = 'DOLLAR';
+
+    this.investmentServiceApi.numberOfShares(this.UID, this.stock.symbol).then(data => {
+      numberShares = data;
+      const sellAmount =  stockShares * this.stock.price[this.stock.price.length - 1];
+      if (stockShares > numberShares) {
+
+      } else {
+        this.investmentApi.addBaseCurrency(this.UID, currency, sellAmount);
+        this.investmentApi.sellInvestment(this.UID,
+          this.stock.stockName, this.stock.symbol,
+          this.stock.price[this.stock.price.length - 1],
+          -Math.abs(stockShares),
+          's', 'Stock');
+      }
+    });
   }
 
   ngOnInit(): void {

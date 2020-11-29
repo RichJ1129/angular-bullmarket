@@ -3,8 +3,8 @@ import { Investment } from './investment.model';
 import { InvestmentService } from 'src/app/investment/investment.service';
 import { InvestmentBoxService } from './investmentbox.service';
 import {MatTableDataSource} from '@angular/material/table';
-import { Injectable, EventEmitter } from '@angular/core';    
-import { Subscription } from 'rxjs/internal/Subscription';  
+import { Injectable, EventEmitter } from '@angular/core';
+import { Subscription } from 'rxjs/internal/Subscription';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
@@ -16,10 +16,10 @@ import { AuthData } from 'src/app/auth/auth-data.model';
 import { InvestmentList } from './investmentList';
 import { RealEstateService } from 'src/app/realestate/realestate.service';
 import { Country } from 'src/app/realestate/country.model';
-import { CurrencyService } from 'src/app/currency/currency.service'
-import { Currency } from 'src/app/currency/currency.model'
-import { CommodityService } from 'src/app/commodities/commodity.service'
-import { Commodity } from 'src/app/commodities/commodity.model'
+import { CurrencyService } from 'src/app/currency/currency.service';
+import { Currency } from 'src/app/currency/currency.model';
+import { CommodityService } from 'src/app/commodities/commodity.service';
+import { Commodity } from 'src/app/commodities/commodity.model';
 
 //User ID Interface
 interface IDAuthData{
@@ -67,7 +67,7 @@ export class InvestmentBoxComponent {
       });
 
     }
-    
+
   //Filter Search Query - Source Angular Docs AutoComplete
     private _filter(name: string): InvestmentForm[] {
       const filterValue = name.toLowerCase();
@@ -79,7 +79,7 @@ export class InvestmentBoxComponent {
       return investment && investment.name ? investment.name : '';
     }
 
-  
+
 //Filter Search Query - Source Angular Docs AutoComplete
   ngOnInit() {
     this.filteredInvestments = this.myControl.valueChanges
@@ -89,7 +89,7 @@ export class InvestmentBoxComponent {
       map(name => name ? this._filter(name) : InvestmentList.slice())
     );
   };
-  
+
   onClickPrice(name, shares){
     let currency = "DOLLAR"; let amount = 0;
 
@@ -107,7 +107,7 @@ export class InvestmentBoxComponent {
           this.perSharePrice="$ "+ (stockData2.price[0]).toString();
           this.totalPrice="$ "+ (stockData2.price[0] * shares).toString();
           },500);
-    
+
     });
     }
     else if(result[0].type=="Bond"){
@@ -148,7 +148,7 @@ export class InvestmentBoxComponent {
       this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: "", closeDate: [] };
 
           });
-      
+
       //Update Share and Total Price after 0.5s Delay for Data Retrieval
       setTimeout(() => {
       this.perSharePrice="$ "+this.commodity.etfPrice[0].toString();
@@ -163,7 +163,7 @@ export class InvestmentBoxComponent {
       this.country = {
         countryName: countryData.countryName, capitalCity: countryData.capitalCity, population: countryData.population, urbanRent: countryData.urbanRent, urbanPE: countryData.urbanPE, ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE, interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
       };
-     
+
       //Calculate Real Estate Price, Display Result after 0.5s Delay
       this.realEstatePrice = ((countryData.urbanPE * countryData.urbanRent ) * 12);
       setTimeout(() => {
@@ -183,7 +183,7 @@ export class InvestmentBoxComponent {
         ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE, interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation,
         bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
       };
-     
+
       //Calculate Real Estate Price, Display Result after 0.5s Delay
       this.realEstatePrice = ((countryData.ruralPE * countryData.ruralRent ) * 12);
       setTimeout(() => {
@@ -198,11 +198,11 @@ export class InvestmentBoxComponent {
   onClickBuy(name, shares){
     let currency = "DOLLAR"; let amount = 0;
     let currencyBalance;
-    
+
     this.investmentServiceApi.getCurrencyBalance(this.UID,"DOLLAR").then(data =>{
       currencyBalance = data;
-      
-   
+
+
     //Retrieve Symbol, Type, Name
     let result = InvestmentList.filter(obj => {
       return obj.name === name;
@@ -218,10 +218,10 @@ export class InvestmentBoxComponent {
 
         if((Math.abs(amount))<currencyBalance){
           //Update Currency
-          this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
+          this.investmentApi.removeBaseCurrency(this.UID, currency, amount);
           // Buy Stock
-          this.investmentApi.buyInvestment(this.UID,this.stock2.stockName,this.stock2.symbol,this.stock2.price[0],shares,'b','Stock');
-        }else{console.log("Not enough money")};
+          this.investmentApi.buyInvestment(this.UID, this.stock2.stockName, this.stock2.symbol, this.stock2.price[0], shares,'b','Stock');
+        }else{console.log('Not enough money'); }
     });
     }
     else if(result[0].type=="Bond"){
@@ -290,7 +290,7 @@ export class InvestmentBoxComponent {
       this.country = {
         countryName: countryData.countryName, capitalCity: countryData.capitalCity, population: countryData.population, urbanRent: countryData.urbanRent, urbanPE: countryData.urbanPE, ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE, interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
       };
-     
+
     //Update Currency
     this.realEstatePrice = ((countryData.urbanPE * countryData.urbanRent ) * 12);
 
@@ -303,7 +303,8 @@ export class InvestmentBoxComponent {
       // Buy Real Estate
       this.investmentApi.buyInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,shares,'b','Real Estate');
       this.realEstatePrice = 0;
-    }else(console.log("Not enough money"))
+    }
+    else{console.log('Not enough money')}
     });
     }
     else if(result[0].type=="Rural Real Estate"){
@@ -317,7 +318,7 @@ export class InvestmentBoxComponent {
         ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE, interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation,
         bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
       };
-     
+
       //Check Available Balance
       this.realEstatePrice = ((countryData.ruralPE * countryData.ruralRent ) * 12);
       amount = -Math.abs(Math.round((shares * this.realEstatePrice)*100) / 100);
@@ -345,11 +346,11 @@ export class InvestmentBoxComponent {
       return obj.name === name;
     })
 
-    
+
     this.investmentServiceApi.numberOfShares(this.UID, result[0].symbol).then(data => {
       this.minimumShares=data;
-    
-  
+
+
     setTimeout(function(){}, 3000);
 
     if(result[0].type=="Stock"){
@@ -434,13 +435,13 @@ export class InvestmentBoxComponent {
   this.commodityApi.getOneCommodity(result[0].symbol).subscribe(commodityData => {
    this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: "", closeDate: [] };
    });
-    
+
   //Check Share Ownership
-  if(this.minimumShares>=shares){  
+  if(this.minimumShares>=shares){
   //Update Currency
   amount = Math.abs(shares * this.commodity.etfPrice[0]);
   this.investmentApi.addBaseCurrency(this.UID,currency,amount);
-    
+
   //Buy Investment
   this.investmentApi.sellInvestment(this.UID,this.commodity.commodityName,this.commodity.symbol,this.commodity.etfPrice[0],-(shares),'s','Commodity');
   }else{console.log("Not enough shares");}
@@ -467,7 +468,7 @@ export class InvestmentBoxComponent {
       urbanSymbol: countryData.urbanSymbol,
       ruralSymbol: countryData.ruralSymbol,
     };
-   
+
     //Check Share Ownership
     if(this.minimumShares>=shares){
     //Update Currency
@@ -505,7 +506,7 @@ export class InvestmentBoxComponent {
       urbanSymbol: countryData.urbanSymbol,
       ruralSymbol: countryData.ruralSymbol,
     };
-   
+
     //Check Share Ownership
     if(this.minimumShares>=shares){
     //Update Currency
@@ -523,6 +524,6 @@ export class InvestmentBoxComponent {
 });
   }
 
- 
+
 };
 

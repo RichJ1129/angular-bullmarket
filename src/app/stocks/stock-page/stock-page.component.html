@@ -53,8 +53,8 @@
         <mat-card-actions class="align-middle">
           <hr>
           <div align="center">
-            <button mat-button>Buy</button>
-            <button mat-button>Sell</button>
+            <button mat-button (click)="buyStock(stockValue.value)">Buy</button>
+            <button mat-button (click)="sellStock(stockValue.value)">Sell</button>
           </div>
         </mat-card-actions>
       </mat-card>
