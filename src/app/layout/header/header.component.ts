@@ -4,7 +4,7 @@ import {AuthService} from '../../auth/auth.service';
 import { StockService } from '../../stocks/stock.service';
 import { CurrencyService } from '../../currency/currency.service';
 import { CommodityService } from '../../commodities/commodity.service';
-import { InvestmentService } from 'src/app/investment/investment.service'
+import { InvestmentService } from 'src/app/investment/investment.service';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   UID: string;
   userObject: any;
   availableBalance: number;
-  balanceString="Balance: $";
+  balanceString = 'Balance: $';
 
 
   constructor(private authService: AuthService,
@@ -49,13 +49,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // console.log(this.commodityData);
     });
     this.investmentService.getUserID().subscribe(data => {
-      this.userObject=data;
+      this.userObject = data;
       this.UID = this.userObject._id;
 
-       this.investmentService.getCurrencyBalance(this.UID,"DOLLAR").then(result =>{
+      this.investmentService.getCurrencyBalance(this.UID, 'DOLLAR').then(result => {
          this.availableBalance = result;
        });
-       
+
     });
   }
 

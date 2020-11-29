@@ -17,6 +17,7 @@ import { CurrencyPageComponent } from './currency/currency-page/currency-page.co
 import {ProfileComponent} from './profile/profile.component';
 import {CommoditiesPageComponent} from './commodities/commodities-page/commodities-page.component';
 import {InvestmentPortfolioComponent} from './investment/investmentportfolio.component';
+import { AboutSectionComponent } from './about-section/about-section.component';
 
 const routes: Routes = [
   {
@@ -96,6 +97,10 @@ const routes: Routes = [
     path: 'commodities-page/:commodity_symbol',
     component: CommoditiesPageComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'about',
+    component: AboutSectionComponent
   }
 ];
 
