@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Investment } from './investment.model';
+import { InvestmentService } from 'src/app/investment/investment.service';
 import { InvestmentBoxService } from './investmentbox.service';
 import {MatTableDataSource} from '@angular/material/table';
 import { Injectable, EventEmitter } from '@angular/core';    
@@ -56,16 +57,17 @@ export class InvestmentBoxComponent {
   commodity: Commodity;
   perSharePrice = "$";
   totalPrice = "$";
+  minimumShares:number=0;
 
   //Get UserID and Setup Services
-    constructor(private investmentApi: InvestmentBoxService, private stockApi: StockService, private countryApi: RealEstateService, private currencyApi: CurrencyService, private commodityApi: CommodityService) {
+    constructor(private investmentApi: InvestmentBoxService, private investmentServiceApi: InvestmentService, private stockApi: StockService, private countryApi: RealEstateService, private currencyApi: CurrencyService, private commodityApi: CommodityService) {
         this.investmentApi.getUserID().subscribe(data => {
           this.userObject=data;
           this.UID = this.userObject._id;
       });
 
     }
-
+    
   //Filter Search Query - Source Angular Docs AutoComplete
     private _filter(name: string): InvestmentForm[] {
       const filterValue = name.toLowerCase();
@@ -195,8 +197,12 @@ export class InvestmentBoxComponent {
 
   onClickBuy(name, shares){
     let currency = "DOLLAR"; let amount = 0;
-    //console.log("Buy ", shares, " shares of ", name);
-
+    let currencyBalance;
+    
+    this.investmentServiceApi.getCurrencyBalance(this.UID,"DOLLAR").then(data =>{
+      currencyBalance = data;
+      
+   
     //Retrieve Symbol, Type, Name
     let result = InvestmentList.filter(obj => {
       return obj.name === name;
@@ -207,13 +213,15 @@ export class InvestmentBoxComponent {
       this.stockApi.getOneStock(result[0].symbol).subscribe(stockData2 => {
         this.stock2 = { stockName: stockData2.stockName, symbol: stockData2.symbol, price: stockData2.price, marketCap: stockData2.marketCap, closeDate: stockData2.closeDate, pERatio: stockData2.pERatio };
 
-        // Update Base Currency
-        amount = -Math.abs((stockData2.price[0] * shares))
-        this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
+        // Check Available Balance
+        amount = -Math.abs((stockData2.price[0] * shares));
 
-        // Buy Stock
-        this.investmentApi.buyInvestment(this.UID,this.stock2.stockName,this.stock2.symbol,this.stock2.price[0],shares,'b','Stock');
-    
+        if((Math.abs(amount))<currencyBalance){
+          //Update Currency
+          this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
+          // Buy Stock
+          this.investmentApi.buyInvestment(this.UID,this.stock2.stockName,this.stock2.symbol,this.stock2.price[0],shares,'b','Stock');
+        }else{console.log("Not enough money")};
     });
     }
     else if(result[0].type=="Bond"){
@@ -227,13 +235,15 @@ export class InvestmentBoxComponent {
          interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
       };
 
-      //Update Currency
+      // Check Available Balance
       amount = -Math.abs(shares)
-      this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
 
-      // Buy Bond
-      this.investmentApi.buyInvestment(this.UID,result[0].name,result[0].symbol,1,shares,'b','Bond');
-
+      if((Math.abs(amount))<currencyBalance){
+        //Update Currency
+        this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
+        // Buy Bond
+        this.investmentApi.buyInvestment(this.UID,result[0].name,result[0].symbol,1,shares,'b','Bond');
+      }{console.log("Not enough money")};
     });
     }
     else if(result[0].type=="Currency"){
@@ -242,12 +252,15 @@ export class InvestmentBoxComponent {
     this.currencyApi.getOneCurrency(result[0].symbol).subscribe(currencyData => {
       this.currency = { currencyName: currencyData.currencyName, ticker: currencyData.ticker, rates: currencyData.rates, timeStamp: currencyData.timeStamp};
 
-    //Update Base Currency
+    // Check Available Balance
     amount = -Math.abs(shares)
-    this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
 
-    // Buy Investment Currency
-    this.investmentApi.buyInvestment(this.UID,currencyData.currencyName,currencyData.ticker,currencyData.rates[0],shares,'b','Currency');
+    if((Math.abs(amount))<currencyBalance){
+      //Update Currency
+      this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
+      // Buy Investment Currency
+      this.investmentApi.buyInvestment(this.UID,currencyData.currencyName,currencyData.ticker,currencyData.rates[0],shares,'b','Currency');
+    }else{console.log("Not enough money")};
     });
     }
     else if(result[0].type=="Commodity"){
@@ -258,13 +271,16 @@ export class InvestmentBoxComponent {
     });
 
 
-    //Update Currency
+    // Check Available Balance
     amount = -Math.abs(shares * this.commodity.etfPrice[0]);
-    this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
 
-    //Buy Investment
-    this.investmentApi.buyInvestment(this.UID,this.commodity.commodityName,this.commodity.symbol,this.commodity.etfPrice[0],shares,'b','Commodity');
-    
+    if((Math.abs(amount))<currencyBalance){
+      //Update Currency
+      this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
+      //Buy Commodity
+      this.investmentApi.buyInvestment(this.UID,this.commodity.commodityName,this.commodity.symbol,this.commodity.etfPrice[0],shares,'b','Commodity');
+    }
+    else{console.log("Not enough money")};
     }
     else if(result[0].type=="Urban Real Estate"){
       this.countryname = result[0].country;
@@ -278,12 +294,16 @@ export class InvestmentBoxComponent {
     //Update Currency
     this.realEstatePrice = ((countryData.urbanPE * countryData.urbanRent ) * 12);
 
+    //Check Available Balance
     amount = -Math.abs(Math.round((shares * this.realEstatePrice)*100) / 100);
-    this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
 
-    // Buy Real Estate
-    this.investmentApi.buyInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,shares,'b','Real Estate');
-    this.realEstatePrice = 0;
+    if((Math.abs(amount))<currencyBalance){
+      //Update Currency
+      this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
+      // Buy Real Estate
+      this.investmentApi.buyInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,shares,'b','Real Estate');
+      this.realEstatePrice = 0;
+    }else(console.log("Not enough money"))
     });
     }
     else if(result[0].type=="Rural Real Estate"){
@@ -298,31 +318,39 @@ export class InvestmentBoxComponent {
         bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
       };
      
-      //Update Currency
+      //Check Available Balance
       this.realEstatePrice = ((countryData.ruralPE * countryData.ruralRent ) * 12);
       amount = -Math.abs(Math.round((shares * this.realEstatePrice)*100) / 100);
-      this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
 
-      // Buy Real Estate
-      this.investmentApi.buyInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,shares,'b','Real Estate');
-      this.realEstatePrice = 0;
+      if((Math.abs(amount))<currencyBalance){
+        //Update Currency
+        this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
+
+        // Buy Real Estate
+        this.investmentApi.buyInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,shares,'b','Real Estate');
+        this.realEstatePrice = 0;
+      }else{console.log("Not enough money")};
     });
-    }
+    } setTimeout(() => {location.reload();},700);
+  });
   }
 
 
   onClickSell(name, shares){
     let currency = "DOLLAR";
     let amount = 0;
-    console.log("Sell ", shares, " shares of ", name);
 
     //Retrieve Symbol, Type, Name
     let result = InvestmentList.filter(obj => {
       return obj.name === name;
     })
 
-    console.log("Type:");
-    console.log(result[0].type);
+    
+    this.investmentServiceApi.numberOfShares(this.UID, result[0].symbol).then(data => {
+      this.minimumShares=data;
+    
+  
+    setTimeout(function(){}, 3000);
 
     if(result[0].type=="Stock"){
     //Retrieve Stock Information
@@ -336,19 +364,18 @@ export class InvestmentBoxComponent {
         pERatio: stockData2.pERatio
       };
 
+      //Check Share Ownership
+      if(this.minimumShares>=shares){
       //Update Currency
       amount = (stockData2.price[0] * shares)
       this.investmentApi.addBaseCurrency(this.UID,currency,amount);
 
       //Sell Investment
       this.investmentApi.sellInvestment(this.UID,this.stock2.stockName,this.stock2.symbol,this.stock2.price[0],-Math.abs(shares),'s','Stock');
+    }else{console.log("Not enough shares");}
     });
   }
   else if(result[0].type=="Bond"){
-    console.log(result[0].type);
-    console.log(result[0].name);
-    console.log(result[0].symbol);
-    console.log(result[0].country);
     this.countryname = result[0].country;
 
   //Retrieve Information
@@ -368,20 +395,18 @@ export class InvestmentBoxComponent {
       urbanSymbol: countryData.urbanSymbol,
       ruralSymbol: countryData.ruralSymbol,
     };
-
+    //Check Share Ownership
+    if(this.minimumShares>=shares){
     //Update Currency
     amount = Math.abs(shares)
     this.investmentApi.addBaseCurrency(this.UID,currency,amount);
 
     // Sell Bond
     this.investmentApi.sellInvestment(this.UID,result[0].name,result[0].symbol,1,-(shares),'s','Bond');
-
+    }else{console.log("Not enough shares");}
   });
   }
   else if(result[0].type=="Currency"){
-    console.log(result[0].type);
-    console.log(result[0].name);
-    console.log(result[0].symbol);
 
   //Retrieve Information
   this.currencyApi.getOneCurrency(result[0].symbol).subscribe(currencyData => {
@@ -392,12 +417,15 @@ export class InvestmentBoxComponent {
       timeStamp: currencyData.timeStamp,
     };
 
+  //Check Share Ownership
+  if(this.minimumShares>=shares){
   //Update Base Currency
   amount = Math.abs(shares)
   this.investmentApi.addBaseCurrency(this.UID,currency,amount);
 
   // Sell Investment Currency
   this.investmentApi.sellInvestment(this.UID,currencyData.currencyName,currencyData.ticker,currencyData.rates[0],-(shares),'b','Currency');
+  }else{console.log("Not enough shares");}
   });
   }
   else if(result[0].type=="Commodity"){
@@ -407,25 +435,19 @@ export class InvestmentBoxComponent {
    this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: "", closeDate: [] };
    });
     
-    
+  //Check Share Ownership
+  if(this.minimumShares>=shares){  
   //Update Currency
   amount = Math.abs(shares * this.commodity.etfPrice[0]);
   this.investmentApi.addBaseCurrency(this.UID,currency,amount);
     
   //Buy Investment
   this.investmentApi.sellInvestment(this.UID,this.commodity.commodityName,this.commodity.symbol,this.commodity.etfPrice[0],-(shares),'s','Commodity');
-
+  }else{console.log("Not enough shares");}
   }
   else if(result[0].type=="Urban Real Estate"){
-    console.log(result[0].type);
-    console.log(result[0].name);
-    console.log(result[0].symbol);
 
   //Retrieve Information
-    console.log(result[0].type);
-    console.log(result[0].name);
-    console.log(result[0].symbol);
-    console.log(result[0].country);
     this.countryname = result[0].country;
 
   //Retrieve Information
@@ -446,6 +468,8 @@ export class InvestmentBoxComponent {
       ruralSymbol: countryData.ruralSymbol,
     };
    
+    //Check Share Ownership
+    if(this.minimumShares>=shares){
     //Update Currency
     this.realEstatePrice = ((countryData.urbanPE * countryData.urbanRent ) * 12);
 
@@ -455,20 +479,13 @@ export class InvestmentBoxComponent {
     // Sell Real Estate
     this.investmentApi.sellInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,-(shares),'s','Real Estate');
     this.realEstatePrice = 0;
-
+    }else{console.log("Not enough shares");}
 
   });
   }
   else if(result[0].type=="Rural Real Estate"){
-    console.log(result[0].type);
-    console.log(result[0].name);
-    console.log(result[0].symbol);
 
   //Retrieve Information
-    console.log(result[0].type);
-    console.log(result[0].name);
-    console.log(result[0].symbol);
-    console.log(result[0].country);
     this.countryname = result[0].country;
 
   //Retrieve Information
@@ -489,6 +506,8 @@ export class InvestmentBoxComponent {
       ruralSymbol: countryData.ruralSymbol,
     };
    
+    //Check Share Ownership
+    if(this.minimumShares>=shares){
     //Update Currency
     this.realEstatePrice = ((countryData.ruralPE * countryData.ruralRent ) * 12);
 
@@ -498,9 +517,10 @@ export class InvestmentBoxComponent {
     // Sell Real Estate
     this.investmentApi.sellInvestment(this.UID,result[0].name,result[0].symbol,this.realEstatePrice,-(shares),'s','Real Estate');
     this.realEstatePrice = 0;
+    }else{console.log("Not enough shares");}
   });
-  }
-  
+  } setTimeout(() => {location.reload();},700);
+});
   }
 
  

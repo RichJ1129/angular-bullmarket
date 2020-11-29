@@ -48,7 +48,6 @@ export class InvestmentPortfolioComponent implements OnInit, OnDestroy{
      //Portfolio History
       this.investmentApi.getInvestments(this.UID).then(data => {
         this.portfolio=data;
-        //console.log("did it work?",data);
         this.dataSource = new MatTableDataSource<InvestmentMath>(data);
 
       });

@@ -4,13 +4,13 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 
 import {AuthService} from '../auth.service';
 
+
 @Component({
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
   isLoading = false;
-
   signUpForm: FormGroup;
   emailRegx = /^(([^<>+()\[\]\\.,;:\s@"-#$%&=]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,3}))$/;
 
@@ -35,5 +35,7 @@ export class SignupComponent {
       this.signUpForm.value.userName,
       this.signUpForm.value.email
     );
+
   }
+
 }

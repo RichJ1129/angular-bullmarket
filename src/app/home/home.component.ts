@@ -5,6 +5,8 @@ import { DxVectorMapModule, DxSelectBoxModule, DxTextBoxModule } from 'devextrem
 import { DxDataGridComponent } from 'devextreme-angular';
 import { Router } from '@angular/router';
 import { RealEstateService } from '../realestate/realestate.service';
+import { InvestmentBoxService } from 'src/app/investmentbox/investmentbox.service'; 
+import { InvestmentService } from 'src/app/investment/investment.service'; 
 
 
 import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js';
@@ -23,17 +25,24 @@ export class HomeComponent implements OnInit {
   gdp: Object;
   animalDecider;
   selectedCountry: string;
+  UID: string;
+  userObject: any;
+  currencyBalance: number;
+
   @ViewChild(DxVectorMapComponent, { static: false }) vectorMap: DxVectorMapComponent;
 
 
   constructor(service: Service,
               private profileService: ProfileService,
+              private InvestmentBoxService: InvestmentBoxService,
+              private InvestmentService: InvestmentService,
               private router: Router) {
     this.gdp = service.getGDP();
     this.customizeLayers = this.customizeLayers.bind(this);
     this.profileService.getAnimal()
       .subscribe(val => {this.animalDecider = val;
       });
+      
   }
 
   onClick(e): void {
@@ -58,6 +67,25 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  public setInitialBalance(){
+
+     this.InvestmentBoxService.getUserID().subscribe(data => {
+      this.userObject=data;
+      this.UID = this.userObject._id;
+    
+    this.InvestmentService.getCurrencyBalance(this.UID,"DOLLAR").then(result =>{
+      this.currencyBalance = result;
+
+      if(this.currencyBalance==0)
+      {
+       this.InvestmentBoxService.addBaseCurrency(this.UID,"DOLLAR",100000);
+      }
+
+   });
+  
+  });
+  }
+
   // customizeText(arg) {
   //   let text;
   //   if(arg.index === 0) {
@@ -72,6 +100,6 @@ export class HomeComponent implements OnInit {
 
   // constructor() { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { this.setInitialBalance(); }
 
 }
