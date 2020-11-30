@@ -1,10 +1,10 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {AuthService} from '../../auth/auth.service';
-import { StockService } from '../../stocks/stock.service';
-import { CurrencyService } from '../../currency/currency.service';
-import { CommodityService } from '../../commodities/commodity.service';
-import { InvestmentService } from 'src/app/investment/investment.service';
+import {StockService} from '../../stocks/stock.service';
+import {CurrencyService} from '../../currency/currency.service';
+import {CommodityService} from '../../commodities/commodity.service';
+import {InvestmentService} from 'src/app/investment/investment.service';
 
 @Component({
   selector: 'app-header',
@@ -24,12 +24,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   balanceString: string;
 
 
-
   constructor(private authService: AuthService,
               private stockService: StockService,
               private currencyService: CurrencyService,
               private commoditySevice: CommodityService,
-              private investmentService: InvestmentService) {}
+              private investmentService: InvestmentService) {
+  }
 
   // tslint:disable-next-line:typedef
   ngOnInit() {
@@ -53,12 +53,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.userObject = data;
       this.UID = this.userObject._id;
 
-       
-         this.investmentService.getCurrencyBalance(this.UID,"DOLLAR").then(result =>{
-         this.availableBalance = result;
-                            this.balanceString="Balance: $"
-                        
-       });
+      this.investmentService.getCurrencyBalance(this.UID, 'DOLLAR').then(result => {
+        this.availableBalance = result;
+        this.balanceString = 'Balance: $';
+      });
 
     });
   }
@@ -66,8 +64,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line:typedef
   onLogout() {
     this.authService.logout();
-    this.availableBalance=null;
-    this.balanceString=null;
+    this.availableBalance = null;
+    this.balanceString = null;
   }
 
   ngOnDestroy() {
