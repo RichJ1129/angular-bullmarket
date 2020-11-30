@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Investment } from './investment.model';
 import { InvestmentBoxService } from './investmentbox.service';
 import {MatTableDataSource} from '@angular/material/table';
-import { Injectable, EventEmitter } from '@angular/core';    
-import { Subscription } from 'rxjs/internal/Subscription';  
+import { Injectable, EventEmitter } from '@angular/core';
+import { Subscription } from 'rxjs/internal/Subscription';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
@@ -40,7 +40,7 @@ interface InvestmentForm {
     templateUrl: './investmentboxhome.component.html',
     styleUrls: ['./investmentbox.component.css'],
 })
-  
+
 export class InvestmentBoxHomeComponent {
     myControl = new FormControl();
     stock: Stock;
@@ -56,28 +56,28 @@ export class InvestmentBoxHomeComponent {
     commodity: Commodity;
     assetPrice = "$";
     assetSymbol = "";
-  
+
     //Get UserID and Setup Services
       constructor(private investmentApi: InvestmentBoxService, private stockApi: StockService, private countryApi: RealEstateService, private currencyApi: CurrencyService, private commodityApi: CommodityService) {
           this.investmentApi.getUserID().subscribe(data => {
             this.userObject=data;
             this.UID = this.userObject._id;
         });
-  
+
       }
-  
+
     //Filter Search Query - Source Angular Docs AutoComplete
       private _filter(name: string): InvestmentForm[] {
         const filterValue = name.toLowerCase();
         return InvestmentList.filter(investment => investment.name.toLowerCase().indexOf(filterValue) === 0);
       }
-  
+
     //Attach Search Query to InvestmentForm object
       displayFn(investment: InvestmentForm): string {
         return investment && investment.name ? investment.name : '';
       }
-  
-    
+
+
   //Filter Search Query - Source Angular Docs AutoComplete
     ngOnInit() {
       this.filteredInvestments = this.myControl.valueChanges
@@ -90,46 +90,46 @@ export class InvestmentBoxHomeComponent {
 
     onClickSearch(name, shares){
         let currency = "DOLLAR"; let amount = 0;
-    
-        //Retrieve Symbol, Type, Name
+
+        // Retrieve Symbol, Type, Name
         let result = InvestmentList.filter(obj => {
           return obj.name === name;
         })
-    
+
         if(result[0].type=="Stock"){
-          //Retrieve Stock Information
+          // Retrieve Stock Information
           this.stockApi.getOneStock(result[0].symbol).subscribe(stockData2 => {
             this.stock2 = { stockName: stockData2.stockName, symbol: stockData2.symbol, price: stockData2.price, marketCap: stockData2.marketCap, closeDate: stockData2.closeDate, pERatio: stockData2.pERatio };
-    
+
             setTimeout(() => {
                 this.assetPrice="$ "+ (stockData2.price[0]).toString();
                 this.assetSymbol = stockData2.symbol;
                 },500);
-        
+
         });
         }
         else if(result[0].type=="Bond"){
-    
+
           this.countryname = result[0].country;
-    
-          //Retrieve Bond-Country Information
+
+          // Retrieve Bond-Country Information
           this.countryApi.getOneCountry(this.countryname).subscribe(countryData => {
             this.country = {
              countryName: countryData.countryName, capitalCity: countryData.capitalCity, population: countryData.population, urbanRent: countryData.urbanRent, urbanPE: countryData.urbanPE, ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE,
              interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
           };
-    
+
 
             setTimeout(() => {
                 this.assetPrice="$ "+ (1).toString();
                 this.assetSymbol = this.country.bondSymbol;
                 },500);
-    
+
         });
         }
         else if(result[0].type=="Currency"){
-    
-        //Retrieve Information
+
+        // Retrieve Information
         this.currencyApi.getOneCurrency(result[0].symbol).subscribe(currencyData => {
           this.currency = { currencyName: currencyData.currencyName, ticker: currencyData.ticker, rates: currencyData.rates, timeStamp: currencyData.timeStamp};
     //xx
@@ -140,13 +140,13 @@ export class InvestmentBoxHomeComponent {
         });
         }
         else if(result[0].type=="Commodity"){
-    
+
         //Retrieve Information
         this.commodityApi.getOneCommodity(result[0].symbol).subscribe(commodityData => {
           this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: "", closeDate: [] };
-    
+
               });
-          
+
               //Retrive Price, Symbol
               setTimeout(() => {
                 this.assetPrice="$ "+ (this.commodity.etfPrice[0]).toString();
@@ -155,13 +155,13 @@ export class InvestmentBoxHomeComponent {
         }
         else if(result[0].type=="Urban Real Estate"){
           this.countryname = result[0].country;
-    
+
         //Retrieve Information
         this.countryApi.getOneCountry(this.countryname).subscribe(countryData => {
           this.country = {
             countryName: countryData.countryName, capitalCity: countryData.capitalCity, population: countryData.population, urbanRent: countryData.urbanRent, urbanPE: countryData.urbanPE, ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE, interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
           };
-         
+
           //Calculate Real Estate Price, Display Result after 0.5s Delay
           this.realEstatePrice = ((countryData.urbanPE * countryData.urbanRent ) * 12);
           setTimeout(() => {
@@ -171,9 +171,9 @@ export class InvestmentBoxHomeComponent {
         });
         }
         else if(result[0].type=="Rural Real Estate"){
-    
+
           this.countryname = result[0].country;
-    
+
         //Retrieve Information
         this.countryApi.getOneCountry(this.countryname).subscribe(countryData => {
           this.country = {
@@ -181,7 +181,7 @@ export class InvestmentBoxHomeComponent {
             ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE, interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation,
             bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
           };
-         
+
           //Calculate Real Estate Price, Display Result after 0.5s Delay
           this.realEstatePrice = ((countryData.ruralPE * countryData.ruralRent ) * 12);
           setTimeout(() => {
