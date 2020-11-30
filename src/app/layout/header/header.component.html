@@ -2,23 +2,26 @@
 <div class="container">
   <br>
   <div class="row" style="display: flex; justify-content: flex-end">
-  <div>
-    <a *ngIf="!userIsAuthenticated" style="font-size: 16px; text-align:right; color: black;" routerLink="/login"> Home </a>
-    <span *ngIf="!userIsAuthenticated">|</span>
-    <a *ngIf="userIsAuthenticated" style="font-size: 16px; text-align:right; color: black;" routerLink="/portfolio"> Investments </a>
-    <span *ngIf="userIsAuthenticated">|</span>
-    <a *ngIf="userIsAuthenticated"  style="font-size: 16px; text-align:right; color: black;" routerLink="/profile"> Profile </a>
-    <span *ngIf="userIsAuthenticated">|</span>
-    <a *ngIf="userIsAuthenticated" class="logout_click"  style="font-size: 16px; text-align:right; color: black; " (click)="onLogout()" routerLink=""> Logout </a>
-    <span *ngIf="userIsAuthenticated">|</span>
-    <a style="font-size: 16px; text-align:right; color: black;" routerLink="/about"> About</a>
+    <div>
+      <a *ngIf="!userIsAuthenticated" style="font-size: 16px; text-align:right; color: black;" routerLink="/login">
+        Home </a>
+      <span *ngIf="!userIsAuthenticated">|</span>
+      <a *ngIf="userIsAuthenticated" style="font-size: 16px; text-align:right; color: black;" routerLink="/portfolio">
+        Investments </a>
+      <span *ngIf="userIsAuthenticated">|</span>
+      <a *ngIf="userIsAuthenticated" style="font-size: 16px; text-align:right; color: black;" routerLink="/profile">
+        Profile </a>
+      <span *ngIf="userIsAuthenticated">|</span>
+      <a *ngIf="userIsAuthenticated" class="logout_click" style="font-size: 16px; text-align:right; color: black; "
+         (click)="onLogout()" routerLink=""> Logout </a>
+      <span *ngIf="userIsAuthenticated">|</span>
+      <a style="font-size: 16px; text-align:right; color: black;" routerLink="/about"> About</a>
 
+    </div>
   </div>
-</div>
-<div class="row" style="display: flex; justify-content: flex-end">
-  <div style="font-size: 14px; text-align: right; color: black;">{{balanceString}}{{availableBalance}}
+  <div class="row" style="display: flex; justify-content: flex-end">
+    <div *ngIf="userIsAuthenticated" style="font-size: 14px; text-align: right; color: black;">{{balanceString}}{{availableBalance}}</div>
   </div>
-</div>
   <div class="col-12" *ngIf="userIsAuthenticated">
     <a class="nav-link" style="font-size: 75px; font-family: Calibri, sans-serif; text-align:center;"
        routerLink="/home">MARKETPLACE</a>
@@ -53,40 +56,53 @@
       <div class="col-12">
         <div class="ticker-wrap">
           <div class="ticker">
-            <div class="ticker__item" *ngFor="let element of this.StockData" >
+            <div class="ticker__item" *ngFor="let element of this.StockData">
               <div *ngIf="element.price[element.price.length - 1] > element.price[element.price.length - 2]">
-                <a style="color: white" [routerLink]="['/stock-page', element.symbol]"> {{element.symbol}} ↑ </a> <p style="display:inline; color:green">{{element.price[element.price.length - 1]}}</p>
+                <a style="color: white" [routerLink]="['/stock-page', element.symbol]"> {{element.symbol}} ↑ </a>
+                <p style="display:inline; color:green">{{element.price[element.price.length - 1]}}</p>
               </div>
               <div *ngIf="element.price[element.price.length - 1] < element.price[element.price.length - 2]">
-                <a style="color: white" [routerLink]="['/stock-page', element.symbol]"> {{element.symbol}} ↓ </a> <p style="display:inline; color: red">{{element.price[element.price.length - 1]}} </p>
+                <a style="color: white" [routerLink]="['/stock-page', element.symbol]"> {{element.symbol}} ↓ </a>
+                <p style="display:inline; color: red">{{element.price[element.price.length - 1]}} </p>
               </div>
               <div *ngIf="element.price[element.price.length - 1] == element.price[element.price.length - 2]">
-                <a style="color: white" [routerLink]="['/stock-page', element.symbol]"> {{element.symbol}} → </a> <p style="display:inline; color: grey">{{element.price[element.price.length - 1]}} </p>
+                <a style="color: white" [routerLink]="['/stock-page', element.symbol]"> {{element.symbol}} → </a>
+                <p style="display:inline; color: grey">{{element.price[element.price.length - 1]}} </p>
               </div>
             </div>
-            <div class="ticker__item" *ngFor="let element of this.currencyData" >
+            <div class="ticker__item" *ngFor="let element of this.currencyData">
               <div *ngIf="element.rates[element.rates.length - 1] > element.rates[element.rates.length - 2]">
-                <a style="color: white" [routerLink]="['/currency-page', element.ticker]"> {{element.ticker}} ↑ </a> <p style="display:inline; color:green">{{element.rates[element.rates.length - 1]}} </p>
+                <a style="color: white" [routerLink]="['/currency-page', element.ticker]"> {{element.ticker}} ↑ </a>
+                <p style="display:inline; color:green">{{element.rates[element.rates.length - 1]}} </p>
               </div>
               <div *ngIf="element.rates[element.rates.length - 1] < element.rates[element.rates.length - 2]">
-                <a style="color: white" [routerLink]="['/currency-page', element.ticker]"> {{element.ticker}} ↓ </a> <p style="display:inline; color: red">{{element.rates[element.rates.length - 1]}} </p>
+                <a style="color: white" [routerLink]="['/currency-page', element.ticker]"> {{element.ticker}} ↓ </a>
+                <p style="display:inline; color: red">{{element.rates[element.rates.length - 1]}} </p>
               </div>
               <div *ngIf="element.rates[element.rates.length - 1] == element.rates[element.rates.length - 2]">
-                <a style="color: white" [routerLink]="['/currency-page', element.ticker]"> {{element.ticker}} → </a> <p style="display:inline; color: grey">{{element.rates[element.rates.length - 1]}} </p>
+                <a style="color: white" [routerLink]="['/currency-page', element.ticker]"> {{element.ticker}} → </a>
+                <p style="display:inline; color: grey">{{element.rates[element.rates.length - 1]}} </p>
               </div>
             </div>
-            <div class="ticker__item" *ngFor="let element of this.commodityData" >
-              <div *ngIf="element.etfPrice[element.etfPrice.length - 1] > element.etfPrice[element.etfPrice.length - 2]">
-                <a style="color: white" [routerLink]="['/commodities-page', element.symbol]"> {{element.symbol}} ↑ </a> <p style="display:inline; color:green">{{element.etfPrice[element.etfPrice.length - 1]}} </p>
+            <div class="ticker__item" *ngFor="let element of this.commodityData">
+              <div
+                *ngIf="element.etfPrice[element.etfPrice.length - 1] > element.etfPrice[element.etfPrice.length - 2]">
+                <a style="color: white" [routerLink]="['/commodities-page', element.symbol]"> {{element.symbol}} ↑ </a>
+                <p style="display:inline; color:green">{{element.etfPrice[element.etfPrice.length - 1]}} </p>
               </div>
-              <div *ngIf="element.etfPrice[element.etfPrice.length - 1] < element.etfPrice[element.etfPrice.length - 2]">
-                <a style="color: white" [routerLink]="['/commodities-page', element.symbol]"> {{element.symbol}} ↓ </a> <p style="display:inline; color: red">{{element.etfPrice[element.etfPrice.length - 1]}} </p>
+              <div
+                *ngIf="element.etfPrice[element.etfPrice.length - 1] < element.etfPrice[element.etfPrice.length - 2]">
+                <a style="color: white" [routerLink]="['/commodities-page', element.symbol]"> {{element.symbol}} ↓ </a>
+                <p style="display:inline; color: red">{{element.etfPrice[element.etfPrice.length - 1]}} </p>
               </div>
-              <div *ngIf="element.etfPrice[element.etfPrice.length - 1] == element.etfPrice[element.etfPrice.length - 2]">
-                <a style="color: white" [routerLink]="['/commodities-page', element.symbol]"> {{element.symbol}} → </a> <p style="display:inline; color: grey">{{element.etfPrice[element.etfPrice.length - 1]}} </p>
+              <div
+                *ngIf="element.etfPrice[element.etfPrice.length - 1] == element.etfPrice[element.etfPrice.length - 2]">
+                <a style="color: white" [routerLink]="['/commodities-page', element.symbol]"> {{element.symbol}} → </a>
+                <p style="display:inline; color: grey">{{element.etfPrice[element.etfPrice.length - 1]}} </p>
               </div>
             </div>
-]          </div>
+            ]
+          </div>
         </div>
       </div>
     </div>
