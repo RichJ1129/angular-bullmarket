@@ -8,6 +8,8 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {FormControl} from '@angular/forms';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
+import {InvestmentService} from '../../investment/investment.service';
+import {InvestmentBoxService} from '../../investmentbox/investmentbox.service';
 
 @Component({
   selector: 'app-currency-page',
@@ -19,8 +21,15 @@ export class CurrencyPageComponent implements OnInit {
   constructor(
     public currencyService: CurrencyService,
     public route: ActivatedRoute,
-    public datePipe: DatePipe
-  ) {}
+    public datePipe: DatePipe,
+    private investmentServiceApi: InvestmentService,
+    private investmentApi: InvestmentBoxService
+  ) {
+    this.investmentApi.getUserID().subscribe(data => {
+    this.userObject = data;
+    this.UID = this.userObject._id;
+  });
+  }
 
   show = false;
 
@@ -30,9 +39,10 @@ export class CurrencyPageComponent implements OnInit {
   currencyValue = new FormControl('');
   chartType = 'line';
   chartData: ChartDataSets[] =  [
-    {data: [], label: 'All Currency Prices', fill: false, lineTension: 0},
+    {data: [], label: '10 Day Currency Prices', fill: false, lineTension: 0},
   ];
-
+  UID: string;
+  userObject: any;
   chartLabels = [];
 
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
@@ -96,7 +106,9 @@ export class CurrencyPageComponent implements OnInit {
 
 
   public computeData(): void {
-    this.chartData[0].data = this.currency.rates;
+    // this.chartData[0].data = this.currency.rates;
+    this.chartData[0].data = this.currency.rates.slice(this.currency.rates.length - 10);
+
 
     const transformedDates = [];
     console.log(this.currency.timeStamp);
@@ -105,7 +117,49 @@ export class CurrencyPageComponent implements OnInit {
       transformedDates.push(this.datePipe.transform(i, 'MM-dd'));
     }
 
-    this.chartLabels = transformedDates;
+    this.chartLabels = transformedDates.slice(transformedDates.length - 10);
+  }
+
+  public buyCurrency(currencyAmount): void {
+    let currencyBalance;
+    const currency = 'DOLLAR';
+
+    this.investmentServiceApi.getCurrencyBalance(this.UID, currency).then(data => {
+      currencyBalance = data;
+      const purchaseAmount =  currencyAmount / this.currency.rates[this.currency.rates.length - 1];
+      if (currencyBalance < purchaseAmount) {
+
+      } else {
+        this.investmentApi.removeBaseCurrency(this.UID, currency, -purchaseAmount);
+        this.investmentApi.buyInvestment(this.UID, this.currency.currencyName,
+          this.currency.ticker, purchaseAmount,
+          currencyAmount, 'b', 'Currency');
+      }
+    });
+  }
+
+
+
+  public sellCurrency(currencyAmount): void {
+    let numberShares;
+    const currency = 'DOLLAR';
+
+    this.investmentServiceApi.numberOfShares(this.UID, this.currency.ticker).then(data => {
+      numberShares = data;
+
+      const sellAmount = currencyAmount / this.currency.rates[this.currency.rates.length - 1];
+      console.log(sellAmount);
+      if (currencyAmount > numberShares) {
+
+      } else {
+        this.investmentApi.addBaseCurrency(this.UID, currency, sellAmount);
+        this.investmentApi.sellInvestment(this.UID,
+          this.currency.currencyName, this.currency.ticker,
+          this.currency.rates[this.currency.rates.length - 1],
+          -Math.abs(numberShares),
+          's', 'Currency');
+      }
+    });
   }
 
   // tslint:disable-next-line:typedef
@@ -120,7 +174,7 @@ export class CurrencyPageComponent implements OnInit {
             rates: currencyData.rates,
             timeStamp: currencyData.timeStamp
           };
-          this.changeAnnotation(this.currency.rates[this.currency.rates.length - 1]);
+          this.changeAnnotation(this.currency.rates[this.currency.rates.length - 10]);
           this.changeLineColor(this.currency.rates[this.currency.rates.length - 2], this.currency.rates[this.currency.rates.length - 1]);
           this.computeData();
         });

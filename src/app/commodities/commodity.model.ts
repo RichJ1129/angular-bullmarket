@@ -3,4 +3,5 @@ export interface Commodity {
   symbol: string;
   etfPrice: Array<number>;
   commodityUnit: string;
+  closeDate: Array<string>;
 }

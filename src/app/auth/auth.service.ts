@@ -74,6 +74,8 @@ export class AuthService {
           const data = this.getAuthData();
           this.router.navigate(['home']);
         }
+      }, error => {
+        this.authStatusListener.next(false);
       });
   }
 

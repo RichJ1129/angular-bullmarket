@@ -1,14 +1,17 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
-import { Stock, Company } from '../stock.model';
-import { StockService } from '../stock.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
-import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import {Component, OnInit, Input, Output} from '@angular/core';
+import {Stock, Company} from '../stock.model';
+import {StockService} from '../stock.service';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatSort} from '@angular/material/sort';
+import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
+import {ActivatedRoute, ParamMap} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {FormControl} from '@angular/forms';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
-
+import {InvestmentService} from '../../investment/investment.service';
+import {HeaderComponent} from '../../layout/header/header.component';
+import {InvestmentBoxService} from '../../investmentbox/investmentbox.service';
+import {Currency} from '../../currency/currency.model';
 
 
 @Component({
@@ -21,23 +24,32 @@ export class StockPageComponent implements OnInit {
   constructor(
     public stocksService: StockService,
     public route: ActivatedRoute,
-    public datePipe: DatePipe
-  ) {}
+    public datePipe: DatePipe,
+    private investmentServiceApi: InvestmentService,
+    private investmentApi: InvestmentBoxService
+  ) {
+    this.investmentApi.getUserID().subscribe(data => {
+      this.userObject = data;
+      this.UID = this.userObject._id;
+    });
+  }
+
+  headerComponent: HeaderComponent;
 
   show = false;
 
   displayedColumns: any[] = ['stockName', 'symbol', 'price', 'pERatio', 'marketCap'];
   stock: Stock;
+  currency: Currency;
   company: { companyCurrency: string; companySummary: string; companyCountry: string };
   private stockTicker: string;
   stockValue = new FormControl('');
+  UID: string;
+  userObject: any;
 
   chartType = 'line';
-  chartData: ChartDataSets[] =  [
+  chartData: ChartDataSets[] = [
     {data: [], label: '10 day Stock Price', fill: false, lineTension: 0},
-    // {data: [], label: '10 day Stock Prices', fill: false, lineTension: 0}
-    // {data: [], label: '5 Day Stock Prices', fill: false, lineTension: 0},
-    // {data: [], label: '3 Day Stock Prices', fill: false, lineTension: 0}
   ];
 
   chartLabels = [];
@@ -60,19 +72,19 @@ export class StockPageComponent implements OnInit {
     annotation: {
       annotations: [
         {
-        type: 'line',
-        mode: 'horizontal',
-        scaleID: 'y-axis-0',
-        value: 5,
-        borderColor: 'grey',
-        borderWidth: 2,
+          type: 'line',
+          mode: 'horizontal',
+          scaleID: 'y-axis-0',
+          value: 5,
+          borderColor: 'grey',
+          borderWidth: 2,
           borderDash: [4, 4],
           label: {
-          enabled: false,
-          fontColor: 'orange',
-          content: 'LineAnno'
-        }
-      }]
+            enabled: false,
+            fontColor: 'orange',
+            content: 'LineAnno'
+          }
+        }]
     }
   };
 
@@ -93,10 +105,9 @@ export class StockPageComponent implements OnInit {
   }
 
   public changeLineColor(yesterdayPrice, todayPrice): void {
-    if (todayPrice > yesterdayPrice){
+    if (todayPrice > yesterdayPrice) {
       this.chartColor[0].borderColor = 'rgb(0,200,7)';
-    }
-    else if (todayPrice < yesterdayPrice) {
+    } else if (todayPrice < yesterdayPrice) {
       this.chartColor[0].borderColor = 'rgb(255,80,0)';
     }
   }
@@ -104,21 +115,56 @@ export class StockPageComponent implements OnInit {
 
   public computeData(): void {
     this.chartData[0].data = this.stock.price.slice(this.stock.price.length - 10);
-    // this.chartData[1].data = this.stock.price.slice(this.stock.price.length - 5);
-    // this.chartData[2].data = this.stock.price.slice(this.stock.price.length - 5);
-    // this.chartData[3].data = this.stock.price.slice(this.stock.price.length - 3);
 
     const transformedDates = [];
 
-    for (const i of this.stock.closeDate){
+    for (const i of this.stock.closeDate) {
       transformedDates.push(this.datePipe.transform(i, 'MM-dd'));
     }
 
     this.chartLabels = transformedDates.slice(transformedDates.length - 10);
   }
 
-  // tslint:disable-next-line:typedef
-  ngOnInit() {
+  public buyStock(stockShares): void {
+    let currencyBalance;
+    const currency = 'DOLLAR';
+
+    this.investmentServiceApi.getCurrencyBalance(this.UID, currency).then(data => {
+      currencyBalance = data;
+      const purchaseAmount = stockShares * this.stock.price[this.stock.price.length - 1];
+      if (currencyBalance < purchaseAmount) {
+
+      } else {
+        this.investmentApi.removeBaseCurrency(this.UID, currency, -purchaseAmount);
+        this.investmentApi.buyInvestment(this.UID, this.stock.stockName,
+          this.stock.symbol, 1,
+          stockShares, 'b', 'Stock');
+      }
+    });
+  }
+
+
+  public sellStock(stockShares): void {
+    let numberShares;
+    const currency = 'DOLLAR';
+
+    this.investmentServiceApi.numberOfShares(this.UID, this.stock.symbol).then(data => {
+      numberShares = data;
+      const sellAmount = stockShares * this.stock.price[this.stock.price.length - 1];
+      if (stockShares > numberShares) {
+
+      } else {
+        this.investmentApi.addBaseCurrency(this.UID, currency, sellAmount);
+        this.investmentApi.sellInvestment(this.UID,
+          this.stock.stockName, this.stock.symbol,
+          this.stock.price[this.stock.price.length - 1],
+          -Math.abs(stockShares),
+          's', 'Stock');
+      }
+    });
+  }
+
+  ngOnInit(): void {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('stock_ticker')) {
         this.stockTicker = paramMap.get('stock_ticker');
@@ -131,7 +177,7 @@ export class StockPageComponent implements OnInit {
             closeDate: stockData.closeDate,
             pERatio: stockData.pERatio
           };
-          this.changeAnnotation(this.stock.price[this.stock.price.length - 10]);
+          this.changeAnnotation(this.stock.price[this.stock.price.length - 9]);
           this.changeLineColor(this.stock.price[this.stock.price.length - 10], this.stock.price[this.stock.price.length - 1]);
           this.computeData();
         });
@@ -140,7 +186,7 @@ export class StockPageComponent implements OnInit {
             companySummary: companyData.companySummary,
             companyCountry: companyData.companyCountry,
             companyCurrency: companyData.companyCurrency
-         };
+          };
         });
       }
     });

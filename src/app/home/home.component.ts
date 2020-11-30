@@ -1,32 +1,59 @@
 import {OnInit} from '@angular/core';
 import {ViewChild, Component} from '@angular/core';
 import {DxVectorMapComponent} from 'devextreme-angular';
+import { DxVectorMapModule, DxSelectBoxModule, DxTextBoxModule } from 'devextreme-angular';
+import { DxDataGridComponent } from 'devextreme-angular';
+import { Router } from '@angular/router';
+import { RealEstateService } from '../realestate/realestate.service';
+import { InvestmentBoxService } from 'src/app/investmentbox/investmentbox.service'; 
+import { InvestmentService } from 'src/app/investment/investment.service'; 
+
 
 import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js';
 import {Service} from './home.service';
-import {ProfileService} from "../profile/profile.service";
+import {ProfileService} from '../profile/profile.service';
 
 @Component({
   selector: 'app-home',
   providers: [Service],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 
 export class HomeComponent implements OnInit {
   worldMap: any = mapsData.world;
   gdp: Object;
   animalDecider;
+  selectedCountry: string;
+  UID: string;
+  userObject: any;
+  currencyBalance: number;
 
-  constructor(service: Service, private profileService: ProfileService) {
+  @ViewChild(DxVectorMapComponent, { static: false }) vectorMap: DxVectorMapComponent;
+
+
+  constructor(service: Service,
+              private profileService: ProfileService,
+              private InvestmentBoxService: InvestmentBoxService,
+              private InvestmentService: InvestmentService,
+              private router: Router) {
     this.gdp = service.getGDP();
     this.customizeLayers = this.customizeLayers.bind(this);
     this.profileService.getAnimal()
       .subscribe(val => {this.animalDecider = val;
-      })
+      });
+      
   }
 
-  customizeTooltip(arg) {
+  onClick(e): void {
+    const target = e.target;
+    if (target && this.gdp[target.attribute('name')] && target.attribute('name') !== 'Greenland') {
+      this.router.navigate(['/country/' + target.attribute('name')]);
+    }
+  }
+
+  customizeTooltip(arg): { text: string } {
+    // console.log(arg.attribute('name'));
     if (arg.attribute('gdp')) {
       return {
         text: arg.attribute('name') + ': ' + arg.attribute('gdp') / 1000 + 'B GDP'
@@ -34,10 +61,29 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  customizeLayers(elements) {
+  customizeLayers(elements): void {
     elements.forEach((element) => {
       element.attribute('gdp', this.gdp[element.attribute('name')]);
     });
+  }
+
+  public setInitialBalance(){
+
+     this.InvestmentBoxService.getUserID().subscribe(data => {
+      this.userObject=data;
+      this.UID = this.userObject._id;
+    
+    this.InvestmentService.getCurrencyBalance(this.UID,"DOLLAR").then(result =>{
+      this.currencyBalance = result;
+
+      if(this.currencyBalance==0)
+      {
+       this.InvestmentBoxService.addBaseCurrency(this.UID,"DOLLAR",100000);
+      }
+
+   });
+  
+  });
   }
 
   // customizeText(arg) {
@@ -54,7 +100,6 @@ export class HomeComponent implements OnInit {
 
   // constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { this.setInitialBalance(); }
 
 }

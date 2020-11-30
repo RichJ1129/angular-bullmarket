@@ -12,34 +12,24 @@
              class="img-fluid" routerLink="/profile">
       </div>
       <div>
-        <form class="assetSearch" style="background-color: black;color:white">
-          <div class="assetSearchBox"><input type="text" id="asset" value="Symbol"><input class="assetSubmit"
-                                                                                          type="submit" value="Lookup">
-          </div>
-          <br>
-          <p style="text-align:right"><a class="symbolLink" href="#">Symbol</a>
-            <a class="symbolLink" href="#">Week</a><br>Price
-            <a class="symbolLink" href="#">Month</a><br>Change
-            <a class="symbolLink" href="#">Year</a><br>PE:
-            <a class="symbolLink" href="#">Max</a><br></p>
-          <br>
-        </form>
+        <app-investmentboxhome></app-investmentboxhome>
       </div>
     </div>
     <div class="col-8">
       <dx-vector-map
         id="vector-map"
+        (onClick)="onClick($event)"
         [bounds]="[-180, 85, 180, -60]">
         <dxo-tooltip
           [enabled]="true"
           [customizeTooltip]="customizeTooltip"></dxo-tooltip>
         <dxi-layer
           name="areas"
-          palette="Violet"
+          [palette]="['#B1BFD8','#202020']"
           colorGroupingField="gdp"
-          [colorGroups]="[0, 0.5, 0.8, 1, 2, 3, 100]"
+          [colorGroups]="[0, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000]"
           [dataSource]="worldMap"
-          [customize]="customizeLayers"></dxi-layer>
+          [customize]="customizeLayers" id="my_country"></dxi-layer>
         <!--        <dxi-legend [customizeText]="customizeText">-->
         <!--          <dxo-source layer="areas" grouping="color"></dxo-source>-->
         <!--        </dxi-legend>-->

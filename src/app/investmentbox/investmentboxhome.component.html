@@ -1,12 +1,6 @@
 <div>
     <mat-card class="stock-card">
       <div class="row">
-        <div class="col-lg-12" align="center" style="font-size: 20px;">
-        Trade
-        </div>
-      </div>
-      <hr>
-      <div class="row">
         <div class="col-lg-12">
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngFor="let investment of filteredInvestments | async" [value]="investment">
@@ -19,43 +13,28 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <mat-form-field appearance="outline">
-            <mat-label>Shares</mat-label>
-            <input matInput #shares align="center" placeholder="0">
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div align="center" class="col-lg-12">
-          <button mat-button (click)="onClickPrice(investment.value, shares.value)">Calculate Price</button>
-        </div>
-      </div>
       <hr>
         <div class="row">
           <div class="col-lg-8">
-            <span>Per Share</span>
+            <span>Price</span>
           </div>
           <div class="col-lg-4">
-            <span>{{perSharePrice}}</span>
+            <span>{{assetPrice}}</span>
           </div>
         </div>
         <br>
         <div class="row">
           <div class="col-lg-8">
-            <span>Total</span>
+            <span>Symbol: </span>
           </div>
           <div class="col-lg-4">
-            <span>{{totalPrice}}</span>
+            <span>{{assetSymbol}}</span>
           </div>
         </div>
-        <br>
       <mat-card-actions class="align-middle">
         <hr>
         <div align="center">
-          <button mat-button (click)="onClickBuy(investment.value, shares.value)">Buy</button>
-          <button mat-button (click)="onClickSell(investment.value, shares.value)">Sell</button>
+          <button mat-button (click)="onClickSearch(investment.value, 1)">Search</button>
         </div>
       </mat-card-actions>
     </mat-card>
