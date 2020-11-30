@@ -259,7 +259,7 @@ export class InvestmentBoxComponent {
       //Update Currency
       this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
       // Buy Investment Currency
-      this.investmentApi.buyInvestment(this.UID,currencyData.currencyName,currencyData.ticker,currencyData.rates[0],shares,'b','Currency');
+      this.investmentApi.buyInvestment(this.UID, currencyData.currencyName, currencyData.ticker, currencyData.rates[0], shares, 'b','Currency');
     }else{console.log("Not enough money")};
     });
     }

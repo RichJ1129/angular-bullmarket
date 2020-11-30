@@ -1,17 +1,17 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
-import { Stock, Company } from '../stock.model';
-import { StockService } from '../stock.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
-import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import {Component, OnInit, Input, Output} from '@angular/core';
+import {Stock, Company} from '../stock.model';
+import {StockService} from '../stock.service';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatSort} from '@angular/material/sort';
+import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
+import {ActivatedRoute, ParamMap} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {FormControl} from '@angular/forms';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
-import { InvestmentService } from '../../investment/investment.service';
-import { HeaderComponent } from '../../layout/header/header.component';
+import {InvestmentService} from '../../investment/investment.service';
+import {HeaderComponent} from '../../layout/header/header.component';
 import {InvestmentBoxService} from '../../investmentbox/investmentbox.service';
-import { Currency } from '../../currency/currency.model';
+import {Currency} from '../../currency/currency.model';
 
 
 @Component({
@@ -33,6 +33,7 @@ export class StockPageComponent implements OnInit {
       this.UID = this.userObject._id;
     });
   }
+
   headerComponent: HeaderComponent;
 
   show = false;
@@ -47,7 +48,7 @@ export class StockPageComponent implements OnInit {
   userObject: any;
 
   chartType = 'line';
-  chartData: ChartDataSets[] =  [
+  chartData: ChartDataSets[] = [
     {data: [], label: '10 day Stock Price', fill: false, lineTension: 0},
   ];
 
@@ -71,19 +72,19 @@ export class StockPageComponent implements OnInit {
     annotation: {
       annotations: [
         {
-        type: 'line',
-        mode: 'horizontal',
-        scaleID: 'y-axis-0',
-        value: 5,
-        borderColor: 'grey',
-        borderWidth: 2,
+          type: 'line',
+          mode: 'horizontal',
+          scaleID: 'y-axis-0',
+          value: 5,
+          borderColor: 'grey',
+          borderWidth: 2,
           borderDash: [4, 4],
           label: {
-          enabled: false,
-          fontColor: 'orange',
-          content: 'LineAnno'
-        }
-      }]
+            enabled: false,
+            fontColor: 'orange',
+            content: 'LineAnno'
+          }
+        }]
     }
   };
 
@@ -104,10 +105,9 @@ export class StockPageComponent implements OnInit {
   }
 
   public changeLineColor(yesterdayPrice, todayPrice): void {
-    if (todayPrice > yesterdayPrice){
+    if (todayPrice > yesterdayPrice) {
       this.chartColor[0].borderColor = 'rgb(0,200,7)';
-    }
-    else if (todayPrice < yesterdayPrice) {
+    } else if (todayPrice < yesterdayPrice) {
       this.chartColor[0].borderColor = 'rgb(255,80,0)';
     }
   }
@@ -118,7 +118,7 @@ export class StockPageComponent implements OnInit {
 
     const transformedDates = [];
 
-    for (const i of this.stock.closeDate){
+    for (const i of this.stock.closeDate) {
       transformedDates.push(this.datePipe.transform(i, 'MM-dd'));
     }
 
@@ -131,7 +131,7 @@ export class StockPageComponent implements OnInit {
 
     this.investmentServiceApi.getCurrencyBalance(this.UID, currency).then(data => {
       currencyBalance = data;
-      const purchaseAmount =  stockShares * this.stock.price[this.stock.price.length - 1];
+      const purchaseAmount = stockShares * this.stock.price[this.stock.price.length - 1];
       if (currencyBalance < purchaseAmount) {
 
       } else {
@@ -144,14 +144,13 @@ export class StockPageComponent implements OnInit {
   }
 
 
-
   public sellStock(stockShares): void {
     let numberShares;
     const currency = 'DOLLAR';
 
     this.investmentServiceApi.numberOfShares(this.UID, this.stock.symbol).then(data => {
       numberShares = data;
-      const sellAmount =  stockShares * this.stock.price[this.stock.price.length - 1];
+      const sellAmount = stockShares * this.stock.price[this.stock.price.length - 1];
       if (stockShares > numberShares) {
 
       } else {
@@ -187,7 +186,7 @@ export class StockPageComponent implements OnInit {
             companySummary: companyData.companySummary,
             companyCountry: companyData.companyCountry,
             companyCurrency: companyData.companyCurrency
-         };
+          };
         });
       }
     });
