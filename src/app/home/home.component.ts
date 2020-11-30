@@ -5,8 +5,8 @@ import { DxVectorMapModule, DxSelectBoxModule, DxTextBoxModule } from 'devextrem
 import { DxDataGridComponent } from 'devextreme-angular';
 import { Router } from '@angular/router';
 import { RealEstateService } from '../realestate/realestate.service';
-import { InvestmentBoxService } from 'src/app/investmentbox/investmentbox.service'; 
-import { InvestmentService } from 'src/app/investment/investment.service'; 
+import { InvestmentBoxService } from 'src/app/investmentbox/investmentbox.service';
+import { InvestmentService } from 'src/app/investment/investment.service';
 
 
 import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js';
@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   worldMap: any = mapsData.world;
   gdp: Object;
   animalDecider;
+  animalName;
   selectedCountry: string;
   UID: string;
   userObject: any;
@@ -40,9 +41,13 @@ export class HomeComponent implements OnInit {
     this.gdp = service.getGDP();
     this.customizeLayers = this.customizeLayers.bind(this);
     this.profileService.getAnimal()
-      .subscribe(val => {this.animalDecider = val;
+      .subscribe(val1 => {this.animalDecider = val1;
       });
-      
+    this.profileService.getAnimalName()
+      .subscribe(val2 => {this.animalName = val2;
+      });
+
+
   }
 
   onClick(e): void {
@@ -72,7 +77,7 @@ export class HomeComponent implements OnInit {
      this.InvestmentBoxService.getUserID().subscribe(data => {
       this.userObject=data;
       this.UID = this.userObject._id;
-    
+
     this.InvestmentService.getCurrencyBalance(this.UID,"DOLLAR").then(result =>{
       this.currencyBalance = result;
 
@@ -82,7 +87,7 @@ export class HomeComponent implements OnInit {
       }
 
    });
-  
+
   });
   }
 

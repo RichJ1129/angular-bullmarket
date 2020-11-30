@@ -15,6 +15,11 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true,
     default: "Bear"
+  },
+  animalName: {
+    type: String,
+    required: true,
+    default: "Benny"
   }
 });
 

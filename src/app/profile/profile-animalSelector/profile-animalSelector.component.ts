@@ -28,6 +28,7 @@ export class ProfileAnimalSelectorComponent implements OnInit {
 
   userAnimalObject;
   userAnimal;
+  userAnimalName;
   userName;
 
   constructor(private authService: AuthService, private profileService: ProfileService) {
@@ -40,21 +41,41 @@ export class ProfileAnimalSelectorComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
+  //grab the selected animal from the dropdown
   selectChangeHandler(event: any) {
     this.selectedAnimal = event.target.value;
     this.showSuccess = false;
     this.showMessage = false;
   }
 
+  //if forms are validated, then update the animal fields
   updateAnimal() {
     if (!this.validateChoice())
       return;
+
     this.profileService.updateAnimal(this.userName, this.selectedAnimal);
+
+    //If animal is valid but name is left blank, only update the animal
+    if (!this.validateName())
+    {
+      location.reload();
+      return;
+    }
+
+    //else update the name and refresh the page
+    this.profileService.updateAnimalName(this.userName, this.userAnimalName)
     location.reload();
     }
 
+  //for now accept anything that is not just a blank string
+  validateName() {
+    if (this.userAnimalName == null)
+      return false
+    else
+      return true
+  }
 
+  //validate the dropdown menu
   validateChoice() {
     //Validating for future "validateChoice()" calls
     if (this.selectedAnimal != '' && this.selectedAnimal != this.userAnimal) {

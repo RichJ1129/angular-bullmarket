@@ -6,10 +6,11 @@
   <div class="row">
     <div class="col-4">
       <div class="animal">
-        <img *ngIf="animalDecider == 'Bull'" src="https://elasticbeanstalk-us-west-2-380431846943.s3-us-west-2.amazonaws.com/benjaminBull2.png"
+        <img *ngIf="animalDecider == 'Bull'" src="/assets/images/no_background_bull.PNG"
              class="img-fluid" routerLink="/profile">
-        <img *ngIf="animalDecider == 'Bear'" src="https://elasticbeanstalk-us-east-2-020439737471.s3.us-east-2.amazonaws.com/buckaroobear.png"
+        <img *ngIf="animalDecider == 'Bear'" src="/assets/images/no_background_bear.PNG"
              class="img-fluid" routerLink="/profile">
+        <h6 align="center">{{animalName}} {{animalDecider}}</h6>
       </div>
       <div>
         <app-investmentboxhome></app-investmentboxhome>

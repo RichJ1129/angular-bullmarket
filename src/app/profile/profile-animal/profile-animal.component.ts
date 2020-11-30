@@ -15,13 +15,17 @@ import {AuthService} from "../../auth/auth.service";
 
 export class ProfileAnimalComponent implements OnInit {
 
-  userAnimal;
+  animalListener;
   animalDecider;
+  nameListener;
+  animalName;
 
   constructor(private profileService: ProfileService, private authService: AuthService) {
-    this.userAnimal = this.profileService.getAnimal()
-      .subscribe(val => {this.animalDecider = val;
+    this.animalListener = this.profileService.getAnimal()
+      .subscribe(val1 => {this.animalDecider = val1;
         })
+    this.nameListener = this.profileService.getAnimalName()
+      .subscribe(val2 => {this.animalName = val2})
     }
 
 

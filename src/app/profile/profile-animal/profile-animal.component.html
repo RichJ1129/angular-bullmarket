@@ -1,5 +1,6 @@
-<div class="animal">
-  <img *ngIf="animalDecider == 'Bull'" src="https://elasticbeanstalk-us-west-2-380431846943.s3-us-west-2.amazonaws.com/benjaminBull2.png"
+<div>
+  <h2>{{animalName}} {{animalDecider}}</h2>
+  <img *ngIf="animalDecider == 'Bull'" src="assets/images/no_background_bull.PNG"
        class="img-fluid">
-  <img *ngIf="animalDecider == 'Bear'" src="https://elasticbeanstalk-us-east-2-020439737471.s3.us-east-2.amazonaws.com/buckaroobear.png">
+  <img *ngIf="animalDecider == 'Bear'" src="assets/images/no_background_bear.PNG">
 </div>
