@@ -35,9 +35,23 @@ export class ProfileService {
       })
   }
 
+  //Call to user.js to update the user's animal name
+  public updateAnimalName(userName: string, userAnimalName: string) {
+    this.dataToSend = {userName, userAnimalName};
+    return this.http.post<{message: string}>(backendURL + '/user/updateAnimalName', this.dataToSend)
+      .subscribe((responseData) => {
+        console.log(responseData.message);
+      })
+  }
+
   //Call to user.js to retrieve the user's animal
   public getAnimal() {
     return this.http.get(backendURL + '/user/getAnimal/' + this.userEmail)
+  }
+
+  //Call to user.js to retrieve the user's animal name
+  public getAnimalName() {
+    return this.http.get(backendURL + '/user/getAnimalName/' + this.userEmail)
   }
 
 }

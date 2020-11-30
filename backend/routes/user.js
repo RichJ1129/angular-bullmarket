@@ -9,7 +9,8 @@ router.post("/signup", (req, res, next) => {
   const user = new User({
     userName: req.body.userName,
     email: req.body.email,
-    animal: "Bear"
+    animal: "Bear",
+    animalName: "Benny"
   });
   user.save().then(
     result => {
@@ -55,6 +56,25 @@ router.post("/updateAnimal", (req, res, next) => {
     });
 });
 
+//Update user animal name
+router.post("/updateAnimalName", (req, res, next) => {
+  User.updateOne({userName: req.body.userName}, {$set: {animalName: req.body.userAnimalName}})
+    .then(user => {
+      if (!user) {
+        return res.status(401).json({
+          message: "Auth failed"
+        });
+      }
+      res.status(200).json({
+      });
+    })
+    .catch(err => {
+      return res.status(401).json({
+        message: "Auth failed"
+      });
+    });
+});
+
 //Get users current animal
 router.get("/getAnimal/:email", (req, res, next) => {
   User.findOne({email: req.params.email}).then( userAnimal => {
@@ -62,6 +82,17 @@ router.get("/getAnimal/:email", (req, res, next) => {
       res.status(200).json(userAnimal['animal']);
     } else {
       res.status(404).json({ message: "User's Animal not found here!" });
+    }
+  });
+});
+
+//Get users current animal name
+router.get("/getAnimalName/:email", (req, res, next) => {
+  User.findOne({email: req.params.email}).then( userAnimalName => {
+    if (userAnimalName) {
+      res.status(200).json(userAnimalName['animalName']);
+    } else {
+      res.status(404).json({ message: "User's Animal Name not found here!" });
     }
   });
 });

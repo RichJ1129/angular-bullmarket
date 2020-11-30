@@ -6,7 +6,17 @@
       </select>
     </div>
 
-    <button class="btn btn-primary" type="submit" (click)="updateAnimal()">Submit</button>
 </div>
+
+<div class="container">
+  <div class="form-group">
+    <label>Name Your Animal:</label>
+    <input class="form-control" maxlength="20"[(ngModel)]="userAnimalName">
+  </div>
+
+  <button class="btn btn-primary" type="submit" (click)="updateAnimal()">Submit</button>
+</div>
+<h6 >*Leave the name field blank to keep your current animal name.</h6>
+&nbsp;
 <h6 [hidden]="!showMessage">*Please select a valid animal or one that is not your current animal.</h6>
 <h6 [hidden] ="!showSuccess"> Animal successfully updated!</h6>

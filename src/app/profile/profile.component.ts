@@ -15,15 +15,12 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
 })
 export class ProfileComponent {
 
-  userName;
   email;
   animal;
   isSelectorVisible = false;
   isFeedVisible = false;
-  isPlayVisible = false;
 
   constructor(private authService: AuthService, private profileService: ProfileService) {
-    this.userName = this.authService.getUserName();
     this.email = this.authService.getEmailID();
   };
 
@@ -31,18 +28,15 @@ export class ProfileComponent {
   {
       this.isSelectorVisible = true;
       this.isFeedVisible = false;
-      this.isPlayVisible = false;
   }
 
   showFeed() {
       this.isFeedVisible = true;
-      this.isPlayVisible = false;
       this.isSelectorVisible = false;
   }
 
   showPlay()
   {
-      this.isPlayVisible = true;
       this.isSelectorVisible = false;
       this.isFeedVisible = false;
   }
