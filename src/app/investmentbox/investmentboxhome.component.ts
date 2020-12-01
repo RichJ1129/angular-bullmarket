@@ -102,7 +102,7 @@ export class InvestmentBoxHomeComponent {
             this.stock2 = { stockName: stockData2.stockName, symbol: stockData2.symbol, price: stockData2.price, marketCap: stockData2.marketCap, closeDate: stockData2.closeDate, pERatio: stockData2.pERatio };
 
             setTimeout(() => {
-                this.assetPrice="$ "+ (stockData2.price[0]).toString();
+                this.assetPrice="$ "+ (+(Math.round((stockData2.price[0]) * 100) / 100).toFixed(2)).toString();
                 this.assetSymbol = stockData2.symbol;
                 },500);
 
@@ -132,9 +132,9 @@ export class InvestmentBoxHomeComponent {
         // Retrieve Information
         this.currencyApi.getOneCurrency(result[0].symbol).subscribe(currencyData => {
           this.currency = { currencyName: currencyData.currencyName, ticker: currencyData.ticker, rates: currencyData.rates, timeStamp: currencyData.timeStamp};
-    //xx
+    //Bug Fix and Restrict to 2 Decimal Points
           setTimeout(() => {
-            this.assetPrice="$ "+ (this.currency.rates[0]).toString();
+            this.assetPrice="$ "+ (+(Math.round((1/this.currency.rates[0]) * 100) / 100).toFixed(2)).toString();
             this.assetSymbol = this.currency.ticker;
             },500);
         });
@@ -145,13 +145,13 @@ export class InvestmentBoxHomeComponent {
         this.commodityApi.getOneCommodity(result[0].symbol).subscribe(commodityData => {
           this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: "", closeDate: [] };
 
-              });
+              
 
               //Retrive Price, Symbol
               setTimeout(() => {
-                this.assetPrice="$ "+ (this.commodity.etfPrice[0]).toString();
+                this.assetPrice="$ "+ (+(Math.round((this.commodity.etfPrice[0]) * 100) / 100).toFixed(2)).toString();
                 this.assetSymbol = this.commodity.symbol;
-                },500);
+                },500);});
         }
         else if(result[0].type=="Urban Real Estate"){
           this.countryname = result[0].country;
@@ -163,7 +163,7 @@ export class InvestmentBoxHomeComponent {
           };
 
           //Calculate Real Estate Price, Display Result after 0.5s Delay
-          this.realEstatePrice = ((countryData.urbanPE * countryData.urbanRent ) * 12);
+          this.realEstatePrice = (+(Math.round(((countryData.urbanPE * countryData.urbanRent ) * 12) * 100) / 100).toFixed(2));
           setTimeout(() => {
             this.assetPrice="$ "+ (this.realEstatePrice).toString();
             this.assetSymbol = this.country.urbanSymbol;
@@ -183,7 +183,7 @@ export class InvestmentBoxHomeComponent {
           };
 
           //Calculate Real Estate Price, Display Result after 0.5s Delay
-          this.realEstatePrice = ((countryData.ruralPE * countryData.ruralRent ) * 12);
+          this.realEstatePrice = (+(Math.round(((countryData.ruralPE * countryData.ruralRent ) * 12) * 100) / 100).toFixed(2));
           setTimeout(() => {
             this.assetPrice="$ "+ (this.realEstatePrice).toString();
             this.assetSymbol = this.country.ruralSymbol;

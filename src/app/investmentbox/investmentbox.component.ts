@@ -46,6 +46,7 @@ export class InvestmentBoxComponent {
   myControl = new FormControl();
   stock: Stock;
   stock2: Stock;
+  stock3: Promise<Stock>;
   UID: string;
   userObject: any;
   filteredInvestments: Observable<InvestmentForm[]>;
@@ -90,7 +91,7 @@ export class InvestmentBoxComponent {
     );
   };
 
-  onClickPrice(name, shares){
+ onClickPrice(name, shares){
     let currency = "DOLLAR"; let amount = 0;
 
     //Retrieve Symbol, Type, Name
@@ -100,8 +101,11 @@ export class InvestmentBoxComponent {
 
     if(result[0].type=="Stock"){
       //Retrieve Stock Information
-      this.stockApi.getOneStock(result[0].symbol).subscribe(stockData2 => {
+      this.stockApi.getOneStock(result[0].symbol).subscribe( stockData2 => {
         this.stock2 = { stockName: stockData2.stockName, symbol: stockData2.symbol, price: stockData2.price, marketCap: stockData2.marketCap, closeDate: stockData2.closeDate, pERatio: stockData2.pERatio };
+
+        //Set to 2 Decimal Places
+        stockData2.price[0]=(+(Math.round(stockData2.price[0] * 100) / 100).toFixed(2));
 
         setTimeout(() => {
           this.perSharePrice="$ "+ (stockData2.price[0]).toString();
@@ -119,13 +123,14 @@ export class InvestmentBoxComponent {
         this.country = {
          countryName: countryData.countryName, capitalCity: countryData.capitalCity, population: countryData.population, urbanRent: countryData.urbanRent, urbanPE: countryData.urbanPE, ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE,
          interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
-      };
+        };
 
       setTimeout(() => {
         this.perSharePrice="$ "+ (1).toString();
         this.totalPrice="$ "+ (shares).toString();
         },500);
-
+      
+      
 
     });
     }
@@ -135,9 +140,13 @@ export class InvestmentBoxComponent {
     this.currencyApi.getOneCurrency(result[0].symbol).subscribe(currencyData => {
       this.currency = { currencyName: currencyData.currencyName, ticker: currencyData.ticker, rates: currencyData.rates, timeStamp: currencyData.timeStamp};
 
+    //Set to 2 Decimal Places
+    //BUG FIX - (1/currencyData.rates[0]) - set currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
+    let currencyRate = (+(Math.round((1/currencyData.rates[0]) * 100) / 100).toFixed(2));
+
       setTimeout(() => {
-        this.perSharePrice="$ "+ (this.currency.rates[0]).toString();
-        this.totalPrice="$ "+ (this.currency.rates[0] * shares).toString();
+        this.perSharePrice="$ "+ (currencyRate).toString(); //BUG FIX - (1/currencyData.rates[0]) - set currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
+        this.totalPrice="$ "+ ((currencyRate * shares).toFixed(2)).toString(); //BUG FIX - (1/currencyData.rates[0]) - set currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
         },500);
     });
     }
@@ -147,13 +156,17 @@ export class InvestmentBoxComponent {
     this.commodityApi.getOneCommodity(result[0].symbol).subscribe(commodityData => {
       this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: "", closeDate: [] };
 
-          });
+      
+
+      //Round to 2 Decimal Places
+      let commodityRate = (+(Math.round(this.commodity.etfPrice[0] * 100) / 100).toFixed(2));
 
       //Update Share and Total Price after 0.5s Delay for Data Retrieval
       setTimeout(() => {
-      this.perSharePrice="$ "+this.commodity.etfPrice[0].toString();
-      this.totalPrice="$ "+(this.commodity.etfPrice[0] * shares).toString();
+      this.perSharePrice="$ "+commodityRate.toString();
+      this.totalPrice="$ "+(commodityRate * shares).toString();
       },500);
+    });
     }
     else if(result[0].type=="Urban Real Estate"){
       this.countryname = result[0].country;
@@ -164,8 +177,9 @@ export class InvestmentBoxComponent {
         countryName: countryData.countryName, capitalCity: countryData.capitalCity, population: countryData.population, urbanRent: countryData.urbanRent, urbanPE: countryData.urbanPE, ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE, interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
       };
 
+      //Round to 2 Decimal Places
       //Calculate Real Estate Price, Display Result after 0.5s Delay
-      this.realEstatePrice = ((countryData.urbanPE * countryData.urbanRent ) * 12);
+      this.realEstatePrice = (+(Math.round(((countryData.urbanPE * countryData.urbanRent ) * 12) * 100) / 100).toFixed(2));
       setTimeout(() => {
         this.perSharePrice="$ "+ (this.realEstatePrice).toString();
         this.totalPrice="$ "+ (this.realEstatePrice * shares).toString();
@@ -185,7 +199,7 @@ export class InvestmentBoxComponent {
       };
 
       //Calculate Real Estate Price, Display Result after 0.5s Delay
-      this.realEstatePrice = ((countryData.ruralPE * countryData.ruralRent ) * 12);
+      this.realEstatePrice = (+(Math.round(((countryData.ruralPE * countryData.ruralRent ) * 12) * 100) / 100).toFixed(2));
       setTimeout(() => {
         this.perSharePrice="$ "+ (this.realEstatePrice).toString();
         this.totalPrice="$ "+ (this.realEstatePrice * shares).toString();
@@ -213,6 +227,8 @@ export class InvestmentBoxComponent {
       this.stockApi.getOneStock(result[0].symbol).subscribe(stockData2 => {
         this.stock2 = { stockName: stockData2.stockName, symbol: stockData2.symbol, price: stockData2.price, marketCap: stockData2.marketCap, closeDate: stockData2.closeDate, pERatio: stockData2.pERatio };
 
+        //Set to 2 Decimal Places
+        stockData2.price[0]=(+(Math.round(stockData2.price[0] * 100) / 100).toFixed(2));
         // Check Available Balance
         amount = -Math.abs((stockData2.price[0] * shares));
 
@@ -251,15 +267,19 @@ export class InvestmentBoxComponent {
     //Retrieve Information
     this.currencyApi.getOneCurrency(result[0].symbol).subscribe(currencyData => {
       this.currency = { currencyName: currencyData.currencyName, ticker: currencyData.ticker, rates: currencyData.rates, timeStamp: currencyData.timeStamp};
+    
+    //Set to 2 Decimal Places
+    //BUG FIX - (1/currencyData.rates[0]) - set currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
+    let currencyRate = (+(Math.round((1/currencyData.rates[0]) * 100) / 100).toFixed(2));
 
     // Check Available Balance
-    amount = -Math.abs(shares)
+    amount = -Math.abs(shares*currencyRate);
 
     if((Math.abs(amount))<currencyBalance){
       //Update Currency
       this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
       // Buy Investment Currency
-      this.investmentApi.buyInvestment(this.UID, currencyData.currencyName, currencyData.ticker, currencyData.rates[0], shares, 'b','Currency');
+      this.investmentApi.buyInvestment(this.UID, currencyData.currencyName, currencyData.ticker, currencyRate, shares, 'b','Currency'); 
     }else{console.log("Not enough money")};
     });
     }
@@ -268,19 +288,22 @@ export class InvestmentBoxComponent {
     //Retrieve Information
     this.commodityApi.getOneCommodity(result[0].symbol).subscribe(commodityData => {
       this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: "", closeDate: [] };
-    });
+    
 
+    //Round to 2 Decimal Places
+    let commodityRate = (+(Math.round(this.commodity.etfPrice[0] * 100) / 100).toFixed(2));
 
     // Check Available Balance
-    amount = -Math.abs(shares * this.commodity.etfPrice[0]);
+    amount = -Math.abs(shares * commodityRate);
 
     if((Math.abs(amount))<currencyBalance){
       //Update Currency
       this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
       //Buy Commodity
-      this.investmentApi.buyInvestment(this.UID,this.commodity.commodityName,this.commodity.symbol,this.commodity.etfPrice[0],shares,'b','Commodity');
+      this.investmentApi.buyInvestment(this.UID,this.commodity.commodityName,this.commodity.symbol,commodityRate,shares,'b','Commodity');
+    
     }
-    else{console.log("Not enough money")};
+    else{console.log("Not enough money")};});
     }
     else if(result[0].type=="Urban Real Estate"){
       this.countryname = result[0].country;
@@ -290,9 +313,9 @@ export class InvestmentBoxComponent {
       this.country = {
         countryName: countryData.countryName, capitalCity: countryData.capitalCity, population: countryData.population, urbanRent: countryData.urbanRent, urbanPE: countryData.urbanPE, ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE, interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
       };
-
-    //Update Currency
-    this.realEstatePrice = ((countryData.urbanPE * countryData.urbanRent ) * 12);
+      
+    //Update Currency - 2 Decimal Places
+    this.realEstatePrice = (+(Math.round(((countryData.urbanPE * countryData.urbanRent ) * 12) * 100) / 100).toFixed(2));
 
     //Check Available Balance
     amount = -Math.abs(Math.round((shares * this.realEstatePrice)*100) / 100);
@@ -318,9 +341,9 @@ export class InvestmentBoxComponent {
         ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE, interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation,
         bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
       };
-
+      
       //Check Available Balance
-      this.realEstatePrice = ((countryData.ruralPE * countryData.ruralRent ) * 12);
+      this.realEstatePrice = (+(Math.round(((countryData.ruralPE * countryData.ruralRent ) * 12) * 100) / 100).toFixed(2));
       amount = -Math.abs(Math.round((shares * this.realEstatePrice)*100) / 100);
 
       if((Math.abs(amount))<currencyBalance){
@@ -367,6 +390,10 @@ export class InvestmentBoxComponent {
 
       //Check Share Ownership
       if(this.minimumShares>=shares){
+      
+      //Set to 2 Decimal Places
+      stockData2.price[0]=(+(Math.round(stockData2.price[0] * 100) / 100).toFixed(2));
+      
       //Update Currency
       amount = (stockData2.price[0] * shares)
       this.investmentApi.addBaseCurrency(this.UID,currency,amount);
@@ -420,12 +447,17 @@ export class InvestmentBoxComponent {
 
   //Check Share Ownership
   if(this.minimumShares>=shares){
+
+    //Set to 2 Decimal Places
+    //BUG FIX - (1/currencyData.rates[0]) - set currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
+    let currencyRate = (+(Math.round((1/currencyData.rates[0]) * 100) / 100).toFixed(2));
+
   //Update Base Currency
-  amount = Math.abs(shares)
+  amount = Math.abs(shares*(currencyRate));
   this.investmentApi.addBaseCurrency(this.UID,currency,amount);
 
   // Sell Investment Currency
-  this.investmentApi.sellInvestment(this.UID,currencyData.currencyName,currencyData.ticker,currencyData.rates[0],-(shares),'b','Currency');
+  this.investmentApi.sellInvestment(this.UID,currencyData.currencyName,currencyData.ticker,currencyRate,-(shares),'b','Currency'); //BUG FIX - (1/currencyData.rates[0]) - set currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
   }else{console.log("Not enough shares");}
   });
   }
@@ -434,17 +466,21 @@ export class InvestmentBoxComponent {
   //Retrieve Information
   this.commodityApi.getOneCommodity(result[0].symbol).subscribe(commodityData => {
    this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: "", closeDate: [] };
-   });
+   
 
   //Check Share Ownership
   if(this.minimumShares>=shares){
+
+  //Round to 2 Decimal Places
+  let commodityRate = (+(Math.round(this.commodity.etfPrice[0] * 100) / 100).toFixed(2));
+
   //Update Currency
-  amount = Math.abs(shares * this.commodity.etfPrice[0]);
+  amount = Math.abs(shares * commodityRate);
   this.investmentApi.addBaseCurrency(this.UID,currency,amount);
 
   //Buy Investment
-  this.investmentApi.sellInvestment(this.UID,this.commodity.commodityName,this.commodity.symbol,this.commodity.etfPrice[0],-(shares),'s','Commodity');
-  }else{console.log("Not enough shares");}
+  this.investmentApi.sellInvestment(this.UID,this.commodity.commodityName,this.commodity.symbol,commodityRate,-(shares),'s','Commodity');
+  }else{console.log("Not enough shares");}});
   }
   else if(result[0].type=="Urban Real Estate"){
 
@@ -468,11 +504,11 @@ export class InvestmentBoxComponent {
       urbanSymbol: countryData.urbanSymbol,
       ruralSymbol: countryData.ruralSymbol,
     };
-
+    
     //Check Share Ownership
     if(this.minimumShares>=shares){
     //Update Currency
-    this.realEstatePrice = ((countryData.urbanPE * countryData.urbanRent ) * 12);
+    this.realEstatePrice = (+(Math.round(((countryData.urbanPE * countryData.urbanRent ) * 12) * 100) / 100).toFixed(2));
 
     amount = Math.abs(Math.round((shares * this.realEstatePrice)*100) / 100);
     this.investmentApi.addBaseCurrency(this.UID,currency,amount);
@@ -506,11 +542,11 @@ export class InvestmentBoxComponent {
       urbanSymbol: countryData.urbanSymbol,
       ruralSymbol: countryData.ruralSymbol,
     };
-
+    
     //Check Share Ownership
     if(this.minimumShares>=shares){
     //Update Currency
-    this.realEstatePrice = ((countryData.ruralPE * countryData.ruralRent ) * 12);
+    this.realEstatePrice = (+(Math.round(((countryData.ruralPE * countryData.ruralRent ) * 12) * 100) / 100).toFixed(2));
 
     amount = Math.abs(Math.round((shares * this.realEstatePrice)*100) / 100);
     this.investmentApi.addBaseCurrency(this.UID,currency,amount);
