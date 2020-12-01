@@ -67,5 +67,6 @@ h4 {
 }
 
 img {
-  cursor: pointer
+  cursor: pointer;
+  transform: scaleX(-1);
 }

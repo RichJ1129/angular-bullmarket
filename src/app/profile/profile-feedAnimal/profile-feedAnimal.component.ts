@@ -4,6 +4,7 @@ import {DxVectorMapComponent} from 'devextreme-angular';
 
 import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js';
 import {ProfileService} from '../profile.service';
+import { InvestmentBoxService } from '../../investmentbox/investmentbox.service';
 
 @Component({
   selector: 'app-profile-feedAnimal',
@@ -13,8 +14,23 @@ import {ProfileService} from '../profile.service';
 })
 
 export class ProfileFeedAnimalComponent implements OnInit {
+  userObject;
+  UID;
+  private currency: string;
 
-  constructor(service: ProfileService) {
+  constructor(service: ProfileService, private investmentApi: InvestmentBoxService) {
+    this.investmentApi.getUserID().subscribe(data => {
+      this.userObject = data;
+      this.UID = this.userObject._id;
+    });
+  }
+
+  //Subtract the cost of the food
+  feedAnimal(price)
+  {
+    this.currency="DOLLAR"
+    this.investmentApi.removeBaseCurrency(this.UID, this.currency, price);
+    location.reload();
   }
 
   ngOnInit(): void {
