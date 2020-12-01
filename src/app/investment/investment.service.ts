@@ -132,7 +132,8 @@ for(let x=0; x<this.portfolio.length;x++){
      this.stockApi.getOneStock(this.portfolio[z].symbol).subscribe(stockData2 => {
        this.stock2 = { stockName: stockData2.stockName, symbol: stockData2.symbol, price: stockData2.price, marketCap: stockData2.marketCap, closeDate: stockData2.closeDate, pERatio: stockData2.pERatio };
 
-       this.portfolio[z].currentPrice = this.stock2.price[0];
+       //Set to 2 decimal places
+       this.portfolio[z].currentPrice = (+(Math.round(this.stock2.price[0] * 100) / 100).toFixed(2));
      });
    }
    if (this.portfolio[z].type == 'Bond' || this.portfolio[z].type == 'bond'){
@@ -143,22 +144,24 @@ for(let x=0; x<this.portfolio.length;x++){
    // Retrieve Commodity Current Price
    this.commodityApi.getOneCommodity(this.portfolio[z].symbol).subscribe(commodityData => {
      this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: '', closeDate: [] };
-
-     this.portfolio[z].currentPrice = this.commodity.etfPrice[0];
+     
+    //Set to 2 Decimal Places
+     this.portfolio[z].currentPrice = (+(Math.round(this.commodity.etfPrice[0] * 100) / 100).toFixed(2));
    });
 
 
    }
    if (this.portfolio[z].type == 'Real Estate' || this.portfolio[z].type == 'realestate'){
-      // Real Estate Price Doesn't Change for Now
-   }
+    this.portfolio[z].currentPrice=(+(Math.round(this.portfolio[z].currentPrice * 100) / 100).toFixed(2));
+  }
    if (this.portfolio[z].type == 'Currency' || this.portfolio[z].type == 'currency'){
 
    // Retrieve Currency Current Price
    this.currencyApi.getOneCurrency(this.portfolio[z].symbol).subscribe(currencyData => {
      this.currency = { currencyName: currencyData.currencyName, ticker: currencyData.ticker, rates: currencyData.rates, timeStamp: currencyData.timeStamp};
 
-     this.portfolio[z].currentPrice = (1/this.currency.rates[0]); //BUG FIX - set X currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
+     //Set to 2 Decimal Places
+     this.portfolio[z].currentPrice = (+(Math.round((1/this.currency.rates[0]) * 100) / 100).toFixed(2)); //BUG FIX - set X currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
    });
    }
  }
