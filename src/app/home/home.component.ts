@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit {
   UID: string;
   userObject: any;
   currencyBalance: number;
+  investmentValue: number;
 
   @ViewChild(DxVectorMapComponent, { static: false }) vectorMap: DxVectorMapComponent;
 
@@ -81,11 +82,15 @@ export class HomeComponent implements OnInit {
     this.InvestmentService.getCurrencyBalance(this.UID,"DOLLAR").then(result =>{
       this.currencyBalance = result;
 
-      if(this.currencyBalance==0)
+    this.InvestmentService.getInvestmentValue(this.UID).then(result2 =>{
+      this.investmentValue = result2;
+    
+
+      if(this.currencyBalance==0 && this.investmentValue==0) // BUG FIX - Add investmentValue to ensure that player doesn't get 100k just for reaching 0 balance.
       {
        this.InvestmentBoxService.addBaseCurrency(this.UID,"DOLLAR",100000);
       }
-
+    })
    });
 
   });

@@ -104,8 +104,8 @@ getUserID(){
      type: this.result[x].assetType,
      transactionPrice: this.result[x].transactionPrice
    };
-   for (let y = 0; y < this.portfolio.length; y++){ // Look to see if this has been add
-     if (this.portfolio[y].symbol == temp2.symbol){
+   for (let y = 0; y < this.portfolio.length; y++){ 
+     if (this.portfolio[y].symbol == temp2.symbol){ // Has this investment been added already
        this.portfolio[y].shares = (+this.portfolio[y].shares + +temp2.shares); // Add or Subtract Shares from this Symbol
        this.add = 0; // Jump to Next Investment
        y = +(this.portfolio.length); // Symbols Match, Exit 'y' For Loop
@@ -116,7 +116,14 @@ getUserID(){
    }
  }
 
-    console.group('Current Prices:');
+//BUG FIX - Remove any portfolio element with 0 shares.
+for(let x=0; x<this.portfolio.length;x++){
+  if(this.portfolio[x].shares == 0){
+    this.portfolio.splice(x,1);
+    x--;
+  }
+}
+
  // Update Current Price for Each Investment
     for (let z = 0; z < this.portfolio.length; z++)
  {
@@ -129,7 +136,7 @@ getUserID(){
      });
    }
    if (this.portfolio[z].type == 'Bond' || this.portfolio[z].type == 'bond'){
-    // No change
+    // Bond Price is "1"
    }
    if (this.portfolio[z].type == 'Commodities' || this.portfolio[z].type == 'commodities'){
 
@@ -143,7 +150,7 @@ getUserID(){
 
    }
    if (this.portfolio[z].type == 'Real Estate' || this.portfolio[z].type == 'realestate'){
-      // No change
+      // Real Estate Price Doesn't Change for Now
    }
    if (this.portfolio[z].type == 'Currency' || this.portfolio[z].type == 'currency'){
 
@@ -151,7 +158,7 @@ getUserID(){
    this.currencyApi.getOneCurrency(this.portfolio[z].symbol).subscribe(currencyData => {
      this.currency = { currencyName: currencyData.currencyName, ticker: currencyData.ticker, rates: currencyData.rates, timeStamp: currencyData.timeStamp};
 
-     this.portfolio[z].currentPrice = this.currency.rates[0];
+     this.portfolio[z].currentPrice = (1/this.currency.rates[0]); //BUG FIX - set X currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
    });
    }
  }

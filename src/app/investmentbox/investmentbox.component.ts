@@ -136,8 +136,8 @@ export class InvestmentBoxComponent {
       this.currency = { currencyName: currencyData.currencyName, ticker: currencyData.ticker, rates: currencyData.rates, timeStamp: currencyData.timeStamp};
 
       setTimeout(() => {
-        this.perSharePrice="$ "+ (this.currency.rates[0]).toString();
-        this.totalPrice="$ "+ (this.currency.rates[0] * shares).toString();
+        this.perSharePrice="$ "+ (1/this.currency.rates[0]).toString(); //BUG FIX - (1/currencyData.rates[0]) - set currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
+        this.totalPrice="$ "+ ((1/this.currency.rates[0]) * shares).toString(); //BUG FIX - (1/currencyData.rates[0]) - set currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
         },500);
     });
     }
@@ -253,13 +253,13 @@ export class InvestmentBoxComponent {
       this.currency = { currencyName: currencyData.currencyName, ticker: currencyData.ticker, rates: currencyData.rates, timeStamp: currencyData.timeStamp};
 
     // Check Available Balance
-    amount = -Math.abs(shares)
+    amount = -Math.abs(shares*(1/currencyData.rates[0]));
 
     if((Math.abs(amount))<currencyBalance){
       //Update Currency
       this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
       // Buy Investment Currency
-      this.investmentApi.buyInvestment(this.UID, currencyData.currencyName, currencyData.ticker, currencyData.rates[0], shares, 'b','Currency');
+      this.investmentApi.buyInvestment(this.UID, currencyData.currencyName, currencyData.ticker, (1/currencyData.rates[0]), shares, 'b','Currency'); //BUG FIX - (1/currencyData.rates[0]) - set currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
     }else{console.log("Not enough money")};
     });
     }
@@ -421,11 +421,11 @@ export class InvestmentBoxComponent {
   //Check Share Ownership
   if(this.minimumShares>=shares){
   //Update Base Currency
-  amount = Math.abs(shares)
+  amount = Math.abs(shares*(1/currencyData.rates[0]));
   this.investmentApi.addBaseCurrency(this.UID,currency,amount);
 
   // Sell Investment Currency
-  this.investmentApi.sellInvestment(this.UID,currencyData.currencyName,currencyData.ticker,currencyData.rates[0],-(shares),'b','Currency');
+  this.investmentApi.sellInvestment(this.UID,currencyData.currencyName,currencyData.ticker,(1/currencyData.rates[0]),-(shares),'b','Currency'); //BUG FIX - (1/currencyData.rates[0]) - set currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
   }else{console.log("Not enough shares");}
   });
   }
