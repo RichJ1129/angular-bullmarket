@@ -24,7 +24,6 @@ export class HomeComponent implements OnInit {
   worldMap: any = mapsData.world;
   gdp: Object;
   animalDecider;
-  animalName;
   selectedCountry: string;
   UID: string;
   userObject: any;
@@ -44,11 +43,6 @@ export class HomeComponent implements OnInit {
     this.profileService.getAnimal()
       .subscribe(val1 => {this.animalDecider = val1;
       });
-    this.profileService.getAnimalName()
-      .subscribe(val2 => {this.animalName = val2;
-      });
-
-
   }
 
   onClick(e): void {
