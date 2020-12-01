@@ -145,13 +145,13 @@ export class InvestmentBoxHomeComponent {
         this.commodityApi.getOneCommodity(result[0].symbol).subscribe(commodityData => {
           this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: "", closeDate: [] };
 
-              });
+              
 
               //Retrive Price, Symbol
               setTimeout(() => {
                 this.assetPrice="$ "+ (+(Math.round((this.commodity.etfPrice[0]) * 100) / 100).toFixed(2)).toString();
                 this.assetSymbol = this.commodity.symbol;
-                },500);
+                },500);});
         }
         else if(result[0].type=="Urban Real Estate"){
           this.countryname = result[0].country;

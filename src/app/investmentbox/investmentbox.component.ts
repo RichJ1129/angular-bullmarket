@@ -46,6 +46,7 @@ export class InvestmentBoxComponent {
   myControl = new FormControl();
   stock: Stock;
   stock2: Stock;
+  stock3: Promise<Stock>;
   UID: string;
   userObject: any;
   filteredInvestments: Observable<InvestmentForm[]>;
@@ -90,7 +91,7 @@ export class InvestmentBoxComponent {
     );
   };
 
-  onClickPrice(name, shares){
+ onClickPrice(name, shares){
     let currency = "DOLLAR"; let amount = 0;
 
     //Retrieve Symbol, Type, Name
@@ -100,7 +101,7 @@ export class InvestmentBoxComponent {
 
     if(result[0].type=="Stock"){
       //Retrieve Stock Information
-      this.stockApi.getOneStock(result[0].symbol).subscribe(stockData2 => {
+      this.stockApi.getOneStock(result[0].symbol).subscribe( stockData2 => {
         this.stock2 = { stockName: stockData2.stockName, symbol: stockData2.symbol, price: stockData2.price, marketCap: stockData2.marketCap, closeDate: stockData2.closeDate, pERatio: stockData2.pERatio };
 
         //Set to 2 Decimal Places
@@ -122,13 +123,14 @@ export class InvestmentBoxComponent {
         this.country = {
          countryName: countryData.countryName, capitalCity: countryData.capitalCity, population: countryData.population, urbanRent: countryData.urbanRent, urbanPE: countryData.urbanPE, ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE,
          interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
-      };
+        };
 
       setTimeout(() => {
         this.perSharePrice="$ "+ (1).toString();
         this.totalPrice="$ "+ (shares).toString();
         },500);
-
+      
+      
 
     });
     }
@@ -154,7 +156,7 @@ export class InvestmentBoxComponent {
     this.commodityApi.getOneCommodity(result[0].symbol).subscribe(commodityData => {
       this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: "", closeDate: [] };
 
-          });
+      
 
       //Round to 2 Decimal Places
       let commodityRate = (+(Math.round(this.commodity.etfPrice[0] * 100) / 100).toFixed(2));
@@ -164,6 +166,7 @@ export class InvestmentBoxComponent {
       this.perSharePrice="$ "+commodityRate.toString();
       this.totalPrice="$ "+(commodityRate * shares).toString();
       },500);
+    });
     }
     else if(result[0].type=="Urban Real Estate"){
       this.countryname = result[0].country;
@@ -285,7 +288,7 @@ export class InvestmentBoxComponent {
     //Retrieve Information
     this.commodityApi.getOneCommodity(result[0].symbol).subscribe(commodityData => {
       this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: "", closeDate: [] };
-    });
+    
 
     //Round to 2 Decimal Places
     let commodityRate = (+(Math.round(this.commodity.etfPrice[0] * 100) / 100).toFixed(2));
@@ -298,8 +301,9 @@ export class InvestmentBoxComponent {
       this.investmentApi.removeBaseCurrency(this.UID,currency,amount);
       //Buy Commodity
       this.investmentApi.buyInvestment(this.UID,this.commodity.commodityName,this.commodity.symbol,commodityRate,shares,'b','Commodity');
+    
     }
-    else{console.log("Not enough money")};
+    else{console.log("Not enough money")};});
     }
     else if(result[0].type=="Urban Real Estate"){
       this.countryname = result[0].country;
@@ -462,7 +466,7 @@ export class InvestmentBoxComponent {
   //Retrieve Information
   this.commodityApi.getOneCommodity(result[0].symbol).subscribe(commodityData => {
    this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: "", closeDate: [] };
-   });
+   
 
   //Check Share Ownership
   if(this.minimumShares>=shares){
@@ -476,7 +480,7 @@ export class InvestmentBoxComponent {
 
   //Buy Investment
   this.investmentApi.sellInvestment(this.UID,this.commodity.commodityName,this.commodity.symbol,commodityRate,-(shares),'s','Commodity');
-  }else{console.log("Not enough shares");}
+  }else{console.log("Not enough shares");}});
   }
   else if(result[0].type=="Urban Real Estate"){
 
