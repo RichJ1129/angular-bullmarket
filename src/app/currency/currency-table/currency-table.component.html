@@ -1,8 +1,9 @@
-<br>
-<h1 style="text-align: center">Currency</h1>
-<hr>
+
 <div class="row">
   <div class="col-lg-8">
+    <br>
+    <h1 style="text-align: center">Currency</h1>
+    <hr>
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="currencyName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Currency </th>
@@ -22,6 +23,7 @@
     <mat-paginator [pageSizeOptions]="[15, 30, 45]" showFirstLastButtons></mat-paginator>
   </div>
   <div class="col-lg-4">
+    <br><br><br>
     <app-investmentbox></app-investmentbox>
   </div>
   <div>

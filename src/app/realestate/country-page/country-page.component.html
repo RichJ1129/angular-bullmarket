@@ -1,12 +1,14 @@
 <br>
 <br>
-<br>
+<h1 style="text-align: center" *ngIf="!isLoading">{{country.countryName}}</h1>
 <div class="container">
-  <div class="row">
+  <div class="loading-indicator" *ngIf="isLoading">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+  <div class="row" *ngIf="!isLoading">
     <div class="col-4">
       <br>
       <br>
-      <p>Country - {{country.countryName}}</p>
       <p>Capital City - {{country.capitalCity}}</p>
       <p>Population - {{country.population}}</p>
       <p>Urban Rent - {{country.urbanRent}}</p>
@@ -23,6 +25,7 @@
         [center]="countryCenter"
         [zoomFactor]="countryZoom"
         [zoomingEnabled]="false"
+        [wheelEnabled]="false"
         [panningEnabled]="false">
         <dxo-background
           borderColor= ''></dxo-background>
@@ -35,8 +38,14 @@
         <dxi-layer [dataSource]="capitalMarker"></dxi-layer>
         <dxo-control-bar [enabled]="false"></dxo-control-bar>
       </dx-vector-map>
-
     </div>
+    <hr>
+
+    <h2>About</h2>
+    <div class="about_section" [class.show]="show">{{country.countrySummary}}</div>
+    <br>
+    <button type="button" class="btn btn-dark" (click)="show = !show">{{ show ? 'Show less': 'Show More' }}</button>
+    <br>
   </div>
 </div>
 

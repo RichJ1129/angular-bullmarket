@@ -1,7 +1,10 @@
 <br>
 <br>
 <div class="container">
-  <div class="row">
+  <div class="loading-indicator" *ngIf="isLoading">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+  <div class="row" *ngIf="!isLoading">
     <div class="col-lg-8">
       <div class="container">
         <h2 class="Currency_Name">{{currency.currencyName}}</h2>

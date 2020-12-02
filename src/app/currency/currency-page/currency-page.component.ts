@@ -32,6 +32,7 @@ export class CurrencyPageComponent implements OnInit {
   }
 
   show = false;
+  isLoading = false;
 
   displayedColumns: any[] = ['currencyName', 'ticker', 'rates'];
   currency: Currency;
@@ -166,6 +167,7 @@ export class CurrencyPageComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('currency_ticker')) {
+        this.isLoading = true;
         this.currencyTicker = paramMap.get('currency_ticker');
         this.currencyService.getOneCurrency(this.currencyTicker).subscribe(currencyData => {
           this.currency = {
@@ -177,6 +179,7 @@ export class CurrencyPageComponent implements OnInit {
           this.changeAnnotation(this.currency.rates[this.currency.rates.length - 10]);
           this.changeLineColor(this.currency.rates[this.currency.rates.length - 2], this.currency.rates[this.currency.rates.length - 1]);
           this.computeData();
+          this.isLoading = false;
         });
       }
     });

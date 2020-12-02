@@ -52,6 +52,10 @@ const CountrySchema = mongoose.Schema({
   ruralSymbol: {
     type: String,
     required: false
+  },
+  countrySummary: {
+    type: String,
+    required: false
   }
 });
 

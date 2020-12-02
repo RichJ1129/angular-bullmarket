@@ -116,7 +116,7 @@ export class InvestmentBoxHomeComponent {
           this.countryApi.getOneCountry(this.countryname).subscribe(countryData => {
             this.country = {
              countryName: countryData.countryName, capitalCity: countryData.capitalCity, population: countryData.population, urbanRent: countryData.urbanRent, urbanPE: countryData.urbanPE, ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE,
-             interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
+             interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol, countrySummary: countryData.countrySummary
           };
 
 
@@ -145,7 +145,7 @@ export class InvestmentBoxHomeComponent {
         this.commodityApi.getOneCommodity(result[0].symbol).subscribe(commodityData => {
           this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: "", closeDate: [] };
 
-              
+
 
               //Retrive Price, Symbol
               setTimeout(() => {
@@ -159,7 +159,7 @@ export class InvestmentBoxHomeComponent {
         //Retrieve Information
         this.countryApi.getOneCountry(this.countryname).subscribe(countryData => {
           this.country = {
-            countryName: countryData.countryName, capitalCity: countryData.capitalCity, population: countryData.population, urbanRent: countryData.urbanRent, urbanPE: countryData.urbanPE, ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE, interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
+            countryName: countryData.countryName, capitalCity: countryData.capitalCity, population: countryData.population, urbanRent: countryData.urbanRent, urbanPE: countryData.urbanPE, ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE, interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation, bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol, countrySummary: countryData.countrySummary
           };
 
           //Calculate Real Estate Price, Display Result after 0.5s Delay
@@ -179,7 +179,7 @@ export class InvestmentBoxHomeComponent {
           this.country = {
             countryName: countryData.countryName, capitalCity: countryData.capitalCity, population: countryData.population, urbanRent: countryData.urbanRent, urbanPE: countryData.urbanPE,
             ruralRent: countryData.ruralRent, ruralPE: countryData.ruralPE, interestRate: countryData.interestRate, debtGDP: countryData.debtGDP, inflation: countryData.inflation,
-            bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol,
+            bondSymbol: countryData.bondSymbol, urbanSymbol: countryData.urbanSymbol, ruralSymbol: countryData.ruralSymbol, countrySummary: countryData.countrySummary
           };
 
           //Calculate Real Estate Price, Display Result after 0.5s Delay
