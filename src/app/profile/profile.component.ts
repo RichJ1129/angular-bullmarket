@@ -12,16 +12,21 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent {
 
   email;
   animal;
+  happiness;
   isSelectorVisible = false;
   isFeedVisible = false;
 
   constructor(private authService: AuthService, private profileService: ProfileService) {
     this.email = this.authService.getEmailID();
+    this.profileService.getHappiness().subscribe(data => {
+      this.happiness = data;
+    });
   };
 
   showSelector()

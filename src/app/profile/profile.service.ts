@@ -24,6 +24,7 @@ export class ProfileService {
   dataToSend;
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthService) {
+
   }
 
   //Call to user.js to update the user's animal
@@ -44,6 +45,15 @@ export class ProfileService {
       })
   }
 
+  //Call to user.js to update the user's animal happiness
+  public updateHappiness(userName: string, happiness: string) {
+    this.dataToSend = {userName, happiness};
+    return this.http.post<{message: string}>(backendURL + '/user/updateHappiness', this.dataToSend)
+      .subscribe((responseData) => {
+        console.log(responseData.message);
+      })
+  }
+
   //Call to user.js to retrieve the user's animal
   public getAnimal() {
     return this.http.get(backendURL + '/user/getAnimal/' + this.userEmail)
@@ -52,6 +62,11 @@ export class ProfileService {
   //Call to user.js to retrieve the user's animal name
   public getAnimalName() {
     return this.http.get(backendURL + '/user/getAnimalName/' + this.userEmail)
+  }
+
+  //Call to user.js to retrieve the user's animal happiness
+  public getHappiness() {
+    return this.http.get(backendURL + '/user/getAnimalHappiness/' + this.userEmail)
   }
 
 }

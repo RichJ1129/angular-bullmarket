@@ -1,5 +1,16 @@
-#animal {
-  align: "center";
-  width: 100%;
-  height: 100%;
+
+progress {
+  height:100%;
+  text-align: center;
+  font-weight:bold;
+  width: 500px;
 }
+
+label {
+  font-weight:bold;
+}
+
+progress:after {
+  content: attr(value)'%';
+}
+
