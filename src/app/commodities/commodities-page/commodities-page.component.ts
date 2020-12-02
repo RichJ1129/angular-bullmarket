@@ -23,6 +23,7 @@ export class CommoditiesPageComponent implements OnInit {
   ) {}
 
   show = false;
+  isLoading = false;
 
   displayedColumns: any[] = ['commodityName', 'symbol', 'etfPrice'];
   commodity: Commodity;
@@ -112,6 +113,7 @@ export class CommoditiesPageComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('commodity_symbol')) {
+        this.isLoading = true;
         this.commoditySymbol = paramMap.get('commodity_symbol');
         this.commodityService.getOneCommodity(this.commoditySymbol).subscribe(commodityData => {
           this.commodity = {
@@ -125,6 +127,7 @@ export class CommoditiesPageComponent implements OnInit {
           // tslint:disable-next-line:max-line-length
           this.changeLineColor(this.commodity.etfPrice[this.commodity.etfPrice.length - 2], this.commodity.etfPrice[this.commodity.etfPrice.length - 1]);
           this.computeData();
+          this.isLoading = false;
         });
       }
     });

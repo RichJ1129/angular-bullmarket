@@ -1,7 +1,10 @@
 <br>
 <br>
 <div class="container">
-  <div class="row">
+  <div class="loading-indicator" *ngIf="isLoading">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+  <div class="row" *ngIf="!isLoading">
     <div class="col-lg-8">
       <div class="container">
         <h2 class="Commodity_Name">{{commodity.commodityName}}</h2>
@@ -19,11 +22,6 @@
                 [colors]="chartColor"
                 [options]="lineChartOptions">
         </canvas>
-<!--        <hr>-->
-<!--        <h2>About</h2>-->
-<!--        <div class="about_section" [class.show]="show">{{company.companySummary}}</div>-->
-<!--        <br>-->
-<!--        <button type="button" class="btn btn-dark" (click)="show = !show">{{ show ? 'Show less': 'Show More' }}</button>-->
       </div>
     </div>
     <div class="col-lg-4" >

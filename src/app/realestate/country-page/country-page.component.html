@@ -1,8 +1,11 @@
 <br>
 <br>
-<h1 style="text-align: center">{{country.countryName}}</h1>
+<h1 style="text-align: center" *ngIf="!isLoading">{{country.countryName}}</h1>
 <div class="container">
-  <div class="row">
+  <div class="loading-indicator" *ngIf="isLoading">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+  <div class="row" *ngIf="!isLoading">
     <div class="col-4">
       <br>
       <br>

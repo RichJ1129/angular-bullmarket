@@ -22,6 +22,7 @@ export class CountryPageComponent implements OnInit {
   capitalMarker: Marker[];
   countryZoom: string;
   show = false;
+  isLoading = false;
 
   constructor(public realEstateService: RealEstateService, public route: ActivatedRoute) {
     this.markers = realEstateService.getMarkers();
@@ -64,6 +65,7 @@ export class CountryPageComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('country_name')) {
+        this.isLoading = true;
         this.countryName = paramMap.get('country_name');
         this.realEstateService.getOneCountry(this.countryName).subscribe(countryData => {
           this.country = {
@@ -84,8 +86,9 @@ export class CountryPageComponent implements OnInit {
           };
           this.customizeCoordinates(this.countryName);
           this.findCountryCenter(countryData.capitalCity);
+          this.isLoading = false;
         });
-    }});
+      }});
   }
 
 }

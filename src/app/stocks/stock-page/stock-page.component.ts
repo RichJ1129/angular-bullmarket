@@ -37,6 +37,7 @@ export class StockPageComponent implements OnInit {
   headerComponent: HeaderComponent;
 
   show = false;
+  isLoading = false;
 
   displayedColumns: any[] = ['stockName', 'symbol', 'price', 'pERatio', 'marketCap'];
   stock: Stock;
@@ -167,6 +168,7 @@ export class StockPageComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('stock_ticker')) {
+        this.isLoading = true;
         this.stockTicker = paramMap.get('stock_ticker');
         this.stocksService.getOneStock(this.stockTicker).subscribe(stockData => {
           this.stock = {
@@ -187,6 +189,7 @@ export class StockPageComponent implements OnInit {
             companyCountry: companyData.companyCountry,
             companyCurrency: companyData.companyCurrency
           };
+          this.isLoading = false;
         });
       }
     });
