@@ -1,6 +1,15 @@
 <app-profile-animal></app-profile-animal>
 
 <div align="center">
+  <label>Happiness Level</label>
+</div>
+
+<div align="center">
+  <progress id="health" value="{{this.happiness}}" max="100"></progress>
+</div>
+&nbsp;
+
+<div align="center">
   <button class="buttons" mat-raised-button type="submit" (click)="showSelector()">Customize Animal</button>
   &nbsp;&nbsp;&nbsp;&nbsp;
   <button class="buttons" mat-raised-button  type="submit" (click)="showFeed()">Feed Animal</button>
