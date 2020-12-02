@@ -22,6 +22,7 @@
         [center]="countryCenter"
         [zoomFactor]="countryZoom"
         [zoomingEnabled]="false"
+        [wheelEnabled]="false"
         [panningEnabled]="false">
         <dxo-background
           borderColor= ''></dxo-background>
@@ -35,6 +36,13 @@
         <dxo-control-bar [enabled]="false"></dxo-control-bar>
       </dx-vector-map>
     </div>
+    <hr>
+
+    <h2>About</h2>
+    <div class="about_section" [class.show]="show">{{country.countrySummary}}</div>
+    <br>
+    <button type="button" class="btn btn-dark" (click)="show = !show">{{ show ? 'Show less': 'Show More' }}</button>
+    <br>
   </div>
 </div>
 

@@ -21,6 +21,7 @@ export class CountryPageComponent implements OnInit {
   markers: Marker[];
   capitalMarker: Marker[];
   countryZoom: string;
+  show = false;
 
   constructor(public realEstateService: RealEstateService, public route: ActivatedRoute) {
     this.markers = realEstateService.getMarkers();
@@ -78,7 +79,8 @@ export class CountryPageComponent implements OnInit {
             inflation: countryData.inflation,
             bondSymbol: countryData.bondSymbol,
             urbanSymbol: countryData.urbanSymbol,
-            ruralSymbol: countryData.ruralSymbol
+            ruralSymbol: countryData.ruralSymbol,
+            countrySummary: countryData.countrySummary
           };
           this.customizeCoordinates(this.countryName);
           this.findCountryCenter(countryData.capitalCity);
