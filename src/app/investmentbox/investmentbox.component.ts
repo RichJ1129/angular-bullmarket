@@ -119,11 +119,11 @@ export class InvestmentBoxComponent {
         this.stock2 = { stockName: stockData2.stockName, symbol: stockData2.symbol, price: stockData2.price, marketCap: stockData2.marketCap, closeDate: stockData2.closeDate, pERatio: stockData2.pERatio };
 
         // Set to 2 Decimal Places
-        stockData2.price[0] = (+(Math.round(stockData2.price[0] * 100) / 100).toFixed(2));
+        stockData2.price[stockData2.price.length - 1] = (+(Math.round(stockData2.price[stockData2.price.length - 1] * 100) / 100).toFixed(2));
 
         setTimeout(() => {
-          this.perSharePrice = '$ ' + (stockData2.price[0]).toString();
-          this.totalPrice = '$ ' + (stockData2.price[0] * shares).toString();
+          this.perSharePrice = '$ ' + (stockData2.price[stockData2.price.length - 1]).toString();
+          this.totalPrice = '$ ' + (stockData2.price[stockData2.price.length - 1] * shares).toString();
           }, 500);
 
     });
@@ -168,7 +168,7 @@ export class InvestmentBoxComponent {
 
     // Set to 2 Decimal Places
     // BUG FIX - (1/currencyData.rates[0]) - set currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
-      const currencyRate = (+(Math.round((1 / currencyData.rates[0]) * 100) / 100).toFixed(2));
+      const currencyRate = (+(Math.round((1 / currencyData.rates[currencyData.rates.length - 1]) * 100) / 100).toFixed(2));
 
       setTimeout(() => {
         this.perSharePrice = '$ ' + (currencyRate).toString(); // BUG FIX - (1/currencyData.rates[0]) - set currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
@@ -185,7 +185,7 @@ export class InvestmentBoxComponent {
 
 
       // Round to 2 Decimal Places
-      const commodityRate = (+(Math.round(this.commodity.etfPrice[0] * 100) / 100).toFixed(2));
+      const commodityRate = (+(Math.round(this.commodity.etfPrice[this.commodity.etfPrice.length - 1] * 100) / 100).toFixed(2));
 
       // Update Share and Total Price after 0.5s Delay for Data Retrieval
       setTimeout(() => {
@@ -278,15 +278,15 @@ export class InvestmentBoxComponent {
         this.stock2 = { stockName: stockData2.stockName, symbol: stockData2.symbol, price: stockData2.price, marketCap: stockData2.marketCap, closeDate: stockData2.closeDate, pERatio: stockData2.pERatio };
 
         // Set to 2 Decimal Places
-        stockData2.price[0] = (+(Math.round(stockData2.price[0] * 100) / 100).toFixed(2));
+        stockData2.price[stockData2.price.length - 1] = (+(Math.round(stockData2.price[stockData2.price.length - 1] * 100) / 100).toFixed(2));
         // Check Available Balance
-        amount = -Math.abs((stockData2.price[0] * shares));
+        amount = -Math.abs((stockData2.price[stockData2.price.length - 1] * shares));
 
         if ((Math.abs(amount)) < currencyBalance){
           // Update Currency
           this.investmentApi.removeBaseCurrency(this.UID, currency, amount, this.todayString);
           // Buy Stock
-          this.investmentApi.buyInvestment(this.UID, this.stock2.stockName, this.stock2.symbol, this.stock2.price[0], shares, 'b', 'Stock', this.todayString);
+          this.investmentApi.buyInvestment(this.UID, this.stock2.stockName, this.stock2.symbol, this.stock2.price[this.stock2.price.length - 1], shares, 'b', 'Stock', this.todayString);
         }else{console.log('Not enough money'); }
     });
     }
@@ -332,7 +332,7 @@ export class InvestmentBoxComponent {
 
     // Set to 2 Decimal Places
     // BUG FIX - (1/currencyData.rates[0]) - set currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
-      const currencyRate = (+(Math.round((1 / currencyData.rates[0]) * 100) / 100).toFixed(2));
+      const currencyRate = (+(Math.round((1 / currencyData.rates[currencyData.rates.length - 1]) * 100) / 100).toFixed(2));
 
     // Check Available Balance
       amount = -Math.abs(shares * currencyRate);
@@ -353,7 +353,7 @@ export class InvestmentBoxComponent {
 
 
     // Round to 2 Decimal Places
-      const commodityRate = (+(Math.round(this.commodity.etfPrice[0] * 100) / 100).toFixed(2));
+      const commodityRate = (+(Math.round(this.commodity.etfPrice[this.commodity.etfPrice.length - 1] * 100) / 100).toFixed(2));
 
     // Check Available Balance
       amount = -Math.abs(shares * commodityRate);
@@ -478,14 +478,14 @@ export class InvestmentBoxComponent {
       if (this.minimumShares >= shares){
 
       // Set to 2 Decimal Places
-      stockData2.price[0] = (+(Math.round(stockData2.price[0] * 100) / 100).toFixed(2));
+      stockData2.price[stockData2.price.length - 1] = (+(Math.round(stockData2.price[stockData2.price.length - 1] * 100) / 100).toFixed(2));
 
       // Update Currency
       amount = (stockData2.price[0] * shares);
       this.investmentApi.addBaseCurrency(this.UID, currency, amount, this.todayString);
 
       // Sell Investment
-      this.investmentApi.sellInvestment(this.UID, this.stock2.stockName, this.stock2.symbol, this.stock2.price[0], -Math.abs(shares), 's', 'Stock', this.todayString);
+      this.investmentApi.sellInvestment(this.UID, this.stock2.stockName, this.stock2.symbol, this.stock2.price[stockData2.price.length - 1], -Math.abs(shares), 's', 'Stock', this.todayString);
     }else{console.log('Not enough shares'); }
     });
   }
@@ -537,7 +537,7 @@ export class InvestmentBoxComponent {
 
     // Set to 2 Decimal Places
     // BUG FIX - (1/currencyData.rates[0]) - set currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
-    const currencyRate = (+(Math.round((1 / currencyData.rates[0]) * 100) / 100).toFixed(2));
+    const currencyRate = (+(Math.round((1 / currencyData.rates[currencyData.rates.length - 1]) * 100) / 100).toFixed(2));
 
   // Update Base Currency
     amount = Math.abs(shares * (currencyRate));
@@ -559,7 +559,7 @@ export class InvestmentBoxComponent {
    if (this.minimumShares >= shares){
 
   // Round to 2 Decimal Places
-  const commodityRate = (+(Math.round(this.commodity.etfPrice[0] * 100) / 100).toFixed(2));
+  const commodityRate = (+(Math.round(this.commodity.etfPrice[this.commodity.etfPrice.length - 1] * 100) / 100).toFixed(2));
 
   // Update Currency
   amount = Math.abs(shares * commodityRate);
