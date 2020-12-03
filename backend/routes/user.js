@@ -24,7 +24,7 @@ router.post("/signup", (req, res, next) => {
       res.status(500).json({
         message: "Invalid authentication credentials!"
       });
-    });i
+    });
 });
 
 //Get user by email address
