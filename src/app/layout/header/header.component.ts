@@ -47,7 +47,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     this.commoditySevice.getCommodities().subscribe(data => {
       this.commodityData = data;
-      // console.log(this.commodityData);
     });
     this.investmentService.getUserID().subscribe(data => {
       this.userObject = data;
