@@ -133,7 +133,7 @@ for(let x=0; x<this.portfolio.length;x++){
        this.stock2 = { stockName: stockData2.stockName, symbol: stockData2.symbol, price: stockData2.price, marketCap: stockData2.marketCap, closeDate: stockData2.closeDate, pERatio: stockData2.pERatio };
 
        //Set to 2 decimal places
-       this.portfolio[z].currentPrice = (+(Math.round(this.stock2.price[0] * 100) / 100).toFixed(2));
+       this.portfolio[z].currentPrice = (+(Math.round(this.stock2.price[this.stock2.price.length - 1] * 100) / 100).toFixed(2));
      });
    }
    if (this.portfolio[z].type == 'Bond' || this.portfolio[z].type == 'bond'){
@@ -146,7 +146,7 @@ for(let x=0; x<this.portfolio.length;x++){
      this.commodity = {commodityName: commodityData.commodityName, symbol: commodityData.symbol, etfPrice: commodityData.etfPrice, commodityUnit: '', closeDate: [] };
      
     //Set to 2 Decimal Places
-     this.portfolio[z].currentPrice = (+(Math.round(this.commodity.etfPrice[0] * 100) / 100).toFixed(2));
+     this.portfolio[z].currentPrice = (+(Math.round(this.commodity.etfPrice[this.commodity.etfPrice.length - 1] * 100) / 100).toFixed(2));
    });
 
 
@@ -161,7 +161,7 @@ for(let x=0; x<this.portfolio.length;x++){
      this.currency = { currencyName: currencyData.currencyName, ticker: currencyData.ticker, rates: currencyData.rates, timeStamp: currencyData.timeStamp};
 
      //Set to 2 Decimal Places
-     this.portfolio[z].currentPrice = (+(Math.round((1/this.currency.rates[0]) * 100) / 100).toFixed(2)); //BUG FIX - set X currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
+     this.portfolio[z].currentPrice = (+(Math.round((1/this.currency.rates[this.currency.rates.length - 1]) * 100) / 100).toFixed(2)); //BUG FIX - set X currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
    });
    }
  }

@@ -102,7 +102,7 @@ export class InvestmentBoxHomeComponent {
             this.stock2 = { stockName: stockData2.stockName, symbol: stockData2.symbol, price: stockData2.price, marketCap: stockData2.marketCap, closeDate: stockData2.closeDate, pERatio: stockData2.pERatio };
 
             setTimeout(() => {
-                this.assetPrice="$ "+ (+(Math.round((stockData2.price[0]) * 100) / 100).toFixed(2)).toString();
+                this.assetPrice="$ "+ (+(Math.round((stockData2.price[stockData2.price.length - 1]) * 100) / 100).toFixed(2)).toString();
                 this.assetSymbol = stockData2.symbol;
                 },500);
 
@@ -134,7 +134,7 @@ export class InvestmentBoxHomeComponent {
           this.currency = { currencyName: currencyData.currencyName, ticker: currencyData.ticker, rates: currencyData.rates, timeStamp: currencyData.timeStamp};
     //Bug Fix and Restrict to 2 Decimal Points
           setTimeout(() => {
-            this.assetPrice="$ "+ (+(Math.round((1/this.currency.rates[0]) * 100) / 100).toFixed(2)).toString();
+            this.assetPrice="$ "+ (+(Math.round((1/this.currency.rates[this.currency.rates.length - 1]) * 100) / 100).toFixed(2)).toString();
             this.assetSymbol = this.currency.ticker;
             },500);
         });
@@ -149,7 +149,7 @@ export class InvestmentBoxHomeComponent {
 
               //Retrive Price, Symbol
               setTimeout(() => {
-                this.assetPrice="$ "+ (+(Math.round((this.commodity.etfPrice[0]) * 100) / 100).toFixed(2)).toString();
+                this.assetPrice="$ "+ (+(Math.round((this.commodity.etfPrice[this.commodity.etfPrice.length - 1]) * 100) / 100).toFixed(2)).toString();
                 this.assetSymbol = this.commodity.symbol;
                 },500);});
         }
