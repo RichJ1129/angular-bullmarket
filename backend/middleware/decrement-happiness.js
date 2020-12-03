@@ -14,7 +14,7 @@ function findUsersAndUpdateHappiness() {
 
             success.forEach(element => {
               let newHappiness = element.happiness;
-              newHappiness -= 10;
+              newHappiness -= 1;
 
               if (newHappiness < 0)
                 newHappiness = 0;
