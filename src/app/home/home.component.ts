@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit {
 
     this.InvestmentService.getInvestmentValue(this.UID).then(result2 =>{
       this.investmentValue = result2;
-    
+
 
       if(this.currencyBalance==0 && this.investmentValue==0) // BUG FIX - Add investmentValue to ensure that player doesn't get 100k just for reaching 0 balance.
       {

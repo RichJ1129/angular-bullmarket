@@ -34,8 +34,11 @@
           [customizeTooltip]="customizeTooltip"></dxo-tooltip>
         <dxi-layer
           [dataSource]="countryMap"
-          borderColor="#030303"></dxi-layer>
-        <dxi-layer [dataSource]="capitalMarker"></dxi-layer>
+          borderColor="#030303"
+          color ="#202020"
+        ></dxi-layer>
+        <dxi-layer [dataSource]="capitalMarker"
+        color="red"></dxi-layer>
         <dxo-control-bar [enabled]="false"></dxo-control-bar>
       </dx-vector-map>
     </div>
