@@ -138,7 +138,7 @@ export class StockPageComponent implements OnInit {
       } else {
         this.investmentApi.removeBaseCurrency(this.UID, currency, -purchaseAmount);
         this.investmentApi.buyInvestment(this.UID, this.stock.stockName,
-          this.stock.symbol, 1,
+          this.stock.symbol, this.stock.price[this.stock.price.length - 1],
           stockShares, 'b', 'Stock');
       }
     });
