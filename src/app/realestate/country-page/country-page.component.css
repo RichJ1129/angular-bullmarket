@@ -20,6 +20,10 @@
   overflow: hidden;
 }
 
+p{
+  font-weight: bold;
+}
+
 .show {
   overflow: visible;
   height: auto;
