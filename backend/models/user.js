@@ -24,7 +24,7 @@ const UserSchema = mongoose.Schema({
   happiness: {
     type: String,
     required: true,
-    default: "100"
+    default: "40"
   }
 });
 

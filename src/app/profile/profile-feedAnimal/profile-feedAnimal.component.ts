@@ -34,7 +34,7 @@ export class ProfileFeedAnimalComponent implements OnInit {
       this.UID = this.userObject._id;
     });
     this.profileService.getHappiness().subscribe(data => {
-      this.happiness = data;
+      this.happiness = Number(data);
     });
     this.userName = this.authService.getUserName();
   }
@@ -42,6 +42,10 @@ export class ProfileFeedAnimalComponent implements OnInit {
   //Subtract the cost of the food
   feedAnimal(price)
   {
+
+    console.log("happiness" + this.happiness);
+    console.log("price" + price);
+
     if (price == 10)
     {
       this.newHappiness = this.happiness + 10;
@@ -59,6 +63,9 @@ export class ProfileFeedAnimalComponent implements OnInit {
     {
       this.newHappiness = 100;
     }
+
+    console.log("newHappiness" + this.newHappiness);
+
 
     //Adjust the happiness bar
     this.profileService.updateHappiness(this.userName, this.newHappiness.toString());
