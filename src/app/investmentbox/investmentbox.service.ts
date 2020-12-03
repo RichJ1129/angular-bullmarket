@@ -34,7 +34,7 @@ getUserID(){
 
   }
 
-  addBaseCurrency(userID: string, currency: string, amount: number){
+  addBaseCurrency(userID: string, currency: string, amount: number, transactionDate: string){
     const currencyUpdate: Investment = { 
       userID: userID, 
       name: currency, 
@@ -42,7 +42,9 @@ getUserID(){
       transactionPrice: 1, 
       shares: amount, 
       transactionType: "b", 
-      assetType: "baseCurrency"
+      assetType: "baseCurrency",
+      transactionDate: transactionDate,
+      lastPaymentDate: transactionDate
     }
     return this.http.post<{message: string}>(backendURL + '/investment', currencyUpdate)
       .subscribe((responseData) => {
@@ -50,7 +52,7 @@ getUserID(){
       })
   }
   
-  removeBaseCurrency(userID: string, currency: string, amount: number){
+  removeBaseCurrency(userID: string, currency: string, amount: number, transactionDate: string){
     const currencyUpdate: Investment = { 
       userID: userID, 
       name: currency, 
@@ -58,7 +60,9 @@ getUserID(){
       transactionPrice: 1, 
       shares: amount, 
       transactionType: "s", 
-      assetType: "baseCurrency"
+      assetType: "baseCurrency",
+      transactionDate: transactionDate,
+      lastPaymentDate: transactionDate
     }
     return this.http.post<{message: string}>(backendURL + '/investment', currencyUpdate)
     .subscribe((responseData) => {
@@ -66,7 +70,7 @@ getUserID(){
     })
   }
 
-  buyInvestment(userID: string, name: string, symbol: string, transactionPrice: number, shares: number, transactionType: string, assetType: string){
+  buyInvestment(userID: string, name: string, symbol: string, transactionPrice: number, shares: number, transactionType: string, assetType: string, transactionDate: string){
     const newInvestment: Investment = { 
       userID: userID, 
       name: name, 
@@ -74,7 +78,9 @@ getUserID(){
       transactionPrice: transactionPrice, 
       shares: shares, 
       transactionType: transactionType, 
-      assetType: assetType
+      assetType: assetType,
+      transactionDate: transactionDate,
+      lastPaymentDate: transactionDate
     }
     return this.http.post<{message: string}>(backendURL + '/investment', newInvestment)
       .subscribe((responseData) => {
@@ -84,7 +90,7 @@ getUserID(){
   }
 
 
-  sellInvestment(userID: string, name: string, symbol: string, transactionPrice: number, shares: number, transactionType: string, assetType: string){
+  sellInvestment(userID: string, name: string, symbol: string, transactionPrice: number, shares: number, transactionType: string, assetType: string, transactionDate: string){
     const newSale: Investment = { 
       userID: userID, 
       name: name, 
@@ -92,7 +98,9 @@ getUserID(){
       transactionPrice: transactionPrice, 
       shares: shares, 
       transactionType: transactionType, 
-      assetType: assetType
+      assetType: assetType,
+      transactionDate: transactionDate,
+      lastPaymentDate: transactionDate
     }
     return this.http.post<{message: string}>(backendURL + '/investment', newSale)
     .subscribe((responseData) => {

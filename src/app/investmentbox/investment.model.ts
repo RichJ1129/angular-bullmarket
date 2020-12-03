@@ -6,4 +6,6 @@ export interface Investment {
     transactionPrice: number;
     transactionType: string;
     assetType: string;
+    transactionDate: string;
+    lastPaymentDate: string;
   }

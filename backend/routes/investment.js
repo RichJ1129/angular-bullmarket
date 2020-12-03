@@ -23,7 +23,9 @@ router.post("",(req,res,next) => {
     transactionPrice: req.body.transactionPrice,
     shares: req.body.shares,
     transactionType: req.body.transactionType,
-    assetType: req.body.assetType
+    assetType: req.body.assetType,
+    transactionDate: req.body.transactionDate,
+    lastPaymentDate: req.body.transactionDate
   });
   investment.save();
   res.status(201).json({

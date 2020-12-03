@@ -45,6 +45,13 @@ export class CurrencyPageComponent implements OnInit {
   UID: string;
   userObject: any;
   chartLabels = [];
+        //Get Today's Date
+        today = new Date();
+        dd = String(this.today.getDate()).padStart(2,'0');
+        mm = String(this.today.getMonth() + 1).padStart(2,'0');
+        yyyy = this.today.getFullYear();
+      
+        todayString = this.yyyy + '-' + this.mm + '-' + this.dd;
 
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
@@ -131,10 +138,10 @@ export class CurrencyPageComponent implements OnInit {
       if (currencyBalance < purchaseAmount) {
 
       } else {
-        this.investmentApi.removeBaseCurrency(this.UID, currency, -purchaseAmount);
+        this.investmentApi.removeBaseCurrency(this.UID, currency, -purchaseAmount, this.todayString);
         this.investmentApi.buyInvestment(this.UID, this.currency.currencyName,
           this.currency.ticker, purchaseAmount,
-          currencyAmount, 'b', 'Currency');
+          currencyAmount, 'b', 'Currency', this.todayString);
       }
     });
   }
@@ -153,12 +160,12 @@ export class CurrencyPageComponent implements OnInit {
       if (currencyAmount > numberShares) {
 
       } else {
-        this.investmentApi.addBaseCurrency(this.UID, currency, sellAmount);
+        this.investmentApi.addBaseCurrency(this.UID, currency, sellAmount, this.todayString);
         this.investmentApi.sellInvestment(this.UID,
           this.currency.currencyName, this.currency.ticker,
           this.currency.rates[this.currency.rates.length - 1],
           -Math.abs(numberShares),
-          's', 'Currency');
+          's', 'Currency', this.todayString);
       }
     });
   }

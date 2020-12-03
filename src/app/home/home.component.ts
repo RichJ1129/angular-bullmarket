@@ -29,6 +29,13 @@ export class HomeComponent implements OnInit {
   userObject: any;
   currencyBalance: number;
   investmentValue: number;
+    //Get Today's Date
+    today = new Date();
+    dd = String(this.today.getDate()).padStart(2,'0');
+    mm = String(this.today.getMonth() + 1).padStart(2,'0');
+    yyyy = this.today.getFullYear();
+  
+    todayString = this.yyyy + '-' + this.mm + '-' + this.dd;
 
   @ViewChild(DxVectorMapComponent, { static: false }) vectorMap: DxVectorMapComponent;
 
@@ -82,7 +89,7 @@ export class HomeComponent implements OnInit {
 
       if(this.currencyBalance==0 && this.investmentValue==0) // BUG FIX - Add investmentValue to ensure that player doesn't get 100k just for reaching 0 balance.
       {
-       this.InvestmentBoxService.addBaseCurrency(this.UID,"DOLLAR",100000);
+       this.InvestmentBoxService.addBaseCurrency(this.UID,"DOLLAR",100000, this.todayString);
       }
     })
    });
