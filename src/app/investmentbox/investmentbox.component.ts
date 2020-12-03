@@ -20,6 +20,7 @@ import { CurrencyService } from 'src/app/currency/currency.service';
 import { Currency } from 'src/app/currency/currency.model';
 import { CommodityService } from 'src/app/commodities/commodity.service';
 import { Commodity } from 'src/app/commodities/commodity.model';
+import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
 
 // User ID Interface
 interface IDAuthData{
@@ -60,6 +61,15 @@ export class InvestmentBoxComponent {
   totalPrice = '$';
   minimumShares = 0;
 
+  //Get Today's Date
+  today = new Date();
+  dd = String(this.today.getDate()).padStart(2,'0');
+  mm = String(this.today.getMonth() + 1).padStart(2,'0');
+  yyyy = this.today.getFullYear();
+
+  todayString = this.yyyy + '-' + this.mm + '-' + this.dd;
+
+
   // Get UserID and Setup Services
     constructor(private investmentApi: InvestmentBoxService, private investmentServiceApi: InvestmentService, private stockApi: StockService, private countryApi: RealEstateService, private currencyApi: CurrencyService, private commodityApi: CommodityService) {
         this.investmentApi.getUserID().subscribe(data => {
@@ -92,6 +102,10 @@ export class InvestmentBoxComponent {
   }
 
  onClickPrice(name, shares){
+
+  console.log("Date: ");
+  console.log(this.todayString);
+
     const currency = 'DOLLAR'; const amount = 0;
 
     // Retrieve Symbol, Type, Name
@@ -270,9 +284,9 @@ export class InvestmentBoxComponent {
 
         if ((Math.abs(amount)) < currencyBalance){
           // Update Currency
-          this.investmentApi.removeBaseCurrency(this.UID, currency, amount);
+          this.investmentApi.removeBaseCurrency(this.UID, currency, amount, this.todayString);
           // Buy Stock
-          this.investmentApi.buyInvestment(this.UID, this.stock2.stockName, this.stock2.symbol, this.stock2.price[0], shares, 'b', 'Stock');
+          this.investmentApi.buyInvestment(this.UID, this.stock2.stockName, this.stock2.symbol, this.stock2.price[0], shares, 'b', 'Stock', this.todayString);
         }else{console.log('Not enough money'); }
     });
     }
@@ -304,9 +318,9 @@ export class InvestmentBoxComponent {
 
         if ((Math.abs(amount)) < currencyBalance){
         // Update Currency
-        this.investmentApi.removeBaseCurrency(this.UID, currency, amount);
+        this.investmentApi.removeBaseCurrency(this.UID, currency, amount, this.todayString);
         // Buy Bond
-        this.investmentApi.buyInvestment(this.UID, result[0].name, result[0].symbol, 1, shares, 'b', 'Bond');
+        this.investmentApi.buyInvestment(this.UID, result[0].name, result[0].symbol, 1, shares, 'b', 'Bond', this.todayString);
       } {console.log('Not enough money'); }
     });
     }
@@ -325,9 +339,9 @@ export class InvestmentBoxComponent {
 
       if ((Math.abs(amount)) < currencyBalance){
       // Update Currency
-      this.investmentApi.removeBaseCurrency(this.UID, currency, amount);
+      this.investmentApi.removeBaseCurrency(this.UID, currency, amount, this.todayString);
       // Buy Investment Currency
-      this.investmentApi.buyInvestment(this.UID, currencyData.currencyName, currencyData.ticker, currencyRate, shares, 'b', 'Currency');
+      this.investmentApi.buyInvestment(this.UID, currencyData.currencyName, currencyData.ticker, currencyRate, shares, 'b', 'Currency', this.todayString);
     }else{console.log('Not enough money'); }
     });
     }
@@ -346,9 +360,9 @@ export class InvestmentBoxComponent {
 
       if ((Math.abs(amount)) < currencyBalance){
       // Update Currency
-      this.investmentApi.removeBaseCurrency(this.UID, currency, amount);
+      this.investmentApi.removeBaseCurrency(this.UID, currency, amount, this.todayString);
       // Buy Commodity
-      this.investmentApi.buyInvestment(this.UID, this.commodity.commodityName, this.commodity.symbol, commodityRate, shares, 'b', 'Commodity');
+      this.investmentApi.buyInvestment(this.UID, this.commodity.commodityName, this.commodity.symbol, commodityRate, shares, 'b', 'Commodity', this.todayString);
 
     }
     else{console.log('Not enough money'); }});
@@ -383,9 +397,9 @@ export class InvestmentBoxComponent {
 
       if ((Math.abs(amount)) < currencyBalance){
       // Update Currency
-      this.investmentApi.removeBaseCurrency(this.UID, currency, amount);
+      this.investmentApi.removeBaseCurrency(this.UID, currency, amount, this.todayString);
       // Buy Real Estate
-      this.investmentApi.buyInvestment(this.UID, result[0].name, result[0].symbol, this.realEstatePrice, shares, 'b', 'Real Estate');
+      this.investmentApi.buyInvestment(this.UID, result[0].name, result[0].symbol, this.realEstatePrice, shares, 'b', 'Real Estate', this.todayString);
       this.realEstatePrice = 0;
     }
     else{console.log('Not enough money'); }
@@ -420,10 +434,10 @@ export class InvestmentBoxComponent {
 
       if ((Math.abs(amount)) < currencyBalance){
         // Update Currency
-        this.investmentApi.removeBaseCurrency(this.UID, currency, amount);
+        this.investmentApi.removeBaseCurrency(this.UID, currency, amount, this.todayString);
 
         // Buy Real Estate
-        this.investmentApi.buyInvestment(this.UID, result[0].name, result[0].symbol, this.realEstatePrice, shares, 'b', 'Real Estate');
+        this.investmentApi.buyInvestment(this.UID, result[0].name, result[0].symbol, this.realEstatePrice, shares, 'b', 'Real Estate', this.todayString);
         this.realEstatePrice = 0;
       }else{console.log('Not enough money'); }
     });
@@ -468,10 +482,10 @@ export class InvestmentBoxComponent {
 
       // Update Currency
       amount = (stockData2.price[0] * shares);
-      this.investmentApi.addBaseCurrency(this.UID, currency, amount);
+      this.investmentApi.addBaseCurrency(this.UID, currency, amount, this.todayString);
 
       // Sell Investment
-      this.investmentApi.sellInvestment(this.UID, this.stock2.stockName, this.stock2.symbol, this.stock2.price[0], -Math.abs(shares), 's', 'Stock');
+      this.investmentApi.sellInvestment(this.UID, this.stock2.stockName, this.stock2.symbol, this.stock2.price[0], -Math.abs(shares), 's', 'Stock', this.todayString);
     }else{console.log('Not enough shares'); }
     });
   }
@@ -500,10 +514,10 @@ export class InvestmentBoxComponent {
     if (this.minimumShares >= shares){
     // Update Currency
     amount = Math.abs(shares);
-    this.investmentApi.addBaseCurrency(this.UID, currency, amount);
+    this.investmentApi.addBaseCurrency(this.UID, currency, amount, this.todayString);
 
     // Sell Bond
-    this.investmentApi.sellInvestment(this.UID, result[0].name, result[0].symbol, 1, -(shares), 's', 'Bond');
+    this.investmentApi.sellInvestment(this.UID, result[0].name, result[0].symbol, 1, -(shares), 's', 'Bond', this.todayString);
     }else{console.log('Not enough shares'); }
   });
   }
@@ -527,10 +541,10 @@ export class InvestmentBoxComponent {
 
   // Update Base Currency
     amount = Math.abs(shares * (currencyRate));
-    this.investmentApi.addBaseCurrency(this.UID, currency, amount);
+    this.investmentApi.addBaseCurrency(this.UID, currency, amount, this.todayString);
 
   // Sell Investment Currency
-    this.investmentApi.sellInvestment(this.UID, currencyData.currencyName, currencyData.ticker, currencyRate, -(shares), 'b', 'Currency'); // BUG FIX - (1/currencyData.rates[0]) - set currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
+    this.investmentApi.sellInvestment(this.UID, currencyData.currencyName, currencyData.ticker, currencyRate, -(shares), 'b', 'Currency', this.todayString); // BUG FIX - (1/currencyData.rates[0]) - set currency rate as "USD per single unit of X currency" instead of "X currency per USD". This is like "Dollars per house" instead of "Houses per dollar".
   }else{console.log('Not enough shares'); }
   });
   }
@@ -549,10 +563,10 @@ export class InvestmentBoxComponent {
 
   // Update Currency
   amount = Math.abs(shares * commodityRate);
-  this.investmentApi.addBaseCurrency(this.UID, currency, amount);
+  this.investmentApi.addBaseCurrency(this.UID, currency, amount, this.todayString);
 
   // Buy Investment
-  this.investmentApi.sellInvestment(this.UID, this.commodity.commodityName, this.commodity.symbol, commodityRate, -(shares), 's', 'Commodity');
+  this.investmentApi.sellInvestment(this.UID, this.commodity.commodityName, this.commodity.symbol, commodityRate, -(shares), 's', 'Commodity', this.todayString);
   }else{console.log('Not enough shares'); }});
   }
   else if (result[0].type == 'Urban Real Estate'){
@@ -585,10 +599,10 @@ export class InvestmentBoxComponent {
     this.realEstatePrice = (+(Math.round(((countryData.urbanPE * countryData.urbanRent ) * 12) * 100) / 100).toFixed(2));
 
     amount = Math.abs(Math.round((shares * this.realEstatePrice) * 100) / 100);
-    this.investmentApi.addBaseCurrency(this.UID, currency, amount);
+    this.investmentApi.addBaseCurrency(this.UID, currency, amount, this.todayString);
 
     // Sell Real Estate
-    this.investmentApi.sellInvestment(this.UID, result[0].name, result[0].symbol, this.realEstatePrice, -(shares), 's', 'Real Estate');
+    this.investmentApi.sellInvestment(this.UID, result[0].name, result[0].symbol, this.realEstatePrice, -(shares), 's', 'Real Estate', this.todayString);
     this.realEstatePrice = 0;
     }else{console.log('Not enough shares'); }
 
@@ -624,10 +638,10 @@ export class InvestmentBoxComponent {
     this.realEstatePrice = (+(Math.round(((countryData.ruralPE * countryData.ruralRent ) * 12) * 100) / 100).toFixed(2));
 
     amount = Math.abs(Math.round((shares * this.realEstatePrice) * 100) / 100);
-    this.investmentApi.addBaseCurrency(this.UID, currency, amount);
+    this.investmentApi.addBaseCurrency(this.UID, currency, amount, this.todayString);
 
     // Sell Real Estate
-    this.investmentApi.sellInvestment(this.UID, result[0].name, result[0].symbol, this.realEstatePrice, -(shares), 's', 'Real Estate');
+    this.investmentApi.sellInvestment(this.UID, result[0].name, result[0].symbol, this.realEstatePrice, -(shares), 's', 'Real Estate', this.todayString);
     this.realEstatePrice = 0;
     }else{console.log('Not enough shares'); }
   });
