@@ -30,11 +30,11 @@ const InvestmentSchema = mongoose.Schema({
     required: false
   },
   transactionDate: {
-    type: String,
+    type: Date,
     required: false
   },
   lastPaymentDate:{
-    type: String,
+    type: Date,
     required: false
   }
 });

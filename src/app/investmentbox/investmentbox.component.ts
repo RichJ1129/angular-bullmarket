@@ -399,7 +399,7 @@ export class InvestmentBoxComponent {
       // Update Currency
       this.investmentApi.removeBaseCurrency(this.UID, currency, amount, this.todayString);
       // Buy Real Estate
-      this.investmentApi.buyInvestment(this.UID, result[0].name, result[0].symbol, this.realEstatePrice, shares, 'b', 'Real Estate', this.todayString);
+      this.investmentApi.buyInvestment(this.UID, result[0].name, result[0].symbol, this.realEstatePrice, shares, 'b', 'Urban Real Estate', this.todayString);
       this.realEstatePrice = 0;
     }
     else{console.log('Not enough money'); }
@@ -437,7 +437,7 @@ export class InvestmentBoxComponent {
         this.investmentApi.removeBaseCurrency(this.UID, currency, amount, this.todayString);
 
         // Buy Real Estate
-        this.investmentApi.buyInvestment(this.UID, result[0].name, result[0].symbol, this.realEstatePrice, shares, 'b', 'Real Estate', this.todayString);
+        this.investmentApi.buyInvestment(this.UID, result[0].name, result[0].symbol, this.realEstatePrice, shares, 'b', 'Rural Real Estate', this.todayString);
         this.realEstatePrice = 0;
       }else{console.log('Not enough money'); }
     });
@@ -602,7 +602,7 @@ export class InvestmentBoxComponent {
     this.investmentApi.addBaseCurrency(this.UID, currency, amount, this.todayString);
 
     // Sell Real Estate
-    this.investmentApi.sellInvestment(this.UID, result[0].name, result[0].symbol, this.realEstatePrice, -(shares), 's', 'Real Estate', this.todayString);
+    this.investmentApi.sellInvestment(this.UID, result[0].name, result[0].symbol, this.realEstatePrice, -(shares), 's', 'Urban Real Estate', this.todayString);
     this.realEstatePrice = 0;
     }else{console.log('Not enough shares'); }
 
@@ -641,7 +641,7 @@ export class InvestmentBoxComponent {
     this.investmentApi.addBaseCurrency(this.UID, currency, amount, this.todayString);
 
     // Sell Real Estate
-    this.investmentApi.sellInvestment(this.UID, result[0].name, result[0].symbol, this.realEstatePrice, -(shares), 's', 'Real Estate', this.todayString);
+    this.investmentApi.sellInvestment(this.UID, result[0].name, result[0].symbol, this.realEstatePrice, -(shares), 's', 'Rural Real Estate', this.todayString);
     this.realEstatePrice = 0;
     }else{console.log('Not enough shares'); }
   });
