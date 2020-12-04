@@ -23,6 +23,14 @@
                 [options]="lineChartOptions">
         </canvas>
         <hr>
+        <h2>Corporate Information</h2>
+        <ul>
+          <li>Headquarters: {{company.companyCountry}}</li>
+          <li>Stock Currency: {{company.companyCurrency}}</li>
+          <li>Market Cap: {{stock.marketCap[stock.marketCap.length - 1] / 1000 | number: '1.0-2'}} B</li>
+          <li>PE Ratio: {{stock.pERatio[stock.pERatio.length - 1]  | number: '1.0-2'}}</li>
+        </ul>
+        <hr>
         <h2>About</h2>
         <div class="about_section" [class.show]="show">{{company.companySummary}}</div>
         <br>
