@@ -34,7 +34,6 @@ export class StockPageComponent implements OnInit {
     });
   }
 
-  headerComponent: HeaderComponent;
 
   show = false;
   isLoading = false;
@@ -48,12 +47,12 @@ export class StockPageComponent implements OnInit {
   UID: string;
   userObject: any;
 
-      //Get Today's Date
+      // Get Today's Date
       today = new Date();
-      dd = String(this.today.getDate()).padStart(2,'0');
-      mm = String(this.today.getMonth() + 1).padStart(2,'0');
+      dd = String(this.today.getDate()).padStart(2, '0');
+      mm = String(this.today.getMonth() + 1).padStart(2, '0');
       yyyy = this.today.getFullYear();
-    
+
       todayString = this.yyyy + '-' + this.mm + '-' + this.dd;
 
   chartType = 'line';
@@ -144,10 +143,10 @@ export class StockPageComponent implements OnInit {
       if (currencyBalance < purchaseAmount) {
 
       } else {
-        this.investmentApi.removeBaseCurrency(this.UID, currency, -purchaseAmount,this.todayString);
+        this.investmentApi.removeBaseCurrency(this.UID, currency, -purchaseAmount, this.todayString);
         this.investmentApi.buyInvestment(this.UID, this.stock.stockName,
           this.stock.symbol, this.stock.price[this.stock.price.length - 1],
-          stockShares, 'b', 'Stock',this.todayString);
+          stockShares, 'b', 'Stock', this.todayString);
       }
     });
   }
@@ -163,12 +162,12 @@ export class StockPageComponent implements OnInit {
       if (stockShares > numberShares) {
 
       } else {
-        this.investmentApi.addBaseCurrency(this.UID, currency, sellAmount,this.todayString);
+        this.investmentApi.addBaseCurrency(this.UID, currency, sellAmount, this.todayString);
         this.investmentApi.sellInvestment(this.UID,
           this.stock.stockName, this.stock.symbol,
           this.stock.price[this.stock.price.length - 1],
           -Math.abs(stockShares),
-          's', 'Stock',this.todayString);
+          's', 'Stock', this.todayString);
       }
     });
   }
