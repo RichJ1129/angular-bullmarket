@@ -74,6 +74,25 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  updateRents(){
+
+    this.InvestmentBoxService.getUserID().subscribe(data => {
+      this.userObject=data;
+      this.UID = this.userObject._id;
+
+
+    this.InvestmentService.updateRents(this.UID);
+    console.log("Today Object :");
+    console.log(this.today);
+
+    })
+  }
+
+  updateBonds(){
+    console.log("Today String");
+    console.log(this.todayString);
+  }
+
   public setInitialBalance(){
 
      this.InvestmentBoxService.getUserID().subscribe(data => {
@@ -111,6 +130,10 @@ export class HomeComponent implements OnInit {
 
   // constructor() { }
 
-  ngOnInit(): void { this.setInitialBalance(); }
+  ngOnInit(): void { 
+    this.setInitialBalance(); 
+    this.updateRents();
+    this.updateBonds();
+  }
 
 }

@@ -14,6 +14,7 @@ import { CommodityService } from 'src/app/commodities/commodity.service';
 import { Commodity } from 'src/app/commodities/commodity.model';
 import { StockService } from 'src/app/stocks/stock.service';
 import { Stock } from 'src/app/stocks/stock.model';
+import { InvestmentList } from 'src/app/investmentbox/investmentList'
 
 interface IDAuthData{
   _id: string;
@@ -28,6 +29,13 @@ interface InvestmentMath{
   shares: number;
   currentPrice: number;
   transactionPrice: number;
+}
+
+interface InvestmentForm {
+  symbol: string;
+  name: string;
+  type: string;
+  country: string;
 }
 
 const backendURL = environment.apiURL;
@@ -54,6 +62,14 @@ export class InvestmentService {
   currency: Currency;
   commodity: Commodity;
   tempshares = 0;
+  
+  //Get Today's Date
+  today = new Date();
+  dd = String(this.today.getDate()).padStart(2,'0');
+  mm = String(this.today.getMonth() + 1).padStart(2,'0');
+  yyyy = this.today.getFullYear();
+    
+  todayString = this.yyyy + '-' + this.mm + '-' + this.dd;
 
 
 getUserID(){
@@ -151,7 +167,7 @@ for(let x=0; x<this.portfolio.length;x++){
 
 
    }
-   if (this.portfolio[z].type == 'Real Estate' || this.portfolio[z].type == 'realestate'){
+   if (this.portfolio[z].type == 'Real Estate' || this.portfolio[z].type == 'Urban Real Estate' || this.portfolio[z].type == 'Rural Real Estate' || this.portfolio[z].type == 'realestate'){
     this.portfolio[z].currentPrice=(+(Math.round(this.portfolio[z].currentPrice * 100) / 100).toFixed(2));
   }
    if (this.portfolio[z].type == 'Currency' || this.portfolio[z].type == 'currency'){
@@ -183,6 +199,73 @@ for(let x=0; x<this.portfolio.length;x++){
 
     this.returnValue = (+(Math.round(this.investmentValue * 100) / 100).toFixed(2));
     return this.returnValue;
+
+  }
+
+
+  public async updateRents(UID: string){
+    let params = new HttpParams();
+    params = params.append('userID', UID);
+
+    this.result = await this.http.get(backendURL + '/investment', {params}).toPromise();
+
+
+
+    for (let x = 0; x < this.result.length; x++){
+      if(this.result[x].assetType=="Rural Real Estate"){
+        console.log("Rural");
+
+        // Retrieve Symbol, Type, Name
+        let InvestmentListObject = InvestmentList.filter(obj => {
+          return obj.symbol === this.result[x].symbol;
+        });
+
+        //console.log(InvestmentListObject[0].country);
+        // Retrieve Information
+       this.countryApi.getOneCountry(InvestmentListObject[0].country).subscribe(countryData => {
+        this.country = {
+          countryName: countryData.countryName,
+          capitalCity: countryData.capitalCity,
+          population: countryData.population,
+          urbanRent: countryData.urbanRent,
+          urbanPE: countryData.urbanPE,
+          ruralRent: countryData.ruralRent,
+          ruralPE: countryData.ruralPE,
+          interestRate: countryData.interestRate,
+          debtGDP: countryData.debtGDP,
+          inflation: countryData.inflation,
+          bondSymbol: countryData.bondSymbol,
+          urbanSymbol: countryData.urbanSymbol,
+          ruralSymbol: countryData.ruralSymbol,
+          countrySummary: countryData.countrySummary
+        };
+        //Re
+        console.log("Today Is: ",this.today);
+        console.log("Last Payment Date: ",this.result[x].lastPaymentDate);
+        console.log("Rural Rent: ",this.country.ruralRent);
+        //this.result[x].lastPaymentDate: Date;
+        //let lastPayment = new Date(this.result[x].lastPaymentDate.getTime())
+        //this.today – Date.parse(this.result[x].lastPaymentDate.getTime());
+
+
+        const date2 = new Date(this.todayString);
+        const date1 = new Date(this.result[x].lastPaymentDate);
+        const diffTime = Math.abs(date2.getTime() - date1.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+        console.log(diffTime + " milliseconds");
+        console.log(diffDays + " days");
+
+      });
+
+
+
+      }
+
+      if(this.result[x].assetType=="Urban Real Estate"){
+        console.log("Urban");
+      }
+    }
+
 
   }
 
