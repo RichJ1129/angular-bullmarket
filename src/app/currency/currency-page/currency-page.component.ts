@@ -50,7 +50,7 @@ export class CurrencyPageComponent implements OnInit {
         dd = String(this.today.getDate()).padStart(2,'0');
         mm = String(this.today.getMonth() + 1).padStart(2,'0');
         yyyy = this.today.getFullYear();
-      
+
         todayString = this.yyyy + '-' + this.mm + '-' + this.dd;
 
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
@@ -142,6 +142,7 @@ export class CurrencyPageComponent implements OnInit {
         this.investmentApi.buyInvestment(this.UID, this.currency.currencyName,
           this.currency.ticker, purchaseAmount,
           currencyAmount, 'b', 'Currency', this.todayString);
+        location.reload();
       }
     });
   }
@@ -166,6 +167,7 @@ export class CurrencyPageComponent implements OnInit {
           this.currency.rates[this.currency.rates.length - 1],
           -Math.abs(numberShares),
           's', 'Currency', this.todayString);
+        location.reload();
       }
     });
   }

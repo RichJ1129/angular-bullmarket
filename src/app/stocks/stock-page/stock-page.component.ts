@@ -147,6 +147,7 @@ export class StockPageComponent implements OnInit {
         this.investmentApi.buyInvestment(this.UID, this.stock.stockName,
           this.stock.symbol, this.stock.price[this.stock.price.length - 1],
           stockShares, 'b', 'Stock', this.todayString);
+        location.reload();
       }
     });
   }
@@ -168,6 +169,7 @@ export class StockPageComponent implements OnInit {
           this.stock.price[this.stock.price.length - 1],
           -Math.abs(stockShares),
           's', 'Stock', this.todayString);
+        location.reload();
       }
     });
   }
