@@ -32,6 +32,7 @@ export class CurrencyPageComponent implements OnInit {
   }
 
   show = false;
+  isLoading = false;
 
   displayedColumns: any[] = ['currencyName', 'ticker', 'rates'];
   currency: Currency;
@@ -44,6 +45,13 @@ export class CurrencyPageComponent implements OnInit {
   UID: string;
   userObject: any;
   chartLabels = [];
+        //Get Today's Date
+        today = new Date();
+        dd = String(this.today.getDate()).padStart(2,'0');
+        mm = String(this.today.getMonth() + 1).padStart(2,'0');
+        yyyy = this.today.getFullYear();
+
+        todayString = this.yyyy + '-' + this.mm + '-' + this.dd;
 
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
@@ -130,10 +138,11 @@ export class CurrencyPageComponent implements OnInit {
       if (currencyBalance < purchaseAmount) {
 
       } else {
-        this.investmentApi.removeBaseCurrency(this.UID, currency, -purchaseAmount);
+        this.investmentApi.removeBaseCurrency(this.UID, currency, -purchaseAmount, this.todayString);
         this.investmentApi.buyInvestment(this.UID, this.currency.currencyName,
           this.currency.ticker, purchaseAmount,
-          currencyAmount, 'b', 'Currency');
+          currencyAmount, 'b', 'Currency', this.todayString);
+        location.reload();
       }
     });
   }
@@ -152,12 +161,13 @@ export class CurrencyPageComponent implements OnInit {
       if (currencyAmount > numberShares) {
 
       } else {
-        this.investmentApi.addBaseCurrency(this.UID, currency, sellAmount);
+        this.investmentApi.addBaseCurrency(this.UID, currency, sellAmount, this.todayString);
         this.investmentApi.sellInvestment(this.UID,
           this.currency.currencyName, this.currency.ticker,
           this.currency.rates[this.currency.rates.length - 1],
           -Math.abs(numberShares),
-          's', 'Currency');
+          's', 'Currency', this.todayString);
+        location.reload();
       }
     });
   }
@@ -166,6 +176,7 @@ export class CurrencyPageComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('currency_ticker')) {
+        this.isLoading = true;
         this.currencyTicker = paramMap.get('currency_ticker');
         this.currencyService.getOneCurrency(this.currencyTicker).subscribe(currencyData => {
           this.currency = {
@@ -177,6 +188,7 @@ export class CurrencyPageComponent implements OnInit {
           this.changeAnnotation(this.currency.rates[this.currency.rates.length - 10]);
           this.changeLineColor(this.currency.rates[this.currency.rates.length - 2], this.currency.rates[this.currency.rates.length - 1]);
           this.computeData();
+          this.isLoading = false;
         });
       }
     });

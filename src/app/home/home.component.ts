@@ -28,6 +28,14 @@ export class HomeComponent implements OnInit {
   UID: string;
   userObject: any;
   currencyBalance: number;
+  investmentValue: number;
+    //Get Today's Date
+    today = new Date();
+    dd = String(this.today.getDate()).padStart(2,'0');
+    mm = String(this.today.getMonth() + 1).padStart(2,'0');
+    yyyy = this.today.getFullYear();
+  
+    todayString = this.yyyy + '-' + this.mm + '-' + this.dd;
 
   @ViewChild(DxVectorMapComponent, { static: false }) vectorMap: DxVectorMapComponent;
 
@@ -66,6 +74,25 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  updateRents(){
+
+    this.InvestmentBoxService.getUserID().subscribe(data => {
+      this.userObject=data;
+      this.UID = this.userObject._id;
+
+
+    this.InvestmentService.updateRents(this.UID);
+    console.log("Today Object :");
+    console.log(this.today);
+
+    })
+  }
+
+  updateBonds(){
+    console.log("Today String");
+    console.log(this.todayString);
+  }
+
   public setInitialBalance(){
 
      this.InvestmentBoxService.getUserID().subscribe(data => {
@@ -75,11 +102,15 @@ export class HomeComponent implements OnInit {
     this.InvestmentService.getCurrencyBalance(this.UID,"DOLLAR").then(result =>{
       this.currencyBalance = result;
 
-      if(this.currencyBalance==0)
-      {
-       this.InvestmentBoxService.addBaseCurrency(this.UID,"DOLLAR",100000);
-      }
+    this.InvestmentService.getInvestmentValue(this.UID).then(result2 =>{
+      this.investmentValue = result2;
 
+
+      if(this.currencyBalance==0 && this.investmentValue==0) // BUG FIX - Add investmentValue to ensure that player doesn't get 100k just for reaching 0 balance.
+      {
+       this.InvestmentBoxService.addBaseCurrency(this.UID,"DOLLAR",100000, this.todayString);
+      }
+    })
    });
 
   });
@@ -99,6 +130,10 @@ export class HomeComponent implements OnInit {
 
   // constructor() { }
 
-  ngOnInit(): void { this.setInitialBalance(); }
+  ngOnInit(): void { 
+    this.setInitialBalance(); 
+    this.updateRents();
+    this.updateBonds();
+  }
 
 }

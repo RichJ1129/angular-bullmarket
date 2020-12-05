@@ -1,9 +1,12 @@
 <br>
 <br>
 <div class="container">
-  <div class="row">
+  <div class="loading-indicator" *ngIf="isLoading">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+  <div class="row" *ngIf="!isLoading">
     <div class="col-lg-8">
-      <div class="container">
+      <div class="container" >
         <h2 class="Stock_Name">{{stock.stockName}}</h2>
         <h2 class="Stock_Price">${{stock.price[stock.price.length - 1]}}</h2>
         <h6 class="Daily_Change">${{stock.price[stock.price.length - 1] - stock.price[stock.price.length - 2] | number:'1.0-2' }}
@@ -19,6 +22,14 @@
                 [colors]="chartColor"
                 [options]="lineChartOptions">
         </canvas>
+        <hr>
+        <h2>Corporate Information</h2>
+        <ul>
+          <li>Headquarters: {{company.companyCountry}}</li>
+          <li>Stock Currency: {{company.companyCurrency}}</li>
+          <li>Market Cap: {{stock.marketCap[stock.marketCap.length - 1] / 1000 | number: '1.0-2'}} B</li>
+          <li>PE Ratio: {{stock.pERatio[stock.pERatio.length - 1]  | number: '1.0-2'}}</li>
+        </ul>
         <hr>
         <h2>About</h2>
         <div class="about_section" [class.show]="show">{{company.companySummary}}</div>

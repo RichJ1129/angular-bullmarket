@@ -150,6 +150,11 @@ router.post("/login", (req, res, next) => {
         });
       }
       fetchedUser = user;
+      if (fetchedUser.userName.toUpperCase() !== req.body.userName.toUpperCase()) {
+        return res.status(401).json({
+          message: "Invalid User Name"
+        })
+      }
       const token = jwt.sign(
         {email: fetchedUser.email, userId: fetchedUser._id},
         process.env.JWT_KEY,

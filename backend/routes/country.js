@@ -8,7 +8,7 @@ router.use("/:country", (req, res, next) => {
             if (country) {
                 res.status(200).json(country);
             } else {
-                res.status(404).json({ message: "Stock not found!" });
+                res.status(404).json({ message: "Country not found!" });
             }
         });
     });

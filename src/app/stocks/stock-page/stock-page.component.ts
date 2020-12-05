@@ -34,9 +34,9 @@ export class StockPageComponent implements OnInit {
     });
   }
 
-  headerComponent: HeaderComponent;
 
   show = false;
+  isLoading = false;
 
   displayedColumns: any[] = ['stockName', 'symbol', 'price', 'pERatio', 'marketCap'];
   stock: Stock;
@@ -46,6 +46,14 @@ export class StockPageComponent implements OnInit {
   stockValue = new FormControl('');
   UID: string;
   userObject: any;
+
+      // Get Today's Date
+      today = new Date();
+      dd = String(this.today.getDate()).padStart(2, '0');
+      mm = String(this.today.getMonth() + 1).padStart(2, '0');
+      yyyy = this.today.getFullYear();
+
+      todayString = this.yyyy + '-' + this.mm + '-' + this.dd;
 
   chartType = 'line';
   chartData: ChartDataSets[] = [
@@ -135,10 +143,11 @@ export class StockPageComponent implements OnInit {
       if (currencyBalance < purchaseAmount) {
 
       } else {
-        this.investmentApi.removeBaseCurrency(this.UID, currency, -purchaseAmount);
+        this.investmentApi.removeBaseCurrency(this.UID, currency, -purchaseAmount, this.todayString);
         this.investmentApi.buyInvestment(this.UID, this.stock.stockName,
-          this.stock.symbol, 1,
-          stockShares, 'b', 'Stock');
+          this.stock.symbol, this.stock.price[this.stock.price.length - 1],
+          stockShares, 'b', 'Stock', this.todayString);
+        location.reload();
       }
     });
   }
@@ -154,12 +163,13 @@ export class StockPageComponent implements OnInit {
       if (stockShares > numberShares) {
 
       } else {
-        this.investmentApi.addBaseCurrency(this.UID, currency, sellAmount);
+        this.investmentApi.addBaseCurrency(this.UID, currency, sellAmount, this.todayString);
         this.investmentApi.sellInvestment(this.UID,
           this.stock.stockName, this.stock.symbol,
           this.stock.price[this.stock.price.length - 1],
           -Math.abs(stockShares),
-          's', 'Stock');
+          's', 'Stock', this.todayString);
+        location.reload();
       }
     });
   }
@@ -167,6 +177,7 @@ export class StockPageComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('stock_ticker')) {
+        this.isLoading = true;
         this.stockTicker = paramMap.get('stock_ticker');
         this.stocksService.getOneStock(this.stockTicker).subscribe(stockData => {
           this.stock = {
@@ -187,6 +198,7 @@ export class StockPageComponent implements OnInit {
             companyCountry: companyData.companyCountry,
             companyCurrency: companyData.companyCurrency
           };
+          this.isLoading = false;
         });
       }
     });
