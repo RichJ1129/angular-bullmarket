@@ -66,7 +66,7 @@ export class ProfileFeedAnimalComponent implements OnInit {
 
     //Adjust the user balance
     this.currency="DOLLAR"
-    this.investmentApi.removeBaseCurrency(this.UID, this.currency, price);
+    this.investmentApi.removeBaseCurrency(this.UID, this.currency, -price);
     location.reload();
   }
 
