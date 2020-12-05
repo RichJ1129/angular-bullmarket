@@ -21,6 +21,12 @@ export class ProfileFeedAnimalComponent implements OnInit {
   happiness;
   newHappiness;
   userName;
+  //Get Today's Date
+  today = new Date();
+  dd = String(this.today.getDate()).padStart(2,'0');
+  mm = String(this.today.getMonth() + 1).padStart(2,'0');
+  yyyy = this.today.getFullYear();
+  todayString = this.yyyy + '-' + this.mm + '-' + this.dd;
 
   constructor(private profileService: ProfileService, private investmentApi: InvestmentBoxService, private authService: AuthService) {
     this.investmentApi.getUserID().subscribe(data => {
@@ -66,7 +72,7 @@ export class ProfileFeedAnimalComponent implements OnInit {
 
     //Adjust the user balance
     this.currency="DOLLAR"
-    this.investmentApi.removeBaseCurrency(this.UID, this.currency, -price);
+    this.investmentApi.removeBaseCurrency(this.UID, this.currency, -price, this.todayString);
     location.reload();
   }
 

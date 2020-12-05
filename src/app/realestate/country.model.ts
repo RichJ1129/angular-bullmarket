@@ -12,4 +12,5 @@ export interface Country {
     bondSymbol: string;
     urbanSymbol: string;
     ruralSymbol: string;
+    countrySummary: string;
   }

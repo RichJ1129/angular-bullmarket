@@ -2,6 +2,8 @@ const express = require("express");
 const Country = require("../models/country");
 const router = express.Router();
 const axios = require('axios');
+const wiki = require('wikijs').default;
+
 
 // Country Name, Capital City, Population, Urban Rent, Urban PE, Rural Rent, Rural PE, Interest Rate, Debt GDP, Inflation Rate, Bond Symbol, Urban RE Symbol, Rural RE Symbol
 const country = [
@@ -14,13 +16,13 @@ const country = [
     ['Australia','Canberra','25000000','1254.08','22.97','922.26','22.23', '0.86','45', '-0.30','AUSBOND','AUSUR','AUSRR'],
     ['Austria','Vienna','9000000','874.34','31.51','678.26','28.18', '-0.35','70', '1.40','AUTBOND','AUTUR','AUTRR'],
     ['Azerbaijan','Baku','10000000','311.18','19.46','175.56','17.66', '6.50','48', '2.90','AZEBOND','AZEUR','AZERR'],
-    ['Bahrain','Manama','1500000','956.61','13.44','657.25','12.58', '3.16','93', '-3.6','BHRBOND','BHRUR','BHRRR'],
+    // ['Bahrain','Manama','1500000','956.61','13.44','657.25','12.58', '3.16','93', '-3.6','BHRBOND','BHRUR','BHRRR'],
     ['Bangladesh','Dhaka','161000000','130.66','31.94','79.25','27.84', '7.55','28', '5.70','BGDBOND','BGDUR','BGDRR'],
     ['Belarus','Minsk','9000000','327.06','21.19','214.10','22.8', '7.75','27', '5.60','BLRBOND','BLRUR','BLRRR'],
     ['Belgium','Brussels','11000000','867.5','20.47','713.14','19.98', '-0.28','99', '0.90','BELBOND','BELUR','BELRR'],
     ['Benin','Porto-Novo','11000000','57.86','0','53.41','0', '4.00','22', '3.90','BENBOND','BENUR','BENRR'],
     ['Bolivia','La Paz','11000000','350.82','14.44','246.6','13.75', '3.34','58', '1.40','BOLBOND','BOLUR','BOLRR'],
-    ['Bosnia and Herz.','Sarajevo','3000000','229.50','31.06','157.53','31.01', '3.05','25', '1.30','BIHBOND','BIHUR','BIHRR'],
+    ['Bosnia and Herz.','Sarajevo','3000000','229.50','31.06','157.53','31.01', '3.05','25', '1.30','BIHBOND','BIHUR','BIHRR', 'Bosnia and Herzegovina'],
     ['Botswana','Gaborone','2000000','281.44','0','232.90','0', '3.63','23', '1.40','BWABOND','BWAUR','BWARR'],
     ['Brazil','Brasilia','210000000','237.19','23.9','166.26','23.3', '7.20','76', '2.40','BRABOND','BRAUR','BRARR'],
     ['Bulgaria','Sofia','7000000','327.76','20.17','245.55','17.46', '0.28','21', '1.28','BGRBOND','BGRUR','BGRRR'],
@@ -33,7 +35,7 @@ const country = [
     ['Chile','Santiago','18000000','428.77','25.71','354.75','26.04', '2.67','28', '2.40','CHLBOND','CHLUR','CHLRR'],
     ['China','Beijing','1400000000','523.04','61.18','290.85','56.69', '3.11','51', '2.40','CHNBOND','CHNUR','CHNRR'],
     ['Colombia','Bogota','50000000','298.03','20.86','220.96','21.65', '5.15','48', '1.90','COLBOND','COLUR','COLRR'],
-    ['Dem. Rep. Congo','Kinshasa','90000000','0','0','0','0', '18.50','99', '28.70','COGBOND','COGUR','COGRR'],
+    ['Dem. Rep. Congo','Kinshasa','90000000','0','0','0','0', '18.50','99', '28.70','COGBOND','COGUR','COGRR', 'Democratic Republic of the Congo'],
     ['Costa Rica','San Jose','5000000','490.28','17.31','356.52','18.06', '0.75','77', '0.10','CRIBOND','CRIUR','CRIRR'],
     ['Croatia','Zagreb','4000000','484.10','29.14','368.81','27.27', '0.83','73', '-0.20','HRVBOND','HRVUR','HRVRR'],
     ['Cyprus','Nicosia','1200000','667.73','15.84','543.45','15.2', '0.59','96', '-1.20','CYPBOND','CYPUR','CYPRR'],
@@ -49,7 +51,7 @@ const country = [
     ['Ethiopia','Addis Ababa','109000000','352.29','0','162.17','0', '7.00','57', '20.00','ETHBOND','ETHUR','ETHRR'],
     ['Finland','Helsinki','6000000','905.98','32.04','692.37','24.5', '-0.35','59', '0.20','FINBOND','FINUR','FINRR'],
     ['France','Paris','67000000','813.34','42.33','609.71','', '-0.25','98', '0.10','FRABOND','FRAUR','FRARR'],
-    ['Georgia','Tbilisi','4000000','320.14','14.04','206.53','11.94', '8.00','43', '3.80','GEOBOND','GEOUR','GEORR'],
+    ['Georgia','Tbilisi','4000000','320.14','14.04','206.53','11.94', '8.00','43', '3.80','GEOBOND','GEOUR','GEORR', 'Georgia (country)'],
     ['Germany','Berlin','83000000','887.78','31.04','656.60','28.13', '-0.50','60', '0.20','DEUBOND','DEUUR','DEURR'],
     ['Ghana','Accra','31000000','674.78','0','146.19','0', '14.50','59', '10.50','GHABOND','GHAUR','GHARR'],
     ['Greece','Athens','10000000','399.87','23.4','329.39','24.17', '1.01','177', '1.90','GRCBOND','GRCUR','GRCRR'],
@@ -126,16 +128,21 @@ const country = [
     ['Vietnam','Hanoi','96000000','414.4','24.68','286.72','17.6', '2.73','58', '3.00','VNMBOND','VNMUR','VNMRR'],
     ['Yemen','Sanaa','29000000','179.1','0','104.05','0', '27.00','63', '0.80','YEMBOND','YEMUR','YEMRR'],
     ['Zambia','Lusaka','17000000','142.33','0','125.02','0', '32.50','59', '15.70','ZMBBOND','ZMBUR','ZMBRR'],
-    ['Zimbabwe','Harare','16000000','301.92','0','230.91','0', '35.00','53', '761.00','ZWEBOND','ZWEUR','ZWERR']
+    ['Zimbabwe','Harare','16000000','301.92','0','230.91','0', '35.00','53', '761.00','ZWEBOND','ZWEUR','ZWERR'],
     ['Côte d\'Ivoire','Yamoussoukro','26000000','623.14','0','197.82','0', '4.00','132', '2.70','CIVBOND','CIVUR','CIVRR'],
     ['Lao PDR','Vientiane','7000000','628.50','0','335.58','0', '3.00','53', '5.10','LAOBOND','LAOUR','LAORR'],
   ]
 
-
 // Country Name, Capital City, Population, Urban Rent, Urban PE, Rural Rent, Rural PE, Interest Rate, Debt GDP, Inflation Rate
 
   function apiCountryCall(currentCountry) {
-    const country = new Country({
+    let num = 0;
+    if (currentCountry.length == 14) {
+      num = 13;
+    }
+    wiki().page(currentCountry[num]).then(page => page.summary()).then(response => {
+      console.log(response)
+      const country = new Country({
       countryName: currentCountry[0],
       capitalCity: currentCountry[1],
       population: currentCountry[2],
@@ -148,7 +155,8 @@ const country = [
       inflation: currentCountry[9],
       bondSymbol: currentCountry[10],
       urbanSymbol: currentCountry[11],
-      ruralSymbol: currentCountry[12]
+      ruralSymbol: currentCountry[12],
+        countrySummary: response
     });
 
     Country.count({countryName: currentCountry[0]}, function (err, count) {
@@ -168,7 +176,8 @@ const country = [
             inflation: country['inflation'],
             bondSymbol: country['bondSymbol'],
             urbanSymbol: country['urbanSymbol'],
-            ruralSymbol: country['ruralSymbol']
+            ruralSymbol: country['ruralSymbol'],
+              countrySummary: country['countrySummary']
           }},{upsert:false},
           function (error, success) {
             if(error) {
@@ -181,11 +190,11 @@ const country = [
       } else {
         country.save();
       }
-    })
+    })})
   }
 
 
-  const interval = 1000;
+  const interval = 10000;
 
   module.exports = {
     getCountries: function () {

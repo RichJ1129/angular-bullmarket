@@ -99,7 +99,7 @@ export class RealEstateService {
 const markers: Marker[] = [
   { coordinates: [69.160652, 34.543896], attributes: { name: 'Kabul' }, zoom: '23', center: [0, 0] },
   { coordinates: [19.819025, 41.327953], attributes: { name: 'Tirana' }, zoom: '70', center: [0, 0] },
-  { coordinates: [3.086472, 36.737232], attributes: { name: 'Algiers' }, zoom: '10', center: [0, 0] },
+  { coordinates: [3.086472, 36.737232], attributes: { name: 'Algiers' }, zoom: '12', center: [3.086472, 29.737232] },
   { coordinates: [13.234444,  -8.838333], attributes: { name: 'Luanda' }, zoom: '18', center: [16.234444,  -10.838333] },
   { coordinates: [-58.381592, -34.603722], attributes: { name: 'Buenos Aires' }, zoom: '6' , center: [0, 0]},
   { coordinates: [44.503490, 40.177200], attributes: { name: 'Yerevan' }, zoom: '60', center: [0, 0] },

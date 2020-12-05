@@ -28,6 +28,14 @@ const InvestmentSchema = mongoose.Schema({
   assetType: {
     type: String,
     required: false
+  },
+  transactionDate: {
+    type: Date,
+    required: false
+  },
+  lastPaymentDate:{
+    type: Date,
+    required: false
   }
 });
 
