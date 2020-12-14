@@ -206,8 +206,8 @@ GitHub for Version Control: ​Throughout the 10 weeks our group used GitHub
 extensively for creating branches and committing to the master branch. GitHub
 Workflows allowed us to deploy automatically based on commits to the master branch.
 This feature of automatic deployment saved us countless hours of time as well as
+allowing for consistent deployments.
 ```
-### allowing for consistent deployments.
 
 ## V. Teammate Contributions
 
