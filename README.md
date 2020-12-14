@@ -211,88 +211,95 @@ allowing for consistent deployments.
 
 ## V. Teammate Contributions
 
-```
-Richard Joseph:
-```
+### Richard Joseph:
+
 ```
 ● Initial setup of AWS for hosting the project live.
 ```
-
 ```
 ● Initial setup of Github workflow for automatically deploying the project to AWS.
 ```
-
 ```
 ● Signup and Login Authentication pages and error handling including ensuring
 unique user properties.
 ```
-
 ```
 ● Imported the Cron package which is used to schedule all jobs performed by the
 site.
 ```
-
 ```
 ● Stock pages including individual stock views, stock historical tracking, setting up 
 API calls for stocks, and all related services to the page.
-
 ```
-
 ```
-### ● Currency table, API calls and related services to the page.
-
-### ● Setting up the country map and functions related to the map including formatting
-
+● Currency table, API calls and related services to the page.
 ```
+```
+● Setting up the country map and functions related to the map including formatting
 of the map.
 ```
-### ● Individual tracking for commodities.
-
-### ● Created the about page.
-
-### ● Final project report.
-
 ```
-Trevor Mathwick:
+● Individual tracking for commodities.
 ```
+```
+● Created the about page.
+```
+```
+● Final project report.
+```
+
+### Trevor Mathwick:
+
 ```
 ● Initial setup of the webpage, including the general structure that is currently being
 used.
 ```
-### ● User Investing page including the portfolio and balance tracking for each user.
-
-### ● Buying and selling functionality for all assets across the project.
-
-### ● Real estate table, API calls and related services.
-
-### ● Individual pages for the real estate table that utilize the map interface.
-
-### ● Management of all user investments and portfolio including error handling,
-
 ```
+● User Investing page including the portfolio and balance tracking for each user.
+```
+● Buying and selling functionality for all assets across the project.
+```
+● Real estate table, API calls and related services.
+```
+● Individual pages for the real estate table that utilize the map interface.
+```
+● Management of all user investments and portfolio including error handling,
 restrictions, and exporting logic to other portions of the site.
 ```
-### ● Setting up user balance to be used across the site.
-
-### ● Initial project proposal and supporting documentation.
-
 ```
-Austin Henry:
+● Setting up user balance to be used across the site.
 ```
+```
+● Initial project proposal and supporting documentation.
+```
+
+### Austin Henry:
+
 ```
 ● Initial setup of MongoDB
+```
+```
 ● Setting up the commodity table, API calls and related services.
+```
+```
 ● Setting up the bonds table and related services.
+```
+```
 ● Creating the user profile page and related services.
+```
+```
 ● Functionality to change the animal and feed the animal including automatically
 updating the animal’s levels of happiness.
+```
+```
 ● Art for the feed animal page in addition to formatting art used for the bull and bear.
+```
+```
 ● Project poster.
 ```
 
-```
-All Members participated in the following:
-```
+### All Members participated in the following:
+
 ```
 ● Code reviewing and debugging.
 ```
@@ -302,7 +309,6 @@ All Members participated in the following:
 ```
 ● Participating in weekly meetings to discuss the project.
 ```
-
 
 ## VI. Conclusion
 
