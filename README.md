@@ -28,11 +28,9 @@ world.
 
 ```
 Bull Market is hosted on AWS at the following URL:
-```
-```
+
 http://angularbullmarket-env.eba-ngp4xesd.us-east-2.elasticbeanstalk.com​.
-```
-```
+
 The link will bring you to a login page shown below. If you don't have an account you can
 sign up by clicking the sign up link. After logging in, a user is brought to the home page
 where they can open different pages and look for assets to buy. Over time, the prices of
@@ -257,11 +255,15 @@ used.
 ```
 ● User Investing page including the portfolio and balance tracking for each user.
 ```
+```
 ● Buying and selling functionality for all assets across the project.
+```
 ```
 ● Real estate table, API calls and related services.
 ```
+```
 ● Individual pages for the real estate table that utilize the map interface.
+```
 ```
 ● Management of all user investments and portfolio including error handling,
 restrictions, and exporting logic to other portions of the site.
