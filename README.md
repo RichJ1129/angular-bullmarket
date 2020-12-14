@@ -217,21 +217,27 @@ Richard Joseph:
 ```
 ● Initial setup of AWS for hosting the project live.
 ```
-### ● Initial setup of Github workflow for automatically deploying the project to AWS.
+
+```
+● Initial setup of Github workflow for automatically deploying the project to AWS.
+```
 
 ```
 ● Signup and Login Authentication pages and error handling including ensuring
 unique user properties.
 ```
-### ● Imported the Cron package which is used to schedule all jobs performed by the
 
 ```
+● Imported the Cron package which is used to schedule all jobs performed by the
 site.
 ```
-### ● Stock pages including individual stock views, stock historical tracking, setting up
 
 ```
+● Stock pages including individual stock views, stock historical tracking, setting up 
 API calls for stocks, and all related services to the page.
+
+```
+
 ```
 ### ● Currency table, API calls and related services to the page.
 
@@ -275,25 +281,14 @@ Austin Henry:
 ```
 ```
 ● Initial setup of MongoDB
-```
-### ● Setting up the commodity table, API calls and related services.
-
-### ● Setting up the bonds table and related services.
-
-### ● Creating the user profile page and related services.
-
-
-### ● Functionality to change the animal and feed the animal including automatically
-
-```
+● Setting up the commodity table, API calls and related services.
+● Setting up the bonds table and related services.
+● Creating the user profile page and related services.
+● Functionality to change the animal and feed the animal including automatically
 updating the animal’s levels of happiness.
+● Art for the feed animal page in addition to formatting art used for the bull and bear.
+● Project poster.
 ```
-### ● Art for the feed animal page in addition to formatting art used for the bull and
-
-```
-bear.
-```
-### ● Project poster.
 
 ```
 All Members participated in the following:
@@ -301,9 +296,13 @@ All Members participated in the following:
 ```
 ● Code reviewing and debugging.
 ```
-### ● Creating schemas to be used for the DB.
+```
+● Creating schemas to be used for the DB.
+```
+```
+● Participating in weekly meetings to discuss the project.
+```
 
-### ● Participating in weekly meetings to discuss the project.
 
 ## VI. Conclusion
 
