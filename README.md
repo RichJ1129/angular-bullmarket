@@ -12,14 +12,11 @@ December 4, 2020
 ## I. Introduction
 
 ```
-11 weeks and hundreds of combined hours and our project is complete! Aptly named
+11 weeks and hundreds of combined hours and our project is complete! This project aptly named
 “Bull Market”, this project is an investment simulation where a user invests in virtual
 assets which change in value over time. Proceeds from the investments are used to take
 care of a virtual bull or bear pet. The goal is to keep their happiness from decreasing to
-0.
-```
-```
-Available investments include Bonds, Commodities, Currency, Real Estate and Stocks
+0. Available investments include Bonds, Commodities, Currency, Real Estate and Stocks
 across 100+ countries, 70+ stocks, and 50+ currencies. The game is designed to be a
 reasonable and dynamic approximation of the major investment opportunities around the
 world.
