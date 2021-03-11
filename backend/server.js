@@ -11,7 +11,7 @@ const currencies = require('./middleware/get-currency');
 const CronJob = require('cron').CronJob;
 const countries = require ('./middleware/get-country');
 const users = require('./middleware/decrement-happiness')
-
+//
 let stock_sched = new CronJob("00 00 22 * * 1,2,3,4,5" , function(){
   stocks.getStocks();
 },
