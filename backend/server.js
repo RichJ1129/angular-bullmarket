@@ -11,7 +11,7 @@ const currencies = require('./middleware/get-currency');
 const CronJob = require('cron').CronJob;
 const countries = require ('./middleware/get-country');
 const users = require('./middleware/decrement-happiness')
-/*
+
 let stock_sched = new CronJob("00 00 22 * * 1,2,3,4,5" , function(){
   stocks.getStocks();
 },
@@ -19,8 +19,8 @@ let stock_sched = new CronJob("00 00 22 * * 1,2,3,4,5" , function(){
   true,
   "America/New_York"
 );
-*/
-/*
+
+
 let commodity_sched = new CronJob("00 45 12 * * 1,2,3,4,5,6" , function(){
   commodities.getCommodities();
 },
@@ -28,7 +28,7 @@ let commodity_sched = new CronJob("00 45 12 * * 1,2,3,4,5,6" , function(){
   true,
   "America/New_York"
 );
-*/
+
 
 let currency_sched = new CronJob("00 00 21 * * 0,1,2,3,4,5" , function(){
   console.log("Scheduled Currency job started");
@@ -48,7 +48,7 @@ let bond_sched = new CronJob("00 01 11 * * 1,2,3,4,5,6" , function(){
   "America/New_York"
 );
 
-/*
+
 let company_sched = new CronJob("00 30 08 * * 5" , function(){
   companies.getCompanies();
 },
@@ -56,7 +56,7 @@ let company_sched = new CronJob("00 30 08 * * 5" , function(){
   true,
   "America/New_York"
 );
-*/
+
 
 let decrement_happiness = new CronJob("0 * * * *" , function(){
     users.decrementHappiness();
